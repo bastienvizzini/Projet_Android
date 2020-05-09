@@ -1,5 +1,5 @@
 package be.technifutur.projet_android
 
-class Game {
+class Game(title: String, platform: Platform) {
 
 }
