@@ -5,18 +5,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import be.technifutur.projet_android.adapters.FriendsListAdapter
+import kotlinx.android.synthetic.main.fragment_friends.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class FriendsFragment : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private var mUserList = MockUsers.createUsers()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_friends, container, false)
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val mAdapter = FriendsListAdapter(requireContext(), mUserList)
+        friends_recycler_view.adapter = mAdapter
+        friends_recycler_view.layoutManager = LinearLayoutManager(activity)
     }
 
 }

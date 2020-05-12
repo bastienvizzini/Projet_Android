@@ -3,4 +3,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="friend_list_title">Friend List</string>
+    <string name="explore_title">Explore</string>
+    <string name="messages_title">Messages</string>
+    <string name="screen_title">Screen Title</string>
+    <string name="friend_name">Friend Name</string>
+    <string name="current_playing_game">Current Playing Game</string>
+    <string name="friends_menu_title">Friends</string>
+    <string name="explore_menu_title">Explore</string>
+    <string name="messages_menu_title">Messages</string>
 </resources>
