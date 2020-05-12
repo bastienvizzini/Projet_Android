@@ -1,4 +1,6 @@
-package be.technifutur.projet_android
+package be.technifutur.projet_android.models
+
+import be.technifutur.projet_android.models.Game
 
 class User(
     userName: String,

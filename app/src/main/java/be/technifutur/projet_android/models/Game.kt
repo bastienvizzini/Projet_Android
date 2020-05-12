@@ -1,4 +1,4 @@
-package be.technifutur.projet_android
+package be.technifutur.projet_android.models
 
 class Game(title: String, platform: Platform) {
     var mTitle: String =  title

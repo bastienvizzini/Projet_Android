@@ -2,10 +2,11 @@ package be.technifutur.projet_android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
+import be.technifutur.projet_android.fragments.ExploreFragment
+import be.technifutur.projet_android.fragments.FriendsFragment
+import be.technifutur.projet_android.fragments.MessagesFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +20,9 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation = findViewById(R.id.bottom_nav)
 
         bottomNavigation.setOnNavigationItemSelectedListener(bottomNavMethod)
-        supportFragmentManager.beginTransaction().replace(R.id.tab_container, FriendsFragment())
+        supportFragmentManager.beginTransaction().replace(R.id.tab_container,
+            FriendsFragment()
+        )
             .commit()
 
     }
@@ -30,15 +33,18 @@ class MainActivity : AppCompatActivity() {
             var fragment: Fragment = Fragment()
             when (menuItem.itemId) {
                 R.id.friends -> {
-                    fragment = FriendsFragment()
+                    fragment =
+                        FriendsFragment()
                     screen_title.text = getString(R.string.friend_list_title)
                 }
                 R.id.explore -> {
-                    fragment = ExploreFragment()
+                    fragment =
+                        ExploreFragment()
                     screen_title.text = getString(R.string.explore_title)
                 }
                 R.id.messages -> {
-                    fragment = MessagesFragment()
+                    fragment =
+                        MessagesFragment()
                     screen_title.text = getString(R.string.messages_title)
                 }
             }

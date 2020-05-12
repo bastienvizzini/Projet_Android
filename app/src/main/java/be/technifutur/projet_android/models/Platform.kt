@@ -1,4 +1,4 @@
-package be.technifutur.projet_android
+package be.technifutur.projet_android.models
 
 enum class Platform(val platformName: String) {
     PS4("PlayStation 4"),
