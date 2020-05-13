@@ -21,8 +21,26 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
         parent: ViewGroup,
         viewType: Int
     ): FriendsListAdapter.FriendsViewHolder {
-        val mItemView: View = mInflater.inflate(R.layout.friendlist_item, parent, false)
+        val mItemView: View = when (viewType) {
+            0 -> mInflater.inflate(R.layout.first_friendlist_item, parent, false) // if first item, this layout
+            1 -> mInflater.inflate(R.layout.last_friendlist_item, parent, false) // if last item, this layout
+            else -> mInflater.inflate(R.layout.friendlist_item, parent, false) // otherwise default layout
+        }
         return FriendsViewHolder(mItemView, this)
+    }
+
+    override fun getItemViewType(position: Int): Int { // returns viewType used in onCreateViewHolder
+        return when (position) {
+            0 -> {
+                0
+            }
+            mUserList.size - 1 -> {
+                1
+            }
+            else -> {
+                3
+            }
+        }
     }
 
     override fun getItemCount(): Int {

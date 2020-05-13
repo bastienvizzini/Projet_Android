@@ -20,10 +20,8 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation = findViewById(R.id.bottom_nav)
 
         bottomNavigation.setOnNavigationItemSelectedListener(bottomNavMethod)
-        supportFragmentManager.beginTransaction().replace(R.id.tab_container,
-            FriendsFragment()
-        )
-            .commit()
+        supportFragmentManager.beginTransaction().replace(R.id.tab_container, FriendsFragment()).commit()
+        screen_title.text = getString(R.string.friend_list_title)
 
     }
 
