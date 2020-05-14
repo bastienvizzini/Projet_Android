@@ -13,19 +13,22 @@ class MockUsers {
             gameList.add(
                 Game(
                     "Apex Legends",
-                    Platform.PS4
+                    Platform.PS4,
+                    R.drawable.apex_legends
                 )
             )
             gameList.add(
                 Game(
                     "Fortnite",
-                    Platform.XBOXONE
+                    Platform.XBOXONE,
+                    R.drawable.fortnite
                 )
             )
             gameList.add(
                 Game(
                     "League of Legends",
-                    Platform.PC
+                    Platform.PC,
+                    R.drawable.league_of_legends
                 )
             )
 
@@ -112,7 +115,6 @@ class MockUsers {
             users.add(user7)
             users.add(user8)
             users.add(user9)
-            users.add(user8)
 
             return users
         }

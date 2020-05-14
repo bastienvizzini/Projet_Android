@@ -12,4 +12,6 @@
     <string name="friends_menu_title">Friends</string>
     <string name="explore_menu_title">Explore</string>
     <string name="messages_menu_title">Messages</string>
+    <string name="offline_title">Offline</string>
+    <string name="online_title">Online</string>
 </resources>

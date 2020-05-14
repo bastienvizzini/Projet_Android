@@ -2,10 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    android:background="@drawable/first_item_background"
-    android:padding="8dp"
+    android:layout_height="110dp"
+    android:background="@drawable/first_item_online_status_background"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
     android:layout_marginBottom="1dp">
+
+    <TextView
+        android:id="@+id/online_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/online_title"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@id/friend_picture_item" />
 
     <ImageView
         android:id="@+id/friend_picture_item"
@@ -14,7 +26,7 @@
         android:src="@color/lightGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/online_status" />
 
     <TextView
         android:id="@+id/friend_username_item"
@@ -35,6 +47,5 @@
         app:layout_constraintBottom_toBottomOf="@id/friend_picture_item"
         app:layout_constraintStart_toEndOf="@id/friend_picture_item"
         app:layout_constraintTop_toBottomOf="@id/friend_username_item" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

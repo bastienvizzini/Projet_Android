@@ -16,4 +16,8 @@ class User(
     var mProfilePicture = profilePicture
     var mGames = games
     var mIsOnline = isOnline
+
+    override fun toString(): String {
+        return mUserName
+    }
 }

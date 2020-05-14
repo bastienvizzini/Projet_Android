@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.technifutur.projet_android.mockdata.MockUsers
 import be.technifutur.projet_android.R
@@ -30,8 +29,8 @@ class FriendsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val mAdapter = FriendsListAdapter(requireContext(), mUserList)
-        friends_recycler_view.adapter = mAdapter
-        friends_recycler_view.layoutManager = LinearLayoutManager(activity)
+        friendsRecyclerView.adapter = mAdapter
+        friendsRecyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
 }
