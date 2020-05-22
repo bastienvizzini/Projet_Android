@@ -14,4 +14,8 @@
     <string name="messages_menu_title">Messages</string>
     <string name="offline_title">Offline</string>
     <string name="online_title">Online</string>
+    <string name="search_title">Search</string>
+    <string name="search_hint">Search users and games</string>
+    <string name="result_title">Result</string>
+    <string name="no_results">Oops… No results !</string>
 </resources>

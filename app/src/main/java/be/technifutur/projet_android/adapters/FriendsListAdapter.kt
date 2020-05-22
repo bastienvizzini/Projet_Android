@@ -1,7 +1,6 @@
 package be.technifutur.projet_android.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,9 +24,12 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
         viewType: Int
     ): FriendsListAdapter.FriendsViewHolder {
         val mItemView: View = when (viewType) {
-            0 -> mInflater.inflate(R.layout.friendlist_online_title_item, parent, false) // if first item, this layout
+            0 -> mInflater.inflate(R.layout.friendlist_online_title_item_two, parent, false)
+            //mInflater.inflate(R.layout.friendlist_online_title_item, parent, false)
+            // if first item, this layout
             1 -> mInflater.inflate(R.layout.last_friendlist_item, parent, false) // if last item, this layout
-            2 -> mInflater.inflate(R.layout.friendlist_offline_title_item, parent, false)
+            2 -> mInflater.inflate(R.layout.friendlist_offline_title_item_two, parent, false)
+            //mInflater.inflate(R.layout.friendlist_offline_title_item, parent, false)
             3 -> mInflater.inflate(R.layout.last_friendlist_item, parent, false)
             else -> mInflater.inflate(R.layout.friendlist_item, parent, false) // otherwise default layout
         }
@@ -83,17 +85,19 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
             position < mOnlineUserList.size -> {
                 val mCurrentUsername: String = mOnlineUserList[position].mUserName
                 val mCurrentCurrentGame: String = mOnlineUserList[position].mGames[0].mTitle
+                val otherGamesCount = mOnlineUserList[position].mGames.size - 1
                 val mCurrentProfileResource: Int = mOnlineUserList[position].mProfilePicture
                 holder.usernameTextView.text = mCurrentUsername
-                holder.currentGameTextView.text = mCurrentCurrentGame
+                holder.currentGameTextView.text = "$mCurrentCurrentGame and $otherGamesCount other games"
                 holder.profilePictureImageView.setImageResource(mCurrentProfileResource)
             }
             position >= mOnlineUserList.size -> {
                 val mCurrentUsername: String = mOfflineUserList[position-(mOnlineUserList.size)].mUserName // Set index to 0 since it's another list
                 val mCurrentCurrentGame: String = mOfflineUserList[position-(mOnlineUserList.size)].mGames[0].mTitle
+                val otherGamesCount = mOfflineUserList[position-(mOnlineUserList.size)].mGames.size - 1
                 val mCurrentProfileResource: Int = mOfflineUserList[position-(mOnlineUserList.size)].mProfilePicture
                 holder.usernameTextView.text = mCurrentUsername
-                holder.currentGameTextView.text = mCurrentCurrentGame
+                holder.currentGameTextView.text = "$mCurrentCurrentGame and $otherGamesCount other games"
                 holder.profilePictureImageView.setImageResource(mCurrentProfileResource)
             }
         }

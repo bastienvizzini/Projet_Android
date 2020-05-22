@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root_layout"
     tools:context=".MainActivity">
 
     <TextView
@@ -25,18 +26,19 @@
         app:layout_constraintTop_toBottomOf="@id/screen_title"
         android:layout_marginStart="16dp"/>
 
-    <SearchView
-        android:id="@+id/search_view"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:background="@drawable/gray_rounded_corners_background"
+        android:background="@drawable/item_background_rounded_corner_light_gray"
         app:layout_constraintBottom_toBottomOf="@id/profile_picture"
         app:layout_constraintCircleRadius="70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/profile_picture"
         app:layout_constraintTop_toTopOf="@id/profile_picture"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="16dp"
+        android:onClick="onSearch"/>
 
     <FrameLayout
         android:id="@+id/tab_container"
@@ -45,8 +47,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintTop_toBottomOf="@+id/profile_picture"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+        android:background="@drawable/list_background_dark"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

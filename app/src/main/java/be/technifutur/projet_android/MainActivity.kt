@@ -1,7 +1,14 @@
 package be.technifutur.projet_android
 
+import android.content.Context
+import android.content.Intent
+import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import be.technifutur.projet_android.fragments.ExploreFragment
 import be.technifutur.projet_android.fragments.FriendsFragment
@@ -12,6 +19,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigation: BottomNavigationView
+
+    companion object {
+        const val SEARCH_EXTRA = "search_extra"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,4 +61,34 @@ class MainActivity : AppCompatActivity() {
 
             true
         }
+
+
+    fun onSearch(view: View) {
+        // Set the whole area of searchView clickable
+        searchView.isIconified = false
+
+        // Search process
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                val searchIntent = Intent(applicationContext, SearchActivity::class.java)
+                searchIntent.putExtra(SEARCH_EXTRA, query)
+                startActivity(searchIntent)
+                searchView.clearFocus()
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Clear searchView when we go back to MainActivity
+        searchView.setQuery("", false)
+    }
+
 }
