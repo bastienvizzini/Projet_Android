@@ -61,5 +61,4 @@
         app:layout_constraintTop_toBottomOf="@id/tab_container"
         app:menu="@menu/menu" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

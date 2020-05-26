@@ -18,4 +18,6 @@
     <string name="search_hint">Search users and games</string>
     <string name="result_title">Result</string>
     <string name="no_results">Oops… No results !</string>
+    <string name="games">Games :</string>
+    <string name="username">Username</string>
 </resources>

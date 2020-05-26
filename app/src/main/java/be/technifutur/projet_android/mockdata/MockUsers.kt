@@ -31,6 +31,27 @@ class MockUsers {
                     R.drawable.league_of_legends
                 )
             )
+            gameList.add(
+                Game(
+                    "Apex Legends",
+                    Platform.PS4,
+                    R.drawable.apex_legends
+                )
+            )
+            gameList.add(
+                Game(
+                    "Fortnite",
+                    Platform.XBOXONE,
+                    R.drawable.fortnite
+                )
+            )
+            gameList.add(
+                Game(
+                    "League of Legends",
+                    Platform.PC,
+                    R.drawable.league_of_legends
+                )
+            )
 
             val users: MutableList<User> = mutableListOf()
             val user1 = User(

@@ -1,6 +1,8 @@
 package be.technifutur.projet_android.adapters
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
+import be.technifutur.projet_android.UserProfileActivity
 import be.technifutur.projet_android.models.User
 
 class FriendsListAdapter(context: Context, userList: MutableList<User>) :
@@ -17,7 +20,7 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
     private var mUserList: MutableList<User> = userList
     private var mOnlineUserList: MutableList<User> = getOnlineUsers(mUserList)
     private var mOfflineUserList: MutableList<User> = getOfflineUsers(mUserList)
-    private var mInflater: LayoutInflater = LayoutInflater.from(context);
+    private var mInflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -36,7 +39,7 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
         return FriendsViewHolder(mItemView, this)
     }
 
-    private fun getOnlineUsers(users: MutableList<User>): MutableList<User> {
+    fun getOnlineUsers(users: MutableList<User>): MutableList<User> {
         val onlineUserList: MutableList<User> = mutableListOf()
         for (user in users) {
             if (user.mIsOnline) {
@@ -46,7 +49,7 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
         return onlineUserList
     }
 
-    private fun getOfflineUsers(users: MutableList<User>): MutableList<User> {
+    fun getOfflineUsers(users: MutableList<User>): MutableList<User> {
         val offlineUserList: MutableList<User> = mutableListOf()
         for (user in users) {
             if (!user.mIsOnline) {
@@ -90,6 +93,13 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
                 holder.usernameTextView.text = mCurrentUsername
                 holder.currentGameTextView.text = "$mCurrentCurrentGame and $otherGamesCount other games"
                 holder.profilePictureImageView.setImageResource(mCurrentProfileResource)
+
+                // Handle click
+                holder.itemView.setOnClickListener {
+                    val userProfileIntent = Intent(holder.itemView.context, UserProfileActivity::class.java)
+                    UserProfileActivity.mUser = mOnlineUserList[position]
+                    holder.itemView.context.startActivity(userProfileIntent)
+                }
             }
             position >= mOnlineUserList.size -> {
                 val mCurrentUsername: String = mOfflineUserList[position-(mOnlineUserList.size)].mUserName // Set index to 0 since it's another list
@@ -99,6 +109,13 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
                 holder.usernameTextView.text = mCurrentUsername
                 holder.currentGameTextView.text = "$mCurrentCurrentGame and $otherGamesCount other games"
                 holder.profilePictureImageView.setImageResource(mCurrentProfileResource)
+
+                // Handle click
+                holder.itemView.setOnClickListener {
+                    val userProfileIntent = Intent(holder.itemView.context, UserProfileActivity::class.java)
+                    UserProfileActivity.mUser = mOfflineUserList[position-(mOnlineUserList.size)]
+                    holder.itemView.context.startActivity(userProfileIntent)
+                }
             }
         }
     }
@@ -109,6 +126,5 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
         val usernameTextView: TextView = itemView.findViewById(R.id.friend_username_item)
         var currentGameTextView: TextView = itemView.findViewById(R.id.friend_current_game_item)
         val profilePictureImageView: ImageView = itemView.findViewById(R.id.friend_picture_item)
-
     }
 }
