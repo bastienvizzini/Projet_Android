@@ -1,13 +1,10 @@
 package be.technifutur.projet_android
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import be.technifutur.projet_android.fragments.ExploreFragment
@@ -19,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var searchView: SearchView
 
     companion object {
         const val SEARCH_EXTRA = "search_extra"
@@ -33,6 +31,13 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnNavigationItemSelectedListener(bottomNavMethod)
         supportFragmentManager.beginTransaction().replace(R.id.tab_container, FriendsFragment()).commit()
         screen_title.text = getString(R.string.friend_list_title)
+
+        // Custom Action Bar
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setCustomView(R.layout.custom_actionbar_main)
+
+        searchView = supportActionBar?.customView!!.findViewById(R.id.searchView)
 
     }
 

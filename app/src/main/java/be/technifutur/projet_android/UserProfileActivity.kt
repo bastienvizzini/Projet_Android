@@ -2,6 +2,7 @@ package be.technifutur.projet_android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.technifutur.projet_android.adapters.GameListAdapter
 import be.technifutur.projet_android.models.User
@@ -21,6 +22,14 @@ class UserProfileActivity : AppCompatActivity() {
         val mAdapter = GameListAdapter(this, mUser.mGames)
         games_recycler_view.adapter = mAdapter
         games_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        // Custom Action Bar
+        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setCustomView(R.layout.custom_actionbar_user)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
+
     }
 
     private fun setUser(user: User) {
