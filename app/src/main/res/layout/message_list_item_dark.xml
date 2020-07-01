@@ -25,17 +25,17 @@
             android:text="@string/friend_name"
             android:textStyle="bold"
             android:textColor="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@id/friend_current_game_item"
+            app:layout_constraintBottom_toTopOf="@+id/friend_message_item"
             app:layout_constraintStart_toEndOf="@id/friend_picture_item"
             app:layout_constraintTop_toTopOf="@id/friend_picture_item" />
 
         <TextView
-            android:id="@+id/friend_current_game_item"
+            android:id="@+id/friend_message_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textColor="@android:color/white"
-            android:text="@string/current_playing_game"
+            android:text="@string/current_message"
             app:layout_constraintBottom_toBottomOf="@id/friend_picture_item"
             app:layout_constraintStart_toEndOf="@id/friend_picture_item"
             app:layout_constraintTop_toBottomOf="@id/friend_username_item" />

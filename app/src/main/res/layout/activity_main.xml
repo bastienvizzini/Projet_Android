@@ -23,8 +23,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintTop_toBottomOf="@+id/screen_title"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/list_background_dark"/>
+        android:layout_marginTop="8dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

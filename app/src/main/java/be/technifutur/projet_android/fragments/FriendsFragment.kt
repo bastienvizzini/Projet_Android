@@ -5,10 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.technifutur.projet_android.mockdata.MockUsers
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.adapters.FriendsListAdapter
 import kotlinx.android.synthetic.main.fragment_friends.*
 
 /**
@@ -28,9 +29,9 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mAdapter = FriendsListAdapter(requireContext(), mUserList)
+        val mAdapter = be.technifutur.projet_android.adapters.FriendsListAdapter(requireContext(), mUserList)
         friendsRecyclerView.adapter = mAdapter
-        friendsRecyclerView.layoutManager = LinearLayoutManager(activity)
+        friendsRecyclerView.layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
     }
 
 }

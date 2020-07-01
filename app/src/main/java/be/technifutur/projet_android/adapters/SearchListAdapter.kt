@@ -10,9 +10,12 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.models.User
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
 class SearchListAdapter(context: Context, resultList: MutableList<User>) : RecyclerView.Adapter<SearchListAdapter.SearchViewHolder>(), Filterable {
 
@@ -40,15 +43,21 @@ class SearchListAdapter(context: Context, resultList: MutableList<User>) : Recyc
         if (mResultList.size == 0) {
             holder.resultTitleTextView.visibility = View.INVISIBLE
             holder.pictureResultImageView.visibility = View.INVISIBLE
+            holder.pictureResultCardView.visibility = View.INVISIBLE
             holder.noResultTitleTextView.visibility = View.VISIBLE
         } else {
             val mCurrentUsername: String = mResultList[position].mUserName
             val mCurrentPictureResource: Int = mResultList[position].mProfilePicture
             holder.resultTitleTextView.visibility = View.VISIBLE
             holder.pictureResultImageView.visibility = View.VISIBLE
+            holder.pictureResultCardView.visibility = View.VISIBLE
             holder.noResultTitleTextView.visibility = View.INVISIBLE
             holder.resultTitleTextView.text = mCurrentUsername
-            holder.pictureResultImageView.setImageResource(mCurrentPictureResource)
+
+            Glide.with(holder.itemView.context)
+                .load(mCurrentPictureResource)
+                .centerCrop()
+                .into(holder.pictureResultImageView)
         }
     }
 
@@ -90,6 +99,7 @@ class SearchListAdapter(context: Context, resultList: MutableList<User>) : Recyc
         val pictureResultImageView: ImageView = itemView.findViewById(R.id.result_picture_item)
         val resultTitleTextView: TextView = itemView.findViewById(R.id.result_title_item)
         val noResultTitleTextView: TextView = itemView.findViewById(R.id.no_result_title_item)
+        val pictureResultCardView: CardView = itemView.findViewById(R.id.result_picture_cardview)
     }
 
 }

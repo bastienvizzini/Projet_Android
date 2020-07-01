@@ -26,26 +26,53 @@ class MockUsers {
             )
             gameList.add(
                 Game(
-                    "League of Legends",
-                    Platform.PC,
-                    R.drawable.league_of_legends
+                    "Overwatch",
+                    Platform.SWITCH,
+                    R.drawable.overwatch
                 )
             )
-            gameList.add(
+
+            val gameList2: MutableList<Game> = mutableListOf()
+            gameList2.add(
                 Game(
-                    "Apex Legends",
+                    "The Last of Us: Part II",
                     Platform.PS4,
-                    R.drawable.apex_legends
+                    R.drawable.theltasofuspartii
                 )
             )
-            gameList.add(
+            gameList2.add(
                 Game(
-                    "Fortnite",
+                    "Call of Duty",
                     Platform.XBOXONE,
-                    R.drawable.fortnite
+                    R.drawable.callofduty
                 )
             )
-            gameList.add(
+
+            val gameList3: MutableList<Game> = mutableListOf()
+            gameList3.add(
+                Game(
+                    "Slay the Spire",
+                    Platform.PC,
+                    R.drawable.slaythespire
+                )
+            )
+            gameList3.add(
+                Game(
+                    "Uno",
+                    Platform.XBOXONE,
+                    R.drawable.uno
+                )
+            )
+
+            val gameList4: MutableList<Game> = mutableListOf()
+            gameList4.add(
+                Game(
+                    "Farming Simulator",
+                    Platform.XBOXONE,
+                    R.drawable.farmingsimulator
+                )
+            )
+            gameList4.add(
                 Game(
                     "League of Legends",
                     Platform.PC,
@@ -58,7 +85,7 @@ class MockUsers {
                 "JeanClaude24",
                 24,
                 "Liège",
-                R.drawable.boy_1,
+                R.drawable.user1,
                 gameList,
                 false
             )
@@ -66,31 +93,31 @@ class MockUsers {
                 "TechnoKiller",
                 28,
                 "Liège",
-                R.drawable.boy_2,
-                gameList,
+                R.drawable.user2,
+                gameList2,
                 true
             )
             val user3 = User(
                 "Didier Raoult",
                 87,
                 "Marseille",
-                R.drawable.man_1,
-                gameList,
+                R.drawable.user3,
+                gameList3,
                 false
             )
             val user4 = User(
                 "Corona",
                 16,
                 "Wuhan",
-                R.drawable.man_2,
-                gameList,
+                R.drawable.user4,
+                gameList4,
                 true
             )
             val user5 = User(
                 "PatrickBalkaneux",
                 67,
                 "Levallois",
-                R.drawable.man_3,
+                R.drawable.user5,
                 gameList,
                 false
             )
@@ -98,31 +125,31 @@ class MockUsers {
                 "XHipster",
                 25,
                 "Bruxelles",
-                R.drawable.man_4,
-                gameList,
+                R.drawable.user6,
+                gameList2,
                 true
             )
             val user7 = User(
                 "Kevkev",
                 17,
                 "Namur",
-                R.drawable.man_5,
-                gameList,
+                R.drawable.user7,
+                gameList3,
                 false
             )
             val user8 = User(
                 "TwitchThot",
                 22,
                 "Anderlecht",
-                R.drawable.girl_1,
-                gameList,
+                R.drawable.user8,
+                gameList4,
                 true
             )
             val user9 = User(
                 "Diams",
                 38,
                 "Charleroi",
-                R.drawable.girl_2,
+                R.drawable.user9,
                 gameList,
                 false
             )

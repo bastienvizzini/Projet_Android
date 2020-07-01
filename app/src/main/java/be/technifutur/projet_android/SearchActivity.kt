@@ -24,5 +24,7 @@ class SearchActivity : AppCompatActivity() {
         mAdapter.filter.filter(extraQuerySearch)
         resultsRecyclerView.adapter = mAdapter
         resultsRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        supportActionBar?.title = "Search"
     }
 }

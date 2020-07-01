@@ -9,6 +9,9 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.models.Game
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import java.net.URL
 
 class GameListAdapter (context: Context, gameList: MutableList<Game>): RecyclerView.Adapter<GameListAdapter.GameViewHolder>() {
 
@@ -29,7 +32,11 @@ class GameListAdapter (context: Context, gameList: MutableList<Game>): RecyclerV
 
     override fun onBindViewHolder(holder: GameListAdapter.GameViewHolder, position: Int) {
         val mCurrentGamePictureResource: Int = mGameList[position].mImageResource
-        holder.gamePictureImageView.setImageResource(mCurrentGamePictureResource)
+        //holder.gamePictureImageView.setImageResource(mCurrentGamePictureResource)
+        Glide.with(holder.itemView.context)
+            .load(mCurrentGamePictureResource)
+            .centerCrop()
+            .into(holder.gamePictureImageView)
     }
 
     class GameViewHolder(@NonNull itemView: View, adapter: GameListAdapter): RecyclerView.ViewHolder(itemView) {

@@ -1,6 +1,7 @@
 package be.technifutur.projet_android
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,8 +11,11 @@ import androidx.fragment.app.Fragment
 import be.technifutur.projet_android.fragments.ExploreFragment
 import be.technifutur.projet_android.fragments.FriendsFragment
 import be.technifutur.projet_android.fragments.MessagesFragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.custom_actionbar_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +43,8 @@ class MainActivity : AppCompatActivity() {
 
         searchView = supportActionBar?.customView!!.findViewById(R.id.searchView)
 
+        Glide.with(this).load(R.drawable.main_user).circleCrop().into(user_picture)
+
     }
 
     private val bottomNavMethod =
@@ -60,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                     fragment =
                         MessagesFragment()
                     screen_title.text = getString(R.string.messages_title)
+                    //tab_container.setBackgroundColor(Color.TRANSPARENT) // lol vire ça quand tu peux
                 }
             }
             supportFragmentManager.beginTransaction().replace(R.id.tab_container, fragment).commit()

@@ -20,4 +20,5 @@
     <string name="no_results">Oops… No results !</string>
     <string name="games">Games :</string>
     <string name="username">Username</string>
+    <string name="current_message">Current message</string>
 </resources>
