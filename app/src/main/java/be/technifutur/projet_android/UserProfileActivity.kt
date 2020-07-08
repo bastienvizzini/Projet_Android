@@ -32,6 +32,7 @@ class UserProfileActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.custom_actionbar_user)
         actionBar?.setDisplayHomeAsUpEnabled(true)*/
+        supportActionBar?.elevation = 0f
 
 
     }

@@ -2,9 +2,7 @@ package be.technifutur.projet_android.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
@@ -22,6 +20,8 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
 
     private var mFriendsList: MutableList<User> = userList
     private var mInflater: LayoutInflater = LayoutInflater.from(context)
+    private var wm: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    private var display: Display = wm.defaultDisplay
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -38,6 +38,9 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
     override fun onBindViewHolder(holder: FriendsListAdapter.FriendsViewHolder, position: Int) {
         val currentFriend = mFriendsList[position]
         holder.usernameTextView.text = currentFriend.mUserName
+        // To set the image size programmatically
+        holder.pictureImageView.layoutParams.width = (display.width/4)
+        holder.pictureImageView.layoutParams.height = (display.width/4)
         Glide.with(holder.itemView.context).load(currentFriend.mProfilePicture).centerCrop().into(holder.pictureImageView)
 
         holder.itemView.setOnClickListener {

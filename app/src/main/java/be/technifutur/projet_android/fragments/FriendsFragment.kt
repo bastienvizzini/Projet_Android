@@ -1,16 +1,15 @@
 package be.technifutur.projet_android.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import be.technifutur.projet_android.mockdata.MockUsers
 import be.technifutur.projet_android.R
+import be.technifutur.projet_android.mockdata.MockUsers
 import kotlinx.android.synthetic.main.fragment_friends.*
+import kotlinx.android.synthetic.main.fragment_messages.*
 
 /**
  * A simple [Fragment] subclass.
@@ -32,6 +31,7 @@ class FriendsFragment : Fragment() {
         val mAdapter = be.technifutur.projet_android.adapters.FriendsListAdapter(requireContext(), mUserList)
         friendsRecyclerView.adapter = mAdapter
         friendsRecyclerView.layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
+
     }
 
 }

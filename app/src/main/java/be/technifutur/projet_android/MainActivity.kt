@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.custom_actionbar_main)
+        supportActionBar?.elevation = 0f
 
         searchView = supportActionBar?.customView!!.findViewById(R.id.searchView)
 

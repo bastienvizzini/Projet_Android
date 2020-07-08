@@ -26,5 +26,6 @@ class SearchActivity : AppCompatActivity() {
         resultsRecyclerView.layoutManager = LinearLayoutManager(this)
 
         supportActionBar?.title = "Search"
+        supportActionBar?.elevation = 0f
     }
 }

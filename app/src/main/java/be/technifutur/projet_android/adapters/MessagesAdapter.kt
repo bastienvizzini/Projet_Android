@@ -4,9 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginBottom
+import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.models.User
@@ -32,7 +36,9 @@ class MessagesAdapter(context: Context, userList: MutableList<User>): RecyclerVi
     override fun onBindViewHolder(holder: MessagesAdapter.MessagesViewHolder, position: Int) {
         when (position) {
             0 -> holder.backgroundView.setBackgroundResource(R.drawable.first_item_background)
-            mMessageFriendList.size - 1 -> holder.backgroundView.setBackgroundResource(R.drawable.last_item_background)
+            mMessageFriendList.size - 1 -> {
+                holder.backgroundView.setBackgroundResource(R.drawable.last_item_background)
+            }
             else -> holder.backgroundView.setBackgroundResource(R.color.lightGray)
         }
         val mCurrentUsername: String = mMessageFriendList[position].mUserName

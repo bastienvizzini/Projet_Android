@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.adapters.MessagesAdapter
 import be.technifutur.projet_android.mockdata.MockUsers
+import kotlinx.android.synthetic.main.fragment_friends.*
 import kotlinx.android.synthetic.main.fragment_messages.*
 
 /**
@@ -31,8 +32,9 @@ class MessagesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val mAdapter = MessagesAdapter(requireContext(), mUserList)
-        messagesRecyclerView.adapter = mAdapter
         messagesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        messagesRecyclerView.adapter = mAdapter
+
 
     }
 
