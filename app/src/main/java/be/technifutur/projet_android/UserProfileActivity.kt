@@ -41,6 +41,6 @@ class UserProfileActivity : AppCompatActivity() {
         //user_profile_picture.setImageResource(user.mProfilePicture)
         Glide.with(this).load(user.mProfilePicture).centerCrop().into(user_profile_picture)
         user_username.text = user.mUserName
-        supportActionBar?.title = user.mUserName
+        supportActionBar?.setDisplayShowTitleEnabled(false) // no title in actionbar
     }
 }

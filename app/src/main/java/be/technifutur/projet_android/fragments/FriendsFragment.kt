@@ -30,7 +30,7 @@ class FriendsFragment : Fragment() {
 
         val mAdapter = be.technifutur.projet_android.adapters.FriendsListAdapter(requireContext(), mUserList)
         friendsRecyclerView.adapter = mAdapter
-        friendsRecyclerView.layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
+        friendsRecyclerView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
 
     }
 

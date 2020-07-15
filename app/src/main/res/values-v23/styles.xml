@@ -9,4 +9,12 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">#ffffff</item>
     </style>
+    <style name="AppTheme.ActionBar.Transparent" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/listItemBackground</item>>
+    </style>
+
 </resources>

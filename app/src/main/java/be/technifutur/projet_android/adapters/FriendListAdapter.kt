@@ -39,8 +39,8 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
         val currentFriend = mFriendsList[position]
         holder.usernameTextView.text = currentFriend.mUserName
         // To set the image size programmatically
-        holder.pictureImageView.layoutParams.width = (display.width/4)
-        holder.pictureImageView.layoutParams.height = (display.width/4)
+        //holder.pictureImageView.layoutParams.width = (display.width/2)
+        //holder.pictureImageView.layoutParams.height = (display.width/2)
         Glide.with(holder.itemView.context).load(currentFriend.mProfilePicture).centerCrop().into(holder.pictureImageView)
 
         holder.itemView.setOnClickListener {

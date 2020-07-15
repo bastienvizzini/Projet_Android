@@ -8,4 +8,6 @@
     <color name="darkGrayBlue">#6B7C8C</color>
     <color name="listItemBackground">#2E3E4C</color>
     <color name="listBackground">#202A33</color>
+
+    <color name="actionBarItemBackground">#FFFFFF</color>
 </resources>
