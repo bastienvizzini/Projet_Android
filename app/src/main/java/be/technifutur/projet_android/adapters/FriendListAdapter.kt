@@ -9,51 +9,87 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.UserProfileActivity
+import be.technifutur.projet_android.adapters.old.FriendsListAdapter
 import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.friendlist_item_final.view.*
 
 class FriendsListAdapter(context: Context, userList: MutableList<User>) :
-    RecyclerView.Adapter<FriendsListAdapter.FriendsViewHolder>() {
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mFriendsList: MutableList<User> = userList
     private var mInflater: LayoutInflater = LayoutInflater.from(context)
-    private var wm: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-    private var display: Display = wm.defaultDisplay
+    private var mContext = context
+    private val itemScreenTitle = 0
+    private val itemBody = 1
+
+    // To get window size
+    //private var wm: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    //private var display: Display = wm.defaultDisplay
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): FriendsListAdapter.FriendsViewHolder {
-        val mItemView: View = mInflater.inflate(R.layout.friendlist_item_final, parent, false)
-        return FriendsViewHolder(mItemView, this)
+    ): RecyclerView.ViewHolder {
+        return when (viewType) {
+            0 -> {
+                val mItemView: View = mInflater.inflate(R.layout.title_fragment_item, parent, false)
+                ScreenTitleViewHolder(mItemView)
+            }
+            else -> {
+                val mItemView: View = mInflater.inflate(R.layout.friendlist_item_final, parent, false)
+                FriendsViewHolder(mItemView)
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {
-        return mFriendsList.size
+        return mFriendsList.size + 1 // +1 for header (screen title)
     }
 
-    override fun onBindViewHolder(holder: FriendsListAdapter.FriendsViewHolder, position: Int) {
-        val currentFriend = mFriendsList[position]
-        holder.usernameTextView.text = currentFriend.mUserName
-        // To set the image size programmatically
-        //holder.pictureImageView.layoutParams.width = (display.width/2)
-        //holder.pictureImageView.layoutParams.height = (display.width/2)
-        Glide.with(holder.itemView.context).load(currentFriend.mProfilePicture).centerCrop().into(holder.pictureImageView)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is FriendsViewHolder -> {
+                val currentFriend = mFriendsList[position-1] // -1 bc of header
+                holder.usernameTextView.text = currentFriend.mUserName
+                // To set the image size programmatically
+                //holder.pictureImageView.layoutParams.width = (display.width/2)
+                //holder.pictureImageView.layoutParams.height = (display.width/2)
+                Glide.with(holder.itemView.context).load(currentFriend.mProfilePicture).centerCrop().into(holder.pictureImageView)
 
-        holder.itemView.setOnClickListener {
-            val userProfileIntent = Intent(holder.itemView.context, UserProfileActivity::class.java)
-            UserProfileActivity.mUser = currentFriend
-            holder.itemView.context.startActivity(userProfileIntent)
+                holder.itemView.setOnClickListener {
+                    val userProfileIntent = Intent(holder.itemView.context, UserProfileActivity::class.java)
+                    UserProfileActivity.mUser = currentFriend
+                    holder.itemView.context.startActivity(userProfileIntent)
+                }
+            }
+            is ScreenTitleViewHolder -> {
+                holder.screenTitleTextView.text = mContext.getString(R.string.friends_list_title)
+            }
+        }
+
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            0 -> itemScreenTitle
+            else -> itemBody
         }
     }
 
-    inner class FriendsViewHolder(@NonNull itemView: View, adapter: FriendsListAdapter) :
-        RecyclerView.ViewHolder(itemView) {
+    fun isHeader(position: Int): Boolean {
+        return position == 0
+    }
+
+    inner class FriendsViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val usernameTextView: TextView = itemView.friendUsernameItemFinal
         val pictureImageView: ImageView = itemView.friendPictureItemFinal
+    }
+
+    inner class ScreenTitleViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        val screenTitleTextView: TextView = itemView.findViewById(R.id.screenTitleItem)
     }
 }

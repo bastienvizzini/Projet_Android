@@ -1,7 +1,6 @@
 package be.technifutur.projet_android
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,7 +11,6 @@ import be.technifutur.projet_android.fragments.ExploreFragment
 import be.technifutur.projet_android.fragments.FriendsFragment
 import be.technifutur.projet_android.fragments.MessagesFragment
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_actionbar_main.*
@@ -34,13 +32,12 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigation.setOnNavigationItemSelectedListener(bottomNavMethod)
         supportFragmentManager.beginTransaction().replace(R.id.tab_container, FriendsFragment()).commit()
-        screen_title.text = getString(R.string.friend_list_title)
 
         // Custom Action Bar
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.custom_actionbar_main)
-        supportActionBar?.elevation = 0f
+        //supportActionBar?.elevation = 0f
 
         searchView = supportActionBar?.customView!!.findViewById(R.id.searchView)
 
@@ -56,17 +53,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.friends -> {
                     fragment =
                         FriendsFragment()
-                    screen_title.text = getString(R.string.friend_list_title)
                 }
                 R.id.explore -> {
                     fragment =
                         ExploreFragment()
-                    screen_title.text = getString(R.string.explore_title)
                 }
                 R.id.messages -> {
                     fragment =
                         MessagesFragment()
-                    screen_title.text = getString(R.string.messages_title)
                     //tab_container.setBackgroundColor(Color.TRANSPARENT) // lol vire ça quand tu peux
                 }
             }

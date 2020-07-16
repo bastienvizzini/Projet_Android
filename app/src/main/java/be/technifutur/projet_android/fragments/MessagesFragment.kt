@@ -35,7 +35,6 @@ class MessagesFragment : Fragment() {
         messagesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         messagesRecyclerView.adapter = mAdapter
 
-
     }
 
 }
