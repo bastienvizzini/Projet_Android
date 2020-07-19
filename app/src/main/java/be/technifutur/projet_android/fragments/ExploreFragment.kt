@@ -1,6 +1,7 @@
 package be.technifutur.projet_android.fragments
 
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -45,9 +46,10 @@ class ExploreFragment : Fragment() {
 
         mContext = requireContext()
         val layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-        exploreRecyclerView.layoutManager = layoutManager
 
-        if (mGameList.isEmpty()) {
+        if (mGameList.isEmpty() && exploreRecyclerView != null) {
+            exploreLoader.visibility = View.VISIBLE
+
             val retrofit = Retrofit.Builder()
                 .baseUrl(MainActivity.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -58,6 +60,7 @@ class ExploreFragment : Fragment() {
             gameService.mostPopularGames().enqueue(object : Callback<GameResult>{
                 override fun onFailure(call: Call<GameResult>, t: Throwable) {
                     Log.d("GrosProbleme", t.message)
+                    exploreLoader.visibility = View.GONE
                 }
 
                 override fun onResponse(call: Call<GameResult>, response: Response<GameResult>) {
@@ -66,13 +69,22 @@ class ExploreFragment : Fragment() {
                     }
 
                     val mAdapter = GameAdapter(mContext, mGameList)
-                    exploreRecyclerView.adapter = mAdapter
-
+                    /*while (exploreRecyclerView == null) {
+                        Log.d("bite", "exploreRecyclerView is null bro")
+                    }*/
+                    if (exploreRecyclerView != null) {
+                        exploreLoader.visibility = View.GONE
+                        exploreRecyclerView.layoutManager = layoutManager
+                        exploreRecyclerView.adapter = mAdapter
+                    }
                 }
 
             })
         } else {
+            exploreLoader.visibility = View.VISIBLE
             val mAdapter = GameAdapter(mContext, mGameList)
+            exploreLoader.visibility = View.GONE
+            exploreRecyclerView.layoutManager = layoutManager
             exploreRecyclerView.adapter = mAdapter
         }
     }

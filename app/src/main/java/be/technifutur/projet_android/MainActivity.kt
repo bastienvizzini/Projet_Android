@@ -3,6 +3,8 @@ package be.technifutur.projet_android
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.SearchView
@@ -25,9 +27,15 @@ class MainActivity : AppCompatActivity() {
     private val mExploreFragment = ExploreFragment()
     private val mMessagesFragment = MessagesFragment()
 
+    private var mActiveTabString = FRIENDS
+
     companion object {
         const val SEARCH_EXTRA = "search_extra"
         const val BASE_URL = "https://api.rawg.io/api/"
+        private const val ACTIVE_TAB = "active_tab"
+        private const val FRIENDS = "friends"
+        private const val EXPLORE = "explore"
+        private const val MESSAGES = "messages"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +45,26 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation = findViewById(R.id.bottom_nav)
 
         bottomNavigation.setOnNavigationItemSelectedListener(bottomNavMethod)
-        supportFragmentManager.beginTransaction().replace(R.id.tab_container, mFriendsFragment).commit()
+
+        if (savedInstanceState != null) {
+            mActiveTabString = when (savedInstanceState.get(ACTIVE_TAB)) {
+                EXPLORE -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.tab_container, mExploreFragment).commit()
+                    EXPLORE // Sais pas pourquoi, mais si plusieurs rotation, mActiveTabString revient à "friends"
+                }
+                MESSAGES -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.tab_container, mMessagesFragment).commit()
+                    MESSAGES // when lifted out, so this line == mActiveTabString = MESSAGES
+                }
+                else -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.tab_container, mFriendsFragment).commit()
+                    FRIENDS
+                }
+            }
+            Log.d("bite", savedInstanceState.get(ACTIVE_TAB).toString())
+        } else {
+            supportFragmentManager.beginTransaction().replace(R.id.tab_container, mFriendsFragment).commit()
+        }
 
         // Custom Action Bar
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
@@ -59,14 +86,17 @@ class MainActivity : AppCompatActivity() {
                 R.id.friends -> {
                     fragment =
                         mFriendsFragment
+                    mActiveTabString = FRIENDS
                 }
                 R.id.explore -> {
                     fragment =
                         mExploreFragment
+                    mActiveTabString = EXPLORE
                 }
                 R.id.messages -> {
                     fragment =
                         mMessagesFragment
+                    mActiveTabString = MESSAGES
                     //tab_container.setBackgroundColor(Color.TRANSPARENT) // lol vire ça quand tu peux
                 }
             }
@@ -102,6 +132,12 @@ class MainActivity : AppCompatActivity() {
 
         // Clear searchView when we go back to MainActivity
         searchView.setQuery("", false)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString(ACTIVE_TAB, mActiveTabString)
     }
 
 }
