@@ -1,15 +1,11 @@
 package be.technifutur.projet_android
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
-import be.technifutur.projet_android.adapters.GameListAdapter
+import be.technifutur.projet_android.adapters.UserGameListAdapter
 import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.android.synthetic.main.activity_user_profile.*
 
 class UserProfileActivity : AppCompatActivity() {
@@ -23,7 +19,7 @@ class UserProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_user_profile)
 
         setUser(mUser)
-        val mAdapter = GameListAdapter(this, mUser.mGames)
+        val mAdapter = UserGameListAdapter(this, mUser.mGames)
         games_recycler_view.adapter = mAdapter
         games_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 

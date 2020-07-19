@@ -20,8 +20,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigation: BottomNavigationView
     private lateinit var searchView: SearchView
 
+    // Fragments
+    private val mFriendsFragment = FriendsFragment()
+    private val mExploreFragment = ExploreFragment()
+    private val mMessagesFragment = MessagesFragment()
+
     companion object {
         const val SEARCH_EXTRA = "search_extra"
+        const val BASE_URL = "https://api.rawg.io/api/"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation = findViewById(R.id.bottom_nav)
 
         bottomNavigation.setOnNavigationItemSelectedListener(bottomNavMethod)
-        supportFragmentManager.beginTransaction().replace(R.id.tab_container, FriendsFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.tab_container, mFriendsFragment).commit()
 
         // Custom Action Bar
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
@@ -52,15 +58,15 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.friends -> {
                     fragment =
-                        FriendsFragment()
+                        mFriendsFragment
                 }
                 R.id.explore -> {
                     fragment =
-                        ExploreFragment()
+                        mExploreFragment
                 }
                 R.id.messages -> {
                     fragment =
-                        MessagesFragment()
+                        mMessagesFragment
                     //tab_container.setBackgroundColor(Color.TRANSPARENT) // lol vire ça quand tu peux
                 }
             }

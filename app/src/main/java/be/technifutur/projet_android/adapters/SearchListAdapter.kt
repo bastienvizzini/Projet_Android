@@ -1,6 +1,7 @@
 package be.technifutur.projet_android.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
+import be.technifutur.projet_android.UserProfileActivity
 import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -58,6 +60,12 @@ class SearchListAdapter(context: Context, resultList: MutableList<User>) : Recyc
                 .load(mCurrentPictureResource)
                 .centerCrop()
                 .into(holder.pictureResultImageView)
+
+            holder.itemView.setOnClickListener {
+                val userProfileIntent = Intent(holder.itemView.context, UserProfileActivity::class.java)
+                UserProfileActivity.mUser = mResultList[position]
+                holder.itemView.context.startActivity(userProfileIntent)
+            }
         }
     }
 

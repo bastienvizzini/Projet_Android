@@ -21,4 +21,7 @@
     <string name="games">Games :</string>
     <string name="username">Username</string>
     <string name="current_message">Current message</string>
+    <string name="game_name">Game Name</string>
+
+    <integer name="swing_anim_time">500</integer>
 </resources>

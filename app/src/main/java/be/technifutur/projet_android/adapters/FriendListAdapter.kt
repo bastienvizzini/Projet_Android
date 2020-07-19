@@ -2,17 +2,22 @@ package be.technifutur.projet_android.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.UserProfileActivity
-import be.technifutur.projet_android.adapters.old.FriendsListAdapter
 import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.friendlist_item_final.view.*
+
 
 class FriendsListAdapter(context: Context, userList: MutableList<User>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -59,6 +64,8 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
                 Glide.with(holder.itemView.context).load(currentFriend.mProfilePicture).centerCrop().into(holder.pictureImageView)
 
                 holder.itemView.setOnClickListener {
+                    //val animation: Animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.zoom_in)
+                    //holder.userCardView.startAnimation(animation)
                     val userProfileIntent = Intent(holder.itemView.context, UserProfileActivity::class.java)
                     UserProfileActivity.mUser = currentFriend
                     holder.itemView.context.startActivity(userProfileIntent)
@@ -86,6 +93,7 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
 
         val usernameTextView: TextView = itemView.friendUsernameItemFinal
         val pictureImageView: ImageView = itemView.friendPictureItemFinal
+        val userCardView: CardView = itemView.friendItemCardview
     }
 
     inner class ScreenTitleViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -1,108 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    tools:context=".UserProfileActivity">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/top_profile_container"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@drawable/last_item_background_dark"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:elevation="3dp">
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        tools:context=".UserProfileActivity">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/user_profile_cardview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/user_username"
-            app:layout_constraintEnd_toEndOf="parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top_profile_container"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@drawable/last_item_background_dark"
+            android:elevation="3dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/user_profile_picture"
-                android:layout_width="140dp"
-                android:layout_height="140dp"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/user_profile_cardview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/user_username"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/user_profile_picture"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/user_picture" />
+
+            </androidx.cardview.widget.CardView>
+
+            <ImageButton
+                android:id="@+id/add_friend_image_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="140dp"
+                android:background="@drawable/ic_circle_background"
+                android:elevation="2dp"
+                android:src="@drawable/ic_person_add"
+                app:layout_constraintBottom_toBottomOf="@+id/user_profile_cardview"
+                app:layout_constraintEnd_toEndOf="@+id/user_profile_cardview"
+                app:layout_constraintStart_toStartOf="@+id/user_profile_cardview"
+                app:layout_constraintTop_toTopOf="@+id/user_profile_cardview" />
+
+            <TextView
+                android:id="@+id/user_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/username"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/user_picture" />
-
-        </androidx.cardview.widget.CardView>
-
-        <ImageButton
-            android:id="@+id/add_friend_image_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="140dp"
-            android:layout_marginTop="140dp"
-            android:background="@drawable/ic_circle_background"
-            android:elevation="2dp"
-            android:src="@drawable/ic_person_add"
-            app:layout_constraintBottom_toBottomOf="@+id/user_profile_cardview"
-            app:layout_constraintEnd_toEndOf="@+id/user_profile_cardview"
-            app:layout_constraintStart_toStartOf="@+id/user_profile_cardview"
-            app:layout_constraintTop_toTopOf="@+id/user_profile_cardview" />
-
-        <TextView
-            android:id="@+id/user_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/username"
-            android:textColor="@android:color/white"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_profile_cardview" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ScrollView
-        android:id="@+id/user_profile_scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_profile_container">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/games_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="32dp"
-                android:text="@string/games"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/games_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/games_title"
-                tools:listitem="@layout/user_profile_gamelist_item" />
+                app:layout_constraintTop_toBottomOf="@+id/user_profile_cardview" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+        <TextView
+            android:id="@+id/games_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="28dp"
+            android:text="@string/games"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top_profile_container" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/games_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/games_title"
+            tools:listitem="@layout/user_profile_gamelist_item" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

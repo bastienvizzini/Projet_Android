@@ -8,29 +8,27 @@ import android.widget.ImageView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.models.Game
+import be.technifutur.projet_android.models.MyGame
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import java.net.URL
 
-class GameListAdapter (context: Context, gameList: MutableList<Game>): RecyclerView.Adapter<GameListAdapter.GameViewHolder>() {
+class UserGameListAdapter (context: Context, gameList: MutableList<MyGame>): RecyclerView.Adapter<UserGameListAdapter.UserGameViewHolder>() {
 
     private val mInflater: LayoutInflater = LayoutInflater.from(context)
-    private val mGameList: MutableList<Game> = gameList
+    private val mGameList: MutableList<MyGame> = gameList
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): GameListAdapter.GameViewHolder {
+    ): UserGameListAdapter.UserGameViewHolder {
         val mItemView: View = mInflater.inflate(R.layout.user_profile_gamelist_item, parent, false)
-        return GameViewHolder(mItemView, this)
+        return UserGameViewHolder(mItemView, this)
     }
 
     override fun getItemCount(): Int {
         return mGameList.size
     }
 
-    override fun onBindViewHolder(holder: GameListAdapter.GameViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserGameListAdapter.UserGameViewHolder, position: Int) {
         val mCurrentGamePictureResource: Int = mGameList[position].mImageResource
         //holder.gamePictureImageView.setImageResource(mCurrentGamePictureResource)
         Glide.with(holder.itemView.context)
@@ -39,7 +37,7 @@ class GameListAdapter (context: Context, gameList: MutableList<Game>): RecyclerV
             .into(holder.gamePictureImageView)
     }
 
-    class GameViewHolder(@NonNull itemView: View, adapter: GameListAdapter): RecyclerView.ViewHolder(itemView) {
+    class UserGameViewHolder(@NonNull itemView: View, adapter: UserGameListAdapter): RecyclerView.ViewHolder(itemView) {
         val gamePictureImageView: ImageView = itemView.findViewById(R.id.game_picture_image)
     }
 }

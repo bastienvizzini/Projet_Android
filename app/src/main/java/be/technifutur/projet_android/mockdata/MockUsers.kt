@@ -1,7 +1,7 @@
 package be.technifutur.projet_android.mockdata
 
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.models.Game
+import be.technifutur.projet_android.models.MyGame
 import be.technifutur.projet_android.models.Platform
 import be.technifutur.projet_android.models.User
 
@@ -9,71 +9,71 @@ class MockUsers {
     companion object {
         fun createUsers(): MutableList<User> {
 
-            val gameList: MutableList<Game> = mutableListOf()
+            val gameList: MutableList<MyGame> = mutableListOf()
             gameList.add(
-                Game(
+                MyGame(
                     "Apex Legends",
                     Platform.PS4,
                     R.drawable.apex_legends
                 )
             )
             gameList.add(
-                Game(
+                MyGame(
                     "Fortnite",
                     Platform.XBOXONE,
                     R.drawable.fortnite
                 )
             )
             gameList.add(
-                Game(
+                MyGame(
                     "Overwatch",
                     Platform.SWITCH,
                     R.drawable.overwatch
                 )
             )
 
-            val gameList2: MutableList<Game> = mutableListOf()
+            val gameList2: MutableList<MyGame> = mutableListOf()
             gameList2.add(
-                Game(
+                MyGame(
                     "The Last of Us: Part II",
                     Platform.PS4,
                     R.drawable.theltasofuspartii
                 )
             )
             gameList2.add(
-                Game(
+                MyGame(
                     "Call of Duty",
                     Platform.XBOXONE,
                     R.drawable.callofduty
                 )
             )
 
-            val gameList3: MutableList<Game> = mutableListOf()
+            val gameList3: MutableList<MyGame> = mutableListOf()
             gameList3.add(
-                Game(
+                MyGame(
                     "Slay the Spire",
                     Platform.PC,
                     R.drawable.slaythespire
                 )
             )
             gameList3.add(
-                Game(
+                MyGame(
                     "Uno",
                     Platform.XBOXONE,
                     R.drawable.uno
                 )
             )
 
-            val gameList4: MutableList<Game> = mutableListOf()
+            val gameList4: MutableList<MyGame> = mutableListOf()
             gameList4.add(
-                Game(
+                MyGame(
                     "Farming Simulator",
                     Platform.XBOXONE,
                     R.drawable.farmingsimulator
                 )
             )
             gameList4.add(
-                Game(
+                MyGame(
                     "League of Legends",
                     Platform.PC,
                     R.drawable.league_of_legends

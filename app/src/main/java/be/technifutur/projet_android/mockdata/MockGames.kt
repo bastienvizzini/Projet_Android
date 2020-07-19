@@ -1,31 +1,31 @@
 package be.technifutur.projet_android.mockdata
 
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.models.Game
+import be.technifutur.projet_android.models.MyGame
 import be.technifutur.projet_android.models.Platform
 
 class MockGames {
     companion object {
-        fun createGames(): MutableList<Game> {
+        fun createGames(): MutableList<MyGame> {
 
-            val gameList = mutableListOf<Game>()
+            val gameList = mutableListOf<MyGame>()
 
             gameList.add(
-                Game(
+                MyGame(
                     "Apex Legends",
                     Platform.PS4,
                     R.drawable.apex_legends
                 )
             )
             gameList.add(
-                Game(
+                MyGame(
                     "Fortnite",
                     Platform.XBOXONE,
                     R.drawable.fortnite
                 )
             )
             gameList.add(
-                Game(
+                MyGame(
                     "Overwatch",
                     Platform.SWITCH,
                     R.drawable.overwatch
@@ -33,14 +33,14 @@ class MockGames {
             )
 
             gameList.add(
-                Game(
+                MyGame(
                     "The Last of Us: Part II",
                     Platform.PS4,
                     R.drawable.theltasofuspartii
                 )
             )
             gameList.add(
-                Game(
+                MyGame(
                     "Call of Duty",
                     Platform.XBOXONE,
                     R.drawable.callofduty
@@ -48,14 +48,14 @@ class MockGames {
             )
 
             gameList.add(
-                Game(
+                MyGame(
                     "Slay the Spire",
                     Platform.PC,
                     R.drawable.slaythespire
                 )
             )
             gameList.add(
-                Game(
+                MyGame(
                     "Uno",
                     Platform.XBOXONE,
                     R.drawable.uno
@@ -63,14 +63,14 @@ class MockGames {
             )
 
             gameList.add(
-                Game(
+                MyGame(
                     "Farming Simulator",
                     Platform.XBOXONE,
                     R.drawable.farmingsimulator
                 )
             )
             gameList.add(
-                Game(
+                MyGame(
                     "League of Legends",
                     Platform.PC,
                     R.drawable.league_of_legends
