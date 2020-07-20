@@ -22,6 +22,9 @@
     <string name="username">Username</string>
     <string name="current_message">Current message</string>
     <string name="game_name">Game Name</string>
+    <string name="game_genre">Game genre</string>
+    <string name="your_games">Your games</string>
+    <string name="recommended_games">Recommended games</string>
 
     <integer name="swing_anim_time">500</integer>
 </resources>

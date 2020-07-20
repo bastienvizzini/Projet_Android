@@ -1,7 +1,6 @@
 package be.technifutur.projet_android.fragments
 
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -29,7 +28,9 @@ class ExploreFragment : Fragment() {
 
     private lateinit var gameService: GameService
     private lateinit var mContext: Context
-    private var mGameList = mutableListOf<Game>()
+    private var mYourGamesList = mutableListOf<Game>()
+    private var mRecommendedGamesList = mutableListOf<Game>()
+    private var mRecommendedGamesArray = arrayOf(47137, 23598, 22509, 290856, 10142, 50781, 10213, 19301, 32, 3498)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,9 +46,10 @@ class ExploreFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mContext = requireContext()
-        val layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerOne = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerTwo = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
 
-        if (mGameList.isEmpty() && exploreRecyclerView != null) {
+        if (mYourGamesList.isEmpty() && mRecommendedGamesList.isEmpty()) {
             exploreLoader.visibility = View.VISIBLE
 
             val retrofit = Retrofit.Builder()
@@ -57,6 +59,7 @@ class ExploreFragment : Fragment() {
 
             gameService = retrofit.create(GameService::class.java)
 
+            // For "your games", for loop with user games with gameSearchQuery()
             gameService.mostPopularGames().enqueue(object : Callback<GameResult>{
                 override fun onFailure(call: Call<GameResult>, t: Throwable) {
                     Log.d("GrosProbleme", t.message)
@@ -65,27 +68,54 @@ class ExploreFragment : Fragment() {
 
                 override fun onResponse(call: Call<GameResult>, response: Response<GameResult>) {
                     response.body()?.results?.forEach { game ->
-                        mGameList.add(game)
+                        mYourGamesList.add(game)
                     }
 
-                    val mAdapter = GameAdapter(mContext, mGameList)
-                    /*while (exploreRecyclerView == null) {
-                        Log.d("bite", "exploreRecyclerView is null bro")
-                    }*/
-                    if (exploreRecyclerView != null) {
+                    val mAdapterOne = GameAdapter(mContext, mYourGamesList)
+
+                    if (yourGamesRecyclerView != null) { // otherwise it can crash
                         exploreLoader.visibility = View.GONE
-                        exploreRecyclerView.layoutManager = layoutManager
-                        exploreRecyclerView.adapter = mAdapter
+                        yourGamesRecyclerView.layoutManager = layoutManagerOne
+                        yourGamesRecyclerView.adapter = mAdapterOne
                     }
                 }
-
             })
+
+            mRecommendedGamesArray.map { gameId ->
+                gameService.gameDetailsPerId(gameId).enqueue(object: Callback<Game>{
+                    override fun onFailure(call: Call<Game>, t: Throwable) {
+                        Log.d("GrosProbleme", t.message)
+                    }
+
+                    override fun onResponse(
+                        call: Call<Game>,
+                        response: Response<Game>
+                    ) {
+                        response.body()?.let { game ->
+                            mRecommendedGamesList.add(game)
+                        }
+                    }
+                })
+            }
+            val mAdapterTwo = GameAdapter(mContext, mRecommendedGamesList)
+
+            if (recommendedGamesRecyclerView != null) { // otherwise it can crash
+
+                recommendedGamesRecyclerView.layoutManager = layoutManagerTwo
+                recommendedGamesRecyclerView.adapter = mAdapterTwo
+            }
+
         } else {
             exploreLoader.visibility = View.VISIBLE
-            val mAdapter = GameAdapter(mContext, mGameList)
+            val mAdapterOne = GameAdapter(mContext, mYourGamesList)
+            val mAdapterTwo = GameAdapter(mContext, mRecommendedGamesList)
             exploreLoader.visibility = View.GONE
-            exploreRecyclerView.layoutManager = layoutManager
-            exploreRecyclerView.adapter = mAdapter
+            yourGamesRecyclerView.layoutManager = layoutManagerOne
+            yourGamesRecyclerView.adapter = mAdapterOne
+            recommendedGamesRecyclerView.layoutManager = layoutManagerTwo
+            recommendedGamesRecyclerView.adapter = mAdapterTwo
+
+
         }
     }
 

@@ -6,7 +6,8 @@ class Game(
     var id: Int,
     var name: String,
     @SerializedName("background_image")
-    var posterPath: String
+    var posterPath: String,
+    var genres: Array<Genres>
 ) {
 
 }

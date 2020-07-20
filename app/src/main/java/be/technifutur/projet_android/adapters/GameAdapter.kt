@@ -31,14 +31,17 @@ class GameAdapter(context: Context, gameList: MutableList<Game>):
         val currentGame = mGameList[position]
         val posterPath = currentGame.posterPath
         val name = currentGame.name
+        val genres = currentGame.genres
         Glide.with(holder.itemView.context).load(posterPath).centerCrop().into(holder.gamePictureImageView)
         holder.gameNameTextView.text = name
+        holder.gameGenreTextView.text = genres[0].name
 
     }
 
     inner class GameViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
         val gamePictureImageView: ImageView = itemView.findViewById(R.id.gamePictureImageView)
         val gameNameTextView: TextView = itemView.findViewById(R.id.gameNameTextView)
+        val gameGenreTextView: TextView = itemView.findViewById(R.id.gameGenreTextView)
     }
 
 }
