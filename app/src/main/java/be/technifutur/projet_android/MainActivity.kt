@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_actionbar_main.*
+import kotlinx.android.synthetic.main.fragment_explore.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -126,6 +127,11 @@ class MainActivity : AppCompatActivity() {
 
         })
     }
+
+   /* override fun onPause() {
+        super.onPause()
+        firstRowShimmer!!.startShimmer()
+    } */
 
     override fun onResume() {
         super.onResume()

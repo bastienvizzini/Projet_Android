@@ -59,4 +59,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
     // Library JSON parsing
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
+    // Shimmer placeholder
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }

@@ -37,33 +37,38 @@ class ExploreFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_explore, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         mContext = requireContext()
-        val layoutManagerOne = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
-        val layoutManagerTwo = LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false)
 
-        if (mYourGamesList.isEmpty() && mRecommendedGamesList.isEmpty()) {
-            exploreLoader.visibility = View.VISIBLE
+        val retrofit = Retrofit.Builder()
+            .baseUrl(MainActivity.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl(MainActivity.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+        gameService = retrofit.create(GameService::class.java)
 
-            gameService = retrofit.create(GameService::class.java)
+        val layoutManagerOne = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-            // For "your games", for loop with user games with gameSearchQuery()
+        this.getYourGames(gameService, mContext)
+        this.getRecommendedGames(gameService, mContext)
+
+    }
+
+    private fun getYourGames(gameService: GameService, context: Context) {
+        val layoutManagerOne = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        if (mYourGamesList.isEmpty()) {
+
             gameService.mostPopularGames().enqueue(object : Callback<GameResult>{
                 override fun onFailure(call: Call<GameResult>, t: Throwable) {
                     Log.d("GrosProbleme", t.message)
-                    exploreLoader.visibility = View.GONE
+                    firstRowShimmer.stopShimmer()
+                    firstRowShimmer.visibility = View.INVISIBLE
                 }
 
                 override fun onResponse(call: Call<GameResult>, response: Response<GameResult>) {
@@ -71,51 +76,61 @@ class ExploreFragment : Fragment() {
                         mYourGamesList.add(game)
                     }
 
-                    val mAdapterOne = GameAdapter(mContext, mYourGamesList)
+                    firstRowShimmer.stopShimmer()
+                    firstRowShimmer.visibility = View.INVISIBLE
+
+                    val mAdapterOne = GameAdapter(context, mYourGamesList)
 
                     if (yourGamesRecyclerView != null) { // otherwise it can crash
-                        exploreLoader.visibility = View.GONE
                         yourGamesRecyclerView.layoutManager = layoutManagerOne
                         yourGamesRecyclerView.adapter = mAdapterOne
                     }
                 }
             })
+        } else {
+            val mAdapterOne = GameAdapter(mContext, mYourGamesList)
+            firstRowShimmer.stopShimmer()
+            firstRowShimmer.visibility = View.INVISIBLE
+            yourGamesRecyclerView.layoutManager = layoutManagerOne
+            yourGamesRecyclerView.adapter = mAdapterOne
+        }
+    }
 
+    private fun getRecommendedGames(gameService: GameService, context: Context) {
+        val layoutManagerTwo = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        if (mRecommendedGamesList.isEmpty()) {
             mRecommendedGamesArray.map { gameId ->
                 gameService.gameDetailsPerId(gameId).enqueue(object: Callback<Game>{
                     override fun onFailure(call: Call<Game>, t: Throwable) {
                         Log.d("GrosProbleme", t.message)
+                        secondRowShimmer.stopShimmer()
+                        secondRowShimmer.visibility = View.INVISIBLE
                     }
 
-                    override fun onResponse(
-                        call: Call<Game>,
-                        response: Response<Game>
-                    ) {
+                    override fun onResponse(call: Call<Game>, response: Response<Game>) {
                         response.body()?.let { game ->
                             mRecommendedGamesList.add(game)
+                        }
+                        secondRowShimmer.stopShimmer()
+                        secondRowShimmer.visibility = View.INVISIBLE
+
+                        // Un peu pourri de faire ça ici non ?
+                        val mAdapterTwo = GameAdapter(context, mRecommendedGamesList)
+
+                        if (recommendedGamesRecyclerView != null) { // otherwise it can crash
+                            recommendedGamesRecyclerView.layoutManager = layoutManagerTwo
+                            recommendedGamesRecyclerView.adapter = mAdapterTwo
                         }
                     }
                 })
             }
-            val mAdapterTwo = GameAdapter(mContext, mRecommendedGamesList)
-
-            if (recommendedGamesRecyclerView != null) { // otherwise it can crash
-
-                recommendedGamesRecyclerView.layoutManager = layoutManagerTwo
-                recommendedGamesRecyclerView.adapter = mAdapterTwo
-            }
-
         } else {
-            exploreLoader.visibility = View.VISIBLE
-            val mAdapterOne = GameAdapter(mContext, mYourGamesList)
             val mAdapterTwo = GameAdapter(mContext, mRecommendedGamesList)
-            exploreLoader.visibility = View.GONE
-            yourGamesRecyclerView.layoutManager = layoutManagerOne
-            yourGamesRecyclerView.adapter = mAdapterOne
+            secondRowShimmer.stopShimmer()
+            secondRowShimmer.visibility = View.INVISIBLE
             recommendedGamesRecyclerView.layoutManager = layoutManagerTwo
             recommendedGamesRecyclerView.adapter = mAdapterTwo
-
-
         }
     }
 
