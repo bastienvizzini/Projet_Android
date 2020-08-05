@@ -17,40 +17,12 @@
         android:fontFamily="sans-serif-condensed"
         android:textSize="23sp" />
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/firstRowShimmer"
-        app:layout_constraintTop_toBottomOf="@id/yourGamesTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        app:shimmer_duration="800">
-
-        <LinearLayout
-            android:id="@+id/firstRowLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/yourGamesTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            android:paddingStart="16dp"
-            android:orientation="horizontal">
-
-            <include layout="@layout/item_game_explore_loading" />
-
-            <include layout="@layout/item_game_explore_loading" />
-
-            <include layout="@layout/item_game_explore_loading" />
-
-        </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/yourGamesRecyclerView"
         app:layout_constraintTop_toBottomOf="@id/yourGamesTextView"
         app:layout_constraintStart_toStartOf="parent"
         android:clipToPadding="false"
+        android:layoutAnimation="@anim/layout_animation_horizontal"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:layout_width="match_parent"
@@ -63,46 +35,19 @@
         android:id="@+id/recommendedGamesTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/firstRowShimmer"
+        app:layout_constraintTop_toBottomOf="@id/yourGamesTextView"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/recommended_games"
+        android:layout_marginTop="162dp"
         android:layout_marginStart="16dp"
         android:fontFamily="sans-serif-condensed"
         android:textSize="23sp" />
-
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/secondRowShimmer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/recommendedGamesTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        app:shimmer_duration="800" >
-
-        <LinearLayout
-            android:id="@+id/secondRowLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/recommendedGamesTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            android:paddingStart="16dp"
-            android:orientation="horizontal">
-
-            <include layout="@layout/item_game_explore_loading" />
-
-            <include layout="@layout/item_game_explore_loading" />
-
-            <include layout="@layout/item_game_explore_loading" />
-
-        </LinearLayout>
-
-    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recommendedGamesRecyclerView"
         app:layout_constraintTop_toBottomOf="@+id/recommendedGamesTextView"
         app:layout_constraintStart_toStartOf="parent"
+        android:layoutAnimation="@anim/layout_animation_horizontal"
         android:clipToPadding="false"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"

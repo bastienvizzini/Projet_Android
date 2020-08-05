@@ -28,8 +28,8 @@ class ExploreFragment : Fragment() {
 
     private lateinit var gameService: GameService
     private lateinit var mContext: Context
-    private var mYourGamesList = mutableListOf<Game>()
-    private var mRecommendedGamesList = mutableListOf<Game>()
+    private var mYourGamesList = arrayListOf<Game>()
+    private var mRecommendedGamesList = arrayListOf<Game>()
     private var mRecommendedGamesArray = arrayOf(47137, 23598, 22509, 290856, 10142, 50781, 10213, 19301, 32, 3498)
 
     override fun onCreateView(
@@ -52,23 +52,46 @@ class ExploreFragment : Fragment() {
 
         gameService = retrofit.create(GameService::class.java)
 
-        val layoutManagerOne = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        if (savedInstanceState != null) {
+            savedInstanceState.getParcelableArrayList<Game>("YOUR_GAMES")?.let { yourGamesList ->
+                mYourGamesList.addAll(yourGamesList)
+            }
+            savedInstanceState.getParcelableArrayList<Game>("RECOMMENDED_GAMES")?.let { recommendedGamesList ->
+                mRecommendedGamesList.addAll(recommendedGamesList)
+            }
 
-        this.getYourGames(gameService, mContext)
-        this.getRecommendedGames(gameService, mContext)
+            this.getYourGames(gameService, mContext)
+            //adapterOne.notifyDataSetChanged()
+            this.getRecommendedGames(gameService, mContext)
+            //adapterTwo.notifyDataSetChanged()
+
+        } else {
+            this.getYourGames(gameService, mContext)
+            //adapterOne.notifyDataSetChanged()
+            this.getRecommendedGames(gameService, mContext)
+            //adapterTwo.notifyDataSetChanged()
+        }
+
+        val layoutManagerOne = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerTwo = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val adapterOne = GameAdapter(mContext, mYourGamesList)
+        val adapterTwo = GameAdapter(mContext, mRecommendedGamesList)
+        yourGamesRecyclerView.layoutManager = layoutManagerOne
+        yourGamesRecyclerView.adapter = adapterOne
+        recommendedGamesRecyclerView.layoutManager = layoutManagerTwo
+        recommendedGamesRecyclerView.adapter = adapterTwo
 
     }
 
     private fun getYourGames(gameService: GameService, context: Context) {
         val layoutManagerOne = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        //val mAdapterOne = GameAdapter(context, mYourGamesList)
 
         if (mYourGamesList.isEmpty()) {
 
             gameService.mostPopularGames().enqueue(object : Callback<GameResult>{
                 override fun onFailure(call: Call<GameResult>, t: Throwable) {
                     Log.d("GrosProbleme", t.message)
-                    firstRowShimmer.stopShimmer()
-                    firstRowShimmer.visibility = View.INVISIBLE
                 }
 
                 override fun onResponse(call: Call<GameResult>, response: Response<GameResult>) {
@@ -76,21 +99,11 @@ class ExploreFragment : Fragment() {
                         mYourGamesList.add(game)
                     }
 
-                    firstRowShimmer.stopShimmer()
-                    firstRowShimmer.visibility = View.INVISIBLE
-
-                    val mAdapterOne = GameAdapter(context, mYourGamesList)
-
-                    if (yourGamesRecyclerView != null) { // otherwise it can crash
-                        yourGamesRecyclerView.layoutManager = layoutManagerOne
-                        yourGamesRecyclerView.adapter = mAdapterOne
-                    }
+                    yourGamesRecyclerView.adapter!!.notifyDataSetChanged()
                 }
             })
         } else {
             val mAdapterOne = GameAdapter(mContext, mYourGamesList)
-            firstRowShimmer.stopShimmer()
-            firstRowShimmer.visibility = View.INVISIBLE
             yourGamesRecyclerView.layoutManager = layoutManagerOne
             yourGamesRecyclerView.adapter = mAdapterOne
         }
@@ -99,39 +112,36 @@ class ExploreFragment : Fragment() {
     private fun getRecommendedGames(gameService: GameService, context: Context) {
         val layoutManagerTwo = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
+
         if (mRecommendedGamesList.isEmpty()) {
+
             mRecommendedGamesArray.map { gameId ->
                 gameService.gameDetailsPerId(gameId).enqueue(object: Callback<Game>{
                     override fun onFailure(call: Call<Game>, t: Throwable) {
                         Log.d("GrosProbleme", t.message)
-                        secondRowShimmer.stopShimmer()
-                        secondRowShimmer.visibility = View.INVISIBLE
                     }
 
                     override fun onResponse(call: Call<Game>, response: Response<Game>) {
                         response.body()?.let { game ->
                             mRecommendedGamesList.add(game)
                         }
-                        secondRowShimmer.stopShimmer()
-                        secondRowShimmer.visibility = View.INVISIBLE
 
-                        // Un peu pourri de faire ça ici non ?
-                        val mAdapterTwo = GameAdapter(context, mRecommendedGamesList)
-
-                        if (recommendedGamesRecyclerView != null) { // otherwise it can crash
-                            recommendedGamesRecyclerView.layoutManager = layoutManagerTwo
-                            recommendedGamesRecyclerView.adapter = mAdapterTwo
-                        }
+                        recommendedGamesRecyclerView.adapter!!.notifyDataSetChanged()
                     }
                 })
+
             }
         } else {
             val mAdapterTwo = GameAdapter(mContext, mRecommendedGamesList)
-            secondRowShimmer.stopShimmer()
-            secondRowShimmer.visibility = View.INVISIBLE
             recommendedGamesRecyclerView.layoutManager = layoutManagerTwo
             recommendedGamesRecyclerView.adapter = mAdapterTwo
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList("YOUR_GAMES", mYourGamesList)
+        outState.putParcelableArrayList("RECOMMENDED_GAMES", mRecommendedGamesList)
     }
 
 }

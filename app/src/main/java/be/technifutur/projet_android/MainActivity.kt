@@ -128,11 +128,6 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-   /* override fun onPause() {
-        super.onPause()
-        firstRowShimmer!!.startShimmer()
-    } */
-
     override fun onResume() {
         super.onResume()
 

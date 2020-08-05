@@ -34,7 +34,7 @@ class GameAdapter(context: Context, gameList: MutableList<Game>):
         val genres = currentGame.genres
         Glide.with(holder.itemView.context).load(posterPath).centerCrop().into(holder.gamePictureImageView)
         holder.gameNameTextView.text = name
-        holder.gameGenreTextView.text = genres[0].name
+        holder.gameGenreTextView.text = genres?.get(0)?.name ?: "" // dégueulasse
 
     }
 

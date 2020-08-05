@@ -29,7 +29,7 @@ class FriendsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val mAdapter = be.technifutur.projet_android.adapters.FriendsListAdapter(requireContext(), mUserList)
-        val layoutManager = GridLayoutManager(activity, 2)
+        val layoutManager = GridLayoutManager(activity, 1)
         layoutManager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (mAdapter.isHeader(position)) {

@@ -2,9 +2,7 @@ package be.technifutur.projet_android.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
@@ -59,8 +57,8 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
                 val currentFriend = mFriendsList[position-1] // -1 bc of header
                 holder.usernameTextView.text = currentFriend.mUserName
                 // To set the image size programmatically
-                //holder.pictureImageView.layoutParams.width = (display.width/2)
-                //holder.pictureImageView.layoutParams.height = (display.width/2)
+                //holder.userCardView.layoutParams.width = (display.width/4)+(display.width/18)
+                //holder.userCardView.layoutParams.height = (display.width/3)
                 Glide.with(holder.itemView.context).load(currentFriend.mProfilePicture).centerCrop().into(holder.pictureImageView)
 
                 holder.itemView.setOnClickListener {
