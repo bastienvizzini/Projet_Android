@@ -10,16 +10,15 @@ import kotlinx.android.synthetic.main.activity_user_profile.*
 
 class UserProfileActivity : AppCompatActivity() {
 
-    companion object {
-        lateinit var mUser: User
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
 
-        setUser(mUser)
-        val mAdapter = UserGameListAdapter(this, mUser.mGames)
+        // quand ce sera un fragment, faire comme dans le projet Pokédex fragment avec bundle et args
+
+        val currentUser = intent.getParcelableExtra<User>("USER_SELECTED")
+        setUser(currentUser)
+        val mAdapter = UserGameListAdapter(this, currentUser.games)
         games_recycler_view.adapter = mAdapter
         games_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
@@ -33,10 +32,12 @@ class UserProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun setUser(user: User) {
+    private fun setUser(user: User?) {
         //user_profile_picture.setImageResource(user.mProfilePicture)
-        Glide.with(this).load(user.mProfilePicture).centerCrop().into(user_profile_picture)
-        user_username.text = user.mUserName
-        supportActionBar?.setDisplayShowTitleEnabled(false) // no title in actionbar
+        user?.let {
+            Glide.with(this).load(user.profilePicture).centerCrop().into(user_profile_picture)
+            user_username.text = user.userName
+            supportActionBar?.setDisplayShowTitleEnabled(false) // no title in actionbar
+        }
     }
 }

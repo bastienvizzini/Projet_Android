@@ -1,8 +1,8 @@
 package be.technifutur.projet_android.models
 
-class MyGame(title: String, platform: Platform, imageResource: Int, genre: String = "Action") {
-    var mTitle: String =  title
-    var mGenre: String = genre
-    var mPlatform: String = platform.platformName
-    var mImageResource: Int = imageResource
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class MyGame(val title: String, val platform: Platform, val imageResource: Int, val genre: String = "Action"): Parcelable {
 }

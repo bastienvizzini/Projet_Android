@@ -33,8 +33,8 @@ class FriendsListChildAdapter(context: Context, userList: MutableList<User>) :
 
     override fun onBindViewHolder(holder: ChildViewHolder, position: Int) {
         val child = mUserList[position]
-        holder.usernameTextView.text = child.mUserName
-        Glide.with(holder.itemView.context).load(child.mProfilePicture).transform(RoundedCorners(20)).into(holder.pictureImageView)
+        holder.usernameTextView.text = child.userName
+        Glide.with(holder.itemView.context).load(child.profilePicture).transform(RoundedCorners(20)).into(holder.pictureImageView)
     }
 
     inner class ChildViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

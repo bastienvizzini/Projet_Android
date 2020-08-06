@@ -55,17 +55,34 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
         when (holder) {
             is FriendsViewHolder -> {
                 val currentFriend = mFriendsList[position-1] // -1 bc of header
-                holder.usernameTextView.text = currentFriend.mUserName
+                holder.usernameTextView.text = currentFriend.userName
+                val games: String
+                games = when (currentFriend.games.size) {
+                    0 -> {
+                        ""
+                    }
+                    1 -> {
+                        currentFriend.games[0].title
+                    }
+                    2 -> {
+                        "${currentFriend.games[0].title } and 1 other game"
+                    }
+                    else -> {
+                        "${currentFriend.games[0].title } and ${currentFriend.games.size - 1} other games"
+                    }
+                }
+                holder.gamesTextView.text = games
                 // To set the image size programmatically
                 //holder.userCardView.layoutParams.width = (display.width/4)+(display.width/18)
                 //holder.userCardView.layoutParams.height = (display.width/3)
-                Glide.with(holder.itemView.context).load(currentFriend.mProfilePicture).centerCrop().into(holder.pictureImageView)
+                Glide.with(holder.itemView.context).load(currentFriend.profilePicture).centerCrop().into(holder.pictureImageView)
 
                 holder.itemView.setOnClickListener {
                     //val animation: Animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.zoom_in)
                     //holder.userCardView.startAnimation(animation)
                     val userProfileIntent = Intent(holder.itemView.context, UserProfileActivity::class.java)
-                    UserProfileActivity.mUser = currentFriend
+                    userProfileIntent.putExtra("USER_SELECTED", currentFriend)
+                    //UserProfileActivity.mUser = currentFriend
                     holder.itemView.context.startActivity(userProfileIntent)
                 }
             }
@@ -91,6 +108,7 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
 
         val usernameTextView: TextView = itemView.friendUsernameItemFinal
         val pictureImageView: ImageView = itemView.friendPictureItemFinal
+        val gamesTextView: TextView = itemView.friendGamesItemFinal
         val userCardView: CardView = itemView.friendItemCardview
     }
 

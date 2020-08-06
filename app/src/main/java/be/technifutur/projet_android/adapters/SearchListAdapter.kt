@@ -48,8 +48,9 @@ class SearchListAdapter(context: Context, resultList: MutableList<User>) : Recyc
             holder.pictureResultCardView.visibility = View.INVISIBLE
             holder.noResultTitleTextView.visibility = View.VISIBLE
         } else {
-            val mCurrentUsername: String = mResultList[position].mUserName
-            val mCurrentPictureResource: Int = mResultList[position].mProfilePicture
+            val currentUser = mResultList[position]
+            val mCurrentUsername: String = currentUser.userName
+            val mCurrentPictureResource: Int = currentUser.profilePicture
             holder.resultTitleTextView.visibility = View.VISIBLE
             holder.pictureResultImageView.visibility = View.VISIBLE
             holder.pictureResultCardView.visibility = View.VISIBLE
@@ -63,7 +64,7 @@ class SearchListAdapter(context: Context, resultList: MutableList<User>) : Recyc
 
             holder.itemView.setOnClickListener {
                 val userProfileIntent = Intent(holder.itemView.context, UserProfileActivity::class.java)
-                UserProfileActivity.mUser = mResultList[position]
+                userProfileIntent.putExtra("USER_SELECTED", currentUser)
                 holder.itemView.context.startActivity(userProfileIntent)
             }
         }
@@ -81,7 +82,7 @@ class SearchListAdapter(context: Context, resultList: MutableList<User>) : Recyc
 
             if (!charSequence.toString().isEmpty()) {
                 for (result in mAllResultList) {
-                    if (result.mUserName.toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                    if (result.userName.toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(result)
                     }
                 }

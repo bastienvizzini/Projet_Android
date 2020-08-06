@@ -21,7 +21,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/listItemBackground">
+            android:background="@drawable/item_background_dark"
+            android:focusable="true" >
 
             <ImageView
                 android:id="@+id/friendPictureItemFinal"
@@ -31,25 +32,49 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <TextView
-                android:id="@+id/friendUsernameItemFinal"
+            <LinearLayout
+                android:id="@+id/friendInfoLinearLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/friendPictureItemFinal"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Username"
-                android:textColor="@android:color/white"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textAlignment="textStart"
-                android:layout_margin="8dp" />
+                android:orientation="vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp">
+
+                <TextView
+                    android:id="@+id/friendUsernameItemFinal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/friendGamesItemFinal"
+                    app:layout_constraintStart_toEndOf="@id/friendPictureItemFinal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="Username"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textAlignment="textStart" />
+
+                <TextView
+                    android:id="@+id/friendGamesItemFinal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Number of games"
+                    android:textColor="@color/lightGray"
+                    app:layout_constraintTop_toBottomOf="@id/friendUsernameItemFinal"
+                    app:layout_constraintStart_toEndOf="@id/friendPictureItemFinal"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
     </androidx.cardview.widget.CardView>
 

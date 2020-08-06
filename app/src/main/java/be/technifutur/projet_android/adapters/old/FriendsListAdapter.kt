@@ -46,9 +46,9 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
     private fun getPlatforms(users: MutableList<User>): MutableList<String> {
         val platformList = mutableListOf<String>()
         for (user in users) {
-            for (game in user.mGames) {
-                if (!platformList.contains(game.mPlatform)){
-                    platformList.add(game.mPlatform)
+            for (game in user.games) {
+                if (!platformList.contains(game.platform.platformName)){
+                    platformList.add(game.platform.platformName)
                 }
             }
         }
@@ -112,8 +112,8 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
         when (mCurrentPlatform) {
             Platform.SWITCH.platformName -> {
                 for (user in mUserList) {
-                    for (game in user.mGames) {
-                        if (game.mPlatform == Platform.SWITCH.platformName && !mUserListByPlatform.contains(user)) {
+                    for (game in user.games) {
+                        if (game.platform.platformName == Platform.SWITCH.platformName && !mUserListByPlatform.contains(user)) {
                             mUserListByPlatform.add(user)
                         }
                     }
@@ -121,8 +121,8 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
             }
             Platform.PC.platformName -> {
                 for (user in mUserList) {
-                    for (game in user.mGames) {
-                        if (game.mPlatform == Platform.PC.platformName && !mUserListByPlatform.contains(user)) {
+                    for (game in user.games) {
+                        if (game.platform.platformName == Platform.PC.platformName && !mUserListByPlatform.contains(user)) {
                             mUserListByPlatform.add(user)
                         }
                     }
@@ -130,8 +130,8 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
             }
             Platform.PS4.platformName -> {
                 for (user in mUserList) {
-                    for (game in user.mGames) {
-                        if (game.mPlatform == Platform.PS4.platformName && !mUserListByPlatform.contains(user)) {
+                    for (game in user.games) {
+                        if (game.platform.platformName == Platform.PS4.platformName && !mUserListByPlatform.contains(user)) {
                             mUserListByPlatform.add(user)
                         }
                     }
@@ -139,8 +139,8 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
             }
             Platform.XBOXONE.platformName -> {
                 for (user in mUserList) {
-                    for (game in user.mGames) {
-                        if (game.mPlatform == Platform.XBOXONE.platformName && !mUserListByPlatform.contains(user)) {
+                    for (game in user.games) {
+                        if (game.platform.platformName == Platform.XBOXONE.platformName && !mUserListByPlatform.contains(user)) {
                             mUserListByPlatform.add(user)
                         }
                     }

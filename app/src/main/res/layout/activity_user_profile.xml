@@ -91,6 +91,18 @@
             app:layout_constraintTop_toBottomOf="@id/games_title"
             tools:listitem="@layout/user_profile_gamelist_item" />
 
+        <Button
+            android:id="@+id/sendMessageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/button_background"
+            android:textColor="@android:color/white"
+            android:text="Send a message"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/games_recycler_view" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

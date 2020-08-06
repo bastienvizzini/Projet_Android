@@ -29,7 +29,7 @@ class UserGameListAdapter (context: Context, gameList: MutableList<MyGame>): Rec
     }
 
     override fun onBindViewHolder(holder: UserGameListAdapter.UserGameViewHolder, position: Int) {
-        val mCurrentGamePictureResource: Int = mGameList[position].mImageResource
+        val mCurrentGamePictureResource: Int = mGameList[position].imageResource
         //holder.gamePictureImageView.setImageResource(mCurrentGamePictureResource)
         Glide.with(holder.itemView.context)
             .load(mCurrentGamePictureResource)

@@ -56,11 +56,11 @@ class MessagesAdapter(context: Context, userList: MutableList<User>): RecyclerVi
                     mMessageFriendList.size -> {
                         holder.backgroundView.setBackgroundResource(R.drawable.last_item_background_dark)
                     }
-                    else -> holder.backgroundView.setBackgroundResource(R.color.listItemBackground)
+                    else -> holder.backgroundView.setBackgroundResource(R.drawable.item_background_dark)
                 }
-                val mCurrentUsername: String = mMessageFriendList[position-1].mUserName // -1 bc of header
+                val mCurrentUsername: String = mMessageFriendList[position-1].userName // -1 bc of header
                 val mCurrentMessage = "Hey, this is a sample text, you know what I mean ?"
-                val mCurrentPictureResource: Int = mMessageFriendList[position-1].mProfilePicture
+                val mCurrentPictureResource: Int = mMessageFriendList[position-1].profilePicture
                 holder.usernameTextView.text = mCurrentUsername
                 holder.messageTextView.text = mCurrentMessage
                 Glide.with(holder.itemView.context)

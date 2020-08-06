@@ -9,7 +9,7 @@ class MockUsers {
     companion object {
         fun createUsers(): MutableList<User> {
 
-            val gameList: MutableList<MyGame> = mutableListOf()
+            val gameList: ArrayList<MyGame> = arrayListOf()
             gameList.add(
                 MyGame(
                     "Apex Legends",
@@ -32,7 +32,7 @@ class MockUsers {
                 )
             )
 
-            val gameList2: MutableList<MyGame> = mutableListOf()
+            val gameList2: ArrayList<MyGame> = arrayListOf()
             gameList2.add(
                 MyGame(
                     "The Last of Us: Part II",
@@ -48,7 +48,7 @@ class MockUsers {
                 )
             )
 
-            val gameList3: MutableList<MyGame> = mutableListOf()
+            val gameList3: ArrayList<MyGame> = arrayListOf()
             gameList3.add(
                 MyGame(
                     "Slay the Spire",
@@ -64,7 +64,7 @@ class MockUsers {
                 )
             )
 
-            val gameList4: MutableList<MyGame> = mutableListOf()
+            val gameList4: ArrayList<MyGame> = arrayListOf()
             gameList4.add(
                 MyGame(
                     "Farming Simulator",
