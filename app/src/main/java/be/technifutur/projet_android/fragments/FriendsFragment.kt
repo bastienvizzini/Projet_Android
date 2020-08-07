@@ -30,7 +30,7 @@ class FriendsFragment : Fragment() {
 
         val mAdapter = be.technifutur.projet_android.adapters.FriendsListAdapter(requireContext(), mUserList)
         val layoutManager = GridLayoutManager(activity, 1)
-        layoutManager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
+        layoutManager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() { // à changer balec du gridlayoutmaintenant
             override fun getSpanSize(position: Int): Int {
                 return if (mAdapter.isHeader(position)) {
                     layoutManager.spanCount

@@ -12,6 +12,10 @@ import androidx.fragment.app.Fragment
 import be.technifutur.projet_android.fragments.ExploreFragment
 import be.technifutur.projet_android.fragments.FriendsFragment
 import be.technifutur.projet_android.fragments.MessagesFragment
+import be.technifutur.projet_android.models.Game
+import be.technifutur.projet_android.models.MyGame
+import be.technifutur.projet_android.models.Platform
+import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,6 +33,10 @@ class MainActivity : AppCompatActivity() {
     private val mMessagesFragment = MessagesFragment()
 
     private var mActiveTabString = FRIENDS
+
+    private val mGame = MyGame("On m'appelle l'Ovni", Platform.PS4, R.drawable.apex_legends)
+    private val mGameList : ArrayList<MyGame> = arrayListOf(mGame, mGame, mGame)
+    private var mUser = User("JUL", 38, "Marseille", R.drawable.main_user, mGameList,true)
 
     companion object {
         const val SEARCH_EXTRA = "search_extra"
@@ -139,6 +147,12 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
 
         outState.putString(ACTIVE_TAB, mActiveTabString)
+    }
+
+    fun onUserProfile(view: View) {
+        val userProfileIntent = Intent(view.context, UserProfileActivity::class.java)
+        userProfileIntent.putExtra("USER_MAIN", mUser) // changer pour "MAIN_USER" et changer dans le code (faire un switch et définir layout dans UserProfileActivity
+        startActivity(userProfileIntent)
     }
 
 }

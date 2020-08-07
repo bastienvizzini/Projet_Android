@@ -17,7 +17,8 @@
             android:id="@+id/gamePictureImageView"
             android:layout_width="140dp"
             android:layout_height="110dp"
-            android:src="@drawable/overwatch" />
+            android:src="@drawable/overwatch"
+            android:background="@color/lightGray"/>
 
     </androidx.cardview.widget.CardView>
 

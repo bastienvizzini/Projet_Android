@@ -16,11 +16,22 @@ class UserProfileActivity : AppCompatActivity() {
 
         // quand ce sera un fragment, faire comme dans le projet Pokédex fragment avec bundle et args
 
-        val currentUser = intent.getParcelableExtra<User>("USER_SELECTED")
-        setUser(currentUser)
-        val mAdapter = UserGameListAdapter(this, currentUser.games)
-        games_recycler_view.adapter = mAdapter
-        games_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        // Selected user
+        intent.getParcelableExtra<User>("USER_SELECTED")?.let { currentUser ->
+            this.setUser(currentUser)
+            val mAdapter = UserGameListAdapter(this, currentUser.games)
+            games_recycler_view.adapter = mAdapter
+            games_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        }
+
+        // Main user
+        intent.getParcelableExtra<User>("USER_MAIN")?.let { mainUser ->
+            this.setUser(mainUser)
+            val mAdapter = UserGameListAdapter(this, mainUser.games)
+            games_recycler_view.adapter = mAdapter
+            games_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            this.setupMainUserViews()
+        }
 
         // Custom Action Bar
         /*supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
@@ -28,16 +39,19 @@ class UserProfileActivity : AppCompatActivity() {
         supportActionBar?.setCustomView(R.layout.custom_actionbar_user)
         actionBar?.setDisplayHomeAsUpEnabled(true)*/
         supportActionBar?.elevation = 0f
+        supportActionBar?.setDisplayShowTitleEnabled(false) // No title in action bar
 
 
     }
 
-    private fun setUser(user: User?) {
+    private fun setUser(user: User) {
         //user_profile_picture.setImageResource(user.mProfilePicture)
-        user?.let {
-            Glide.with(this).load(user.profilePicture).centerCrop().into(user_profile_picture)
-            user_username.text = user.userName
-            supportActionBar?.setDisplayShowTitleEnabled(false) // no title in actionbar
-        }
+        Glide.with(this).load(user.profilePicture).centerCrop().into(user_profile_picture)
+        user_username.text = user.userName
+    }
+
+    private fun setupMainUserViews() {
+        add_friend_image_button.setImageDrawable(getDrawable(R.drawable.ic_edit))
+        sendMessageButton.text = getString(R.string.add_games_button_title)
     }
 }
