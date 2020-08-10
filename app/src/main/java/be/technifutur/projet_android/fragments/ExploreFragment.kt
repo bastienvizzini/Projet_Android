@@ -1,6 +1,7 @@
 package be.technifutur.projet_android.fragments
 
 import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -43,7 +44,10 @@ class ExploreFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mContext = requireContext()
+        this.context?.let { context ->
+            mContext = context
+        }
+        this.setRecyclerViews()
 
         val retrofit = Retrofit.Builder()
             .baseUrl(MainActivity.BASE_URL)
@@ -59,19 +63,15 @@ class ExploreFragment : Fragment() {
             savedInstanceState.getParcelableArrayList<Game>("RECOMMENDED_GAMES")?.let { recommendedGamesList ->
                 mRecommendedGamesList.addAll(recommendedGamesList)
             }
-
             this.getYourGames(gameService, mContext)
-            //adapterOne.notifyDataSetChanged()
             this.getRecommendedGames(gameService, mContext)
-            //adapterTwo.notifyDataSetChanged()
-
         } else {
             this.getYourGames(gameService, mContext)
-            //adapterOne.notifyDataSetChanged()
             this.getRecommendedGames(gameService, mContext)
-            //adapterTwo.notifyDataSetChanged()
         }
+    }
 
+    private fun setRecyclerViews() {
         val layoutManagerOne = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         val layoutManagerTwo = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         val adapterOne = GameAdapter(mContext, mYourGamesList)
@@ -80,14 +80,12 @@ class ExploreFragment : Fragment() {
         yourGamesRecyclerView.adapter = adapterOne
         recommendedGamesRecyclerView.layoutManager = layoutManagerTwo
         recommendedGamesRecyclerView.adapter = adapterTwo
-
     }
 
     private fun getYourGames(gameService: GameService, context: Context) {
-        val layoutManagerOne = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        //val mAdapterOne = GameAdapter(context, mYourGamesList)
-
         if (mYourGamesList.isEmpty()) {
+
+            yourGamesRecyclerView.visibility = View.GONE
 
             gameService.mostPopularGames().enqueue(object : Callback<GameResult>{
                 override fun onFailure(call: Call<GameResult>, t: Throwable) {
@@ -99,23 +97,21 @@ class ExploreFragment : Fragment() {
                         mYourGamesList.add(game)
                     }
 
-                    yourGamesRecyclerView.adapter!!.notifyDataSetChanged()
+                    if (yourGamesRecyclerView != null) {
+                        yourGamesRecyclerView.adapter!!.notifyDataSetChanged()
+                        yourGamesRecyclerView.visibility = View.VISIBLE
+                    }
                 }
             })
-        } else {
-            val mAdapterOne = GameAdapter(mContext, mYourGamesList)
-            yourGamesRecyclerView.layoutManager = layoutManagerOne
-            yourGamesRecyclerView.adapter = mAdapterOne
         }
     }
 
     private fun getRecommendedGames(gameService: GameService, context: Context) {
-        val layoutManagerTwo = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-
         if (mRecommendedGamesList.isEmpty()) {
 
-            mRecommendedGamesArray.map { gameId ->
+            recommendedGamesRecyclerView.visibility = View.GONE
+
+            mRecommendedGamesArray.forEach { gameId ->
                 gameService.gameDetailsPerId(gameId).enqueue(object: Callback<Game>{
                     override fun onFailure(call: Call<Game>, t: Throwable) {
                         Log.d("GrosProbleme", t.message)
@@ -126,15 +122,13 @@ class ExploreFragment : Fragment() {
                             mRecommendedGamesList.add(game)
                         }
 
-                        recommendedGamesRecyclerView.adapter!!.notifyDataSetChanged()
+                        if (recommendedGamesRecyclerView != null && gameId == mRecommendedGamesArray.last()) {
+                            recommendedGamesRecyclerView.adapter!!.notifyDataSetChanged()
+                            recommendedGamesRecyclerView.visibility = View.VISIBLE
+                        }
                     }
                 })
-
             }
-        } else {
-            val mAdapterTwo = GameAdapter(mContext, mRecommendedGamesList)
-            recommendedGamesRecyclerView.layoutManager = layoutManagerTwo
-            recommendedGamesRecyclerView.adapter = mAdapterTwo
         }
     }
 
