@@ -1,6 +1,7 @@
 package be.technifutur.projet_android.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
+import be.technifutur.projet_android.GameActivity
 import be.technifutur.projet_android.R
+import be.technifutur.projet_android.UserProfileActivity
 import be.technifutur.projet_android.models.Game
 import com.bumptech.glide.Glide
 
@@ -35,6 +38,12 @@ class GameAdapter(context: Context, gameList: MutableList<Game>):
         Glide.with(holder.itemView.context).load(posterPath).centerCrop().into(holder.gamePictureImageView)
         holder.gameNameTextView.text = name
         holder.gameGenreTextView.text = genres?.get(0)?.name ?: "" // dégueulasse
+
+        holder.itemView.setOnClickListener {
+            val gameDetailIntent = Intent(holder.itemView.context, GameActivity::class.java)
+            gameDetailIntent.putExtra("GAME_SELECTED", currentGame)
+            holder.itemView.context.startActivity(gameDetailIntent)
+        }
 
     }
 

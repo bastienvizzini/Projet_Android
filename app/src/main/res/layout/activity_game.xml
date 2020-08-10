@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/gameDetailTopContainer"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@drawable/last_item_background_dark"
+            android:elevation="3dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/gameDetailCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/gameDetailNameTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/gameDetailImageView"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/apex_legends" />
+
+            </androidx.cardview.widget.CardView>
+
+            <ImageButton
+                android:id="@+id/addGameButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="140dp"
+                android:layout_marginTop="140dp"
+                android:background="@drawable/ic_circle_background"
+                android:elevation="2dp"
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toBottomOf="@+id/gameDetailCardView"
+                app:layout_constraintEnd_toEndOf="@+id/gameDetailCardView"
+                app:layout_constraintStart_toStartOf="@+id/gameDetailCardView"
+                app:layout_constraintTop_toTopOf="@+id/gameDetailCardView" />
+
+            <TextView
+                android:id="@+id/gameDetailNameTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/game_name"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textAlignment="center"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/gameDetailCardView" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/roomsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_marginStart="38dp"
+            android:text="@string/rooms"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gameDetailTopContainer" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

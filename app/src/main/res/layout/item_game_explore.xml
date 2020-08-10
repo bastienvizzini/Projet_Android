@@ -3,14 +3,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/game_cell_background"
+    android:focusable="true">
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
         android:layout_marginBottom="8dp">
 
         <ImageView
@@ -31,7 +34,8 @@
         android:textStyle="bold"
         android:maxLines="1"
         android:ellipsize="end"
-        android:layout_marginStart="8dp"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <TextView
         android:id="@+id/gameGenreTextView"
@@ -41,6 +45,7 @@
         android:textSize="12sp"
         android:maxLines="1"
         android:ellipsize="end"
-        android:layout_marginStart="8dp"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
 
 </LinearLayout>
