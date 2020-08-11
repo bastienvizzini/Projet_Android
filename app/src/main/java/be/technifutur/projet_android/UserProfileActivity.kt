@@ -2,6 +2,7 @@ package be.technifutur.projet_android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.technifutur.projet_android.adapters.UserGameListAdapter
 import be.technifutur.projet_android.models.User
@@ -40,6 +41,7 @@ class UserProfileActivity : AppCompatActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)*/
         supportActionBar?.elevation = 0f
         supportActionBar?.setDisplayShowTitleEnabled(false) // No title in action bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // back on actionbar
 
 
     }
@@ -53,5 +55,15 @@ class UserProfileActivity : AppCompatActivity() {
     private fun setupMainUserViews() {
         add_friend_image_button.setImageDrawable(getDrawable(R.drawable.ic_edit))
         sendMessageButton.text = getString(R.string.add_games_button_title)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item);
+        }
     }
 }

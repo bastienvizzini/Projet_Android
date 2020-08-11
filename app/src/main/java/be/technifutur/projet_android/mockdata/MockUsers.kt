@@ -7,7 +7,7 @@ import be.technifutur.projet_android.models.User
 
 class MockUsers {
     companion object {
-        fun createUsers(): MutableList<User> {
+        fun createUsers(): ArrayList<User> {
 
             val gameList: ArrayList<MyGame> = arrayListOf()
             gameList.add(
@@ -80,7 +80,7 @@ class MockUsers {
                 )
             )
 
-            val users: MutableList<User> = mutableListOf()
+            val users: ArrayList<User> = arrayListOf()
             val user1 = User(
                 "JeanClaude24",
                 24,

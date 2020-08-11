@@ -17,6 +17,6 @@ interface GameService {
     @GET("games/{id}/suggested")
     fun similarGames(@Path("id") gameId: Int): Call<GameResult>
 
-    @GET("games?tags=multiplayer&search=")
-    fun gameSearchQuery(@Query("query") gameName: String): Call<GameResult>
+    @GET("games?")
+    fun gameSearchQuery(@Query("search") gameName: String): Call<GameResult>
 }

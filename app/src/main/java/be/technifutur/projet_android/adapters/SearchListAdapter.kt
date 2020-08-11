@@ -2,7 +2,6 @@ package be.technifutur.projet_android.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,17 +12,21 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import be.technifutur.projet_android.GameActivity
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.UserProfileActivity
+import be.technifutur.projet_android.models.Game
+import be.technifutur.projet_android.models.SearchResult
 import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 
-class SearchListAdapter(context: Context, resultList: MutableList<User>) : RecyclerView.Adapter<SearchListAdapter.SearchViewHolder>(), Filterable {
+class SearchListAdapter(context: Context, resultList: SearchResult) : RecyclerView.Adapter<SearchListAdapter.SearchViewHolder>(), Filterable {
 
     private var mInflater: LayoutInflater = LayoutInflater.from(context)
-    private var mAllResultList: MutableList<User> = resultList
-    private var mResultList: MutableList<User> = mutableListOf()
+    private var mAllUserResultList: ArrayList<User> = resultList.userResult
+    private var mAllGameResultList: ArrayList<Game> = resultList.gameResults // on utilise ça comme search déjà fait via api
+    private var mUserResultList: ArrayList<User> = arrayListOf()
+    // private var mGameResultList: List<Game> = arrayListOf()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,31 +37,50 @@ class SearchListAdapter(context: Context, resultList: MutableList<User>) : Recyc
     }
 
     override fun getItemCount(): Int {
-        return if (mResultList.size == 0) {
+        return if (mUserResultList.isEmpty() && mAllGameResultList.isEmpty()) {
             1
         } else {
-            mResultList.size
+            val count = mUserResultList.size + mAllGameResultList.size
+            count
         }
     }
 
     override fun onBindViewHolder(holder: SearchListAdapter.SearchViewHolder, position: Int) {
-        if (mResultList.size == 0) {
+        if (mUserResultList.isEmpty() && mAllGameResultList.isEmpty()) {
             holder.resultTitleTextView.visibility = View.INVISIBLE
             holder.pictureResultImageView.visibility = View.INVISIBLE
             holder.pictureResultCardView.visibility = View.INVISIBLE
             holder.noResultTitleTextView.visibility = View.VISIBLE
-        } else {
-            val currentUser = mResultList[position]
-            val mCurrentUsername: String = currentUser.userName
-            val mCurrentPictureResource: Int = currentUser.profilePicture
+        } else if (position < mAllGameResultList.size) {
+            val currentGame = mAllGameResultList[position]
+
             holder.resultTitleTextView.visibility = View.VISIBLE
             holder.pictureResultImageView.visibility = View.VISIBLE
             holder.pictureResultCardView.visibility = View.VISIBLE
             holder.noResultTitleTextView.visibility = View.INVISIBLE
-            holder.resultTitleTextView.text = mCurrentUsername
+            holder.resultTitleTextView.text = currentGame.name
 
             Glide.with(holder.itemView.context)
-                .load(mCurrentPictureResource)
+                .load(currentGame.posterPath)
+                .centerCrop()
+                .into(holder.pictureResultImageView)
+
+            holder.itemView.setOnClickListener {
+                val gameDetailIntent = Intent(holder.itemView.context, GameActivity::class.java)
+                gameDetailIntent.putExtra("GAME_SELECTED", currentGame)
+                holder.itemView.context.startActivity(gameDetailIntent)
+            }
+        } /*else {
+            val currentUser = mUserResultList[position + mAllGameResultList.size]
+
+            holder.resultTitleTextView.visibility = View.VISIBLE
+            holder.pictureResultImageView.visibility = View.VISIBLE
+            holder.pictureResultCardView.visibility = View.VISIBLE
+            holder.noResultTitleTextView.visibility = View.INVISIBLE
+            holder.resultTitleTextView.text = currentUser.userName
+
+            Glide.with(holder.itemView.context)
+                .load(currentUser.profilePicture)
                 .centerCrop()
                 .into(holder.pictureResultImageView)
 
@@ -67,7 +89,7 @@ class SearchListAdapter(context: Context, resultList: MutableList<User>) : Recyc
                 userProfileIntent.putExtra("USER_SELECTED", currentUser)
                 holder.itemView.context.startActivity(userProfileIntent)
             }
-        }
+        }*/
     }
 
     override fun getFilter(): Filter {
@@ -81,7 +103,7 @@ class SearchListAdapter(context: Context, resultList: MutableList<User>) : Recyc
             var filteredList: MutableList<User> = mutableListOf()
 
             if (!charSequence.toString().isEmpty()) {
-                for (result in mAllResultList) {
+                for (result in mAllUserResultList) {
                     if (result.userName.toLowerCase().contains(charSequence.toString().toLowerCase())) {
                         filteredList.add(result)
                     }
@@ -96,8 +118,8 @@ class SearchListAdapter(context: Context, resultList: MutableList<User>) : Recyc
 
         // Run on UI thread
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            mResultList.clear()
-            mResultList.addAll(results?.values as Collection<User>)
+            mUserResultList.clear()
+            mUserResultList.addAll(results?.values as Collection<User>)
             notifyDataSetChanged()
         }
     }
