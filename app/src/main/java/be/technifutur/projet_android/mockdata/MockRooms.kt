@@ -21,7 +21,7 @@ class MockRooms {
             val room3users = arrayListOf<User>()
             room3users.add(users[8])
             room3users.add(users[7])
-            room3users.add(users[7])
+            room3users.add(users[6])
 
             val room1 = Room(room1users, 4, "French", "Long sessions", "Tryhard")
             val room2 = Room(room2users, 3, "English", "Few games", "Casual")

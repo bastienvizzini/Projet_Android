@@ -65,10 +65,6 @@ class SearchActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true) // back on actionbar
     }
 
-    override fun onBackPressed() {
-        this.moveTaskToBack(true);
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
