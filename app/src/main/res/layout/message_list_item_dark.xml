@@ -57,7 +57,9 @@
                             android:layout_height="wrap_content"
                             android:text="@string/friend_name"
                             android:textStyle="bold"
-                            android:textColor="@android:color/white" />
+                            android:textColor="@android:color/white"
+                            android:maxLines="1"
+                            android:ellipsize="end"/>
 
                         <TextView
                             android:id="@+id/message_friend_message_item"

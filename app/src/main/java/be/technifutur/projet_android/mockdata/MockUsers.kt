@@ -114,7 +114,7 @@ class MockUsers {
                 true
             )
             val user5 = User(
-                "PatrickBalkaneux",
+                "PatrickBalkaneuxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                 67,
                 "Levallois",
                 R.drawable.user5,
