@@ -11,7 +11,6 @@ import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.GameActivity
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.UserProfileActivity
 import be.technifutur.projet_android.models.Game
 import com.bumptech.glide.Glide
 
@@ -32,10 +31,18 @@ class GameAdapter(context: Context, gameList: MutableList<Game>):
 
     override fun onBindViewHolder(holder: GameAdapter.GameViewHolder, position: Int) {
         val currentGame = mGameList[position]
-        val posterPath = currentGame.posterPath
+
+        currentGame.posterPath?.let { posterPath ->
+            Glide.with(holder.itemView.context).load(posterPath).centerCrop()
+                .into(holder.gamePictureImageView)
+        }
+        /*currentGame.image?.screen_large_url?.let { image ->
+            if (image != "https://giantbomb1.cbsistatic.com/uploads/screen_kubrick/11/110673/3026329-gb_default-16_9.jpg") {
+                Glide.with(holder.itemView.context).load(image).centerCrop().into(holder.gamePictureImageView)
+            }
+        }*/
         val name = currentGame.name
         val genres = currentGame.genres
-        Glide.with(holder.itemView.context).load(posterPath).centerCrop().into(holder.gamePictureImageView)
         holder.gameNameTextView.text = name
         holder.gameGenreTextView.text = genres?.get(0)?.name ?: "" // dégueulasse
 

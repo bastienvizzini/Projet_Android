@@ -1,7 +1,6 @@
 package be.technifutur.projet_android.fragments
 
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,6 +13,7 @@ import be.technifutur.projet_android.R
 import be.technifutur.projet_android.adapters.GameAdapter
 import be.technifutur.projet_android.models.Game
 import be.technifutur.projet_android.models.GameResult
+import be.technifutur.projet_android.models.GamesResult
 import be.technifutur.projet_android.network.GameService
 import kotlinx.android.synthetic.main.fragment_explore.*
 import retrofit2.Call
@@ -50,7 +50,7 @@ class ExploreFragment : Fragment() {
         this.setRecyclerViews()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(MainActivity.BASE_URL)
+            .baseUrl(MainActivity.BASE_URL_RAWG)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -87,12 +87,12 @@ class ExploreFragment : Fragment() {
 
             yourGamesRecyclerView.visibility = View.GONE
 
-            gameService.mostPopularGames().enqueue(object : Callback<GameResult>{
-                override fun onFailure(call: Call<GameResult>, t: Throwable) {
+            gameService.mostPopularGames().enqueue(object : Callback<GamesResult>{
+                override fun onFailure(call: Call<GamesResult>, t: Throwable) {
                     Log.d("GrosProbleme", t.message)
                 }
 
-                override fun onResponse(call: Call<GameResult>, response: Response<GameResult>) {
+                override fun onResponse(call: Call<GamesResult>, response: Response<GamesResult>) {
                     response.body()?.results?.forEach { game ->
                         mYourGamesList.add(game)
                     }

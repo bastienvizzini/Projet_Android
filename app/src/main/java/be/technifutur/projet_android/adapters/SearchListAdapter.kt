@@ -14,7 +14,6 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.GameActivity
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.UserProfileActivity
 import be.technifutur.projet_android.models.Game
 import be.technifutur.projet_android.models.SearchResult
 import be.technifutur.projet_android.models.User
@@ -26,7 +25,7 @@ class SearchListAdapter(context: Context, resultList: SearchResult) : RecyclerVi
     private var mAllUserResultList: ArrayList<User> = resultList.userResult
     private var mAllGameResultList: ArrayList<Game> = resultList.gameResults // on utilise ça comme search déjà fait via api
     private var mUserResultList: ArrayList<User> = arrayListOf()
-    // private var mGameResultList: List<Game> = arrayListOf()
+    private var mGameResultList: ArrayList<Game> = arrayListOf()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -37,22 +36,22 @@ class SearchListAdapter(context: Context, resultList: SearchResult) : RecyclerVi
     }
 
     override fun getItemCount(): Int {
-        return if (mUserResultList.isEmpty() && mAllGameResultList.isEmpty()) {
+        return if (mUserResultList.isEmpty() && mGameResultList.isEmpty()) {
             1
         } else {
-            val count = mUserResultList.size + mAllGameResultList.size
+            val count = mUserResultList.size + mGameResultList.size
             count
         }
     }
 
     override fun onBindViewHolder(holder: SearchListAdapter.SearchViewHolder, position: Int) {
-        if (mUserResultList.isEmpty() && mAllGameResultList.isEmpty()) {
+        if (mUserResultList.isEmpty() && mGameResultList.isEmpty()) {
             holder.resultTitleTextView.visibility = View.INVISIBLE
             holder.pictureResultImageView.visibility = View.INVISIBLE
             holder.pictureResultCardView.visibility = View.INVISIBLE
             holder.noResultTitleTextView.visibility = View.VISIBLE
-        } else if (position < mAllGameResultList.size) {
-            val currentGame = mAllGameResultList[position]
+        } else if (position < mGameResultList.size) {
+            val currentGame = mGameResultList[position]
 
             holder.resultTitleTextView.visibility = View.VISIBLE
             holder.pictureResultImageView.visibility = View.VISIBLE
@@ -60,10 +59,17 @@ class SearchListAdapter(context: Context, resultList: SearchResult) : RecyclerVi
             holder.noResultTitleTextView.visibility = View.INVISIBLE
             holder.resultTitleTextView.text = currentGame.name
 
-            Glide.with(holder.itemView.context)
-                .load(currentGame.posterPath)
-                .centerCrop()
-                .into(holder.pictureResultImageView)
+            /*currentGame.image?.screen_large_url?.let { image ->
+                if (image != "https://giantbomb1.cbsistatic.com/uploads/screen_kubrick/11/110673/3026329-gb_default-16_9.jpg") {
+                    Glide.with(holder.itemView.context).load(image).centerCrop()
+                        .into(holder.pictureResultImageView)
+                }
+            }*/
+
+            currentGame.posterPath?.let { posterPath ->
+                Glide.with(holder.itemView.context).load(posterPath).centerCrop()
+                    .into(holder.pictureResultImageView)
+            }
 
             holder.itemView.setOnClickListener {
                 val gameDetailIntent = Intent(holder.itemView.context, GameActivity::class.java)
@@ -100,12 +106,14 @@ class SearchListAdapter(context: Context, resultList: SearchResult) : RecyclerVi
         // Run on background thread
         override fun performFiltering(charSequence: CharSequence?): FilterResults {
 
-            var filteredList: MutableList<User> = mutableListOf()
+            var filteredList: MutableList<Game> = mutableListOf()
 
             if (!charSequence.toString().isEmpty()) {
-                for (result in mAllUserResultList) {
-                    if (result.userName.toLowerCase().contains(charSequence.toString().toLowerCase())) {
-                        filteredList.add(result)
+                for (result in mAllGameResultList) {
+                    result.name?.let { matchingName ->
+                        if (matchingName.toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                            filteredList.add(result)
+                        }
                     }
                 }
             }
@@ -118,8 +126,8 @@ class SearchListAdapter(context: Context, resultList: SearchResult) : RecyclerVi
 
         // Run on UI thread
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            mUserResultList.clear()
-            mUserResultList.addAll(results?.values as Collection<User>)
+            mGameResultList.clear()
+            mGameResultList.addAll(results?.values as Collection<Game>)
             notifyDataSetChanged()
         }
     }

@@ -11,6 +11,7 @@ data class Game (
     val name: String?,
     @SerializedName("background_image")
     val posterPath: String?,
+    val image: Image?,
     val genres: ArrayList<Genres>?
 ) : Parcelable {
 }

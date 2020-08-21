@@ -12,7 +12,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/top_profile_container"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="280dp"
             android:background="@drawable/last_item_background_dark"
             android:elevation="3dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -23,6 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="8dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintBottom_toTopOf="@+id/user_username"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

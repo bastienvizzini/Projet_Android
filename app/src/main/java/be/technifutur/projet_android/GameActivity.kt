@@ -10,6 +10,7 @@ import be.technifutur.projet_android.mockdata.MockRooms
 import be.technifutur.projet_android.models.Game
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_game.*
+import kotlinx.android.synthetic.main.activity_user_profile.*
 
 class GameActivity : AppCompatActivity() {
 
@@ -37,7 +38,12 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun setGame(game: Game) {
-        Glide.with(this).load(game.posterPath).centerCrop().into(gameDetailImageView)
+        /*if (game.image?.screen_large_url != "https://giantbomb1.cbsistatic.com/uploads/screen_kubrick/11/110673/3026329-gb_default-16_9.jpg") {
+            Glide.with(this).load(game.image?.screen_large_url).centerCrop()
+                .into(gameDetailImageView)
+        }*/
+        Glide.with(this).load(game.posterPath).centerCrop()
+            .into(gameDetailImageView)
         gameDetailNameTextView.text = game.name
     }
 

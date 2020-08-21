@@ -5,10 +5,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
+import be.technifutur.projet_android.adapters.SearchGameAdapter
 import be.technifutur.projet_android.adapters.SearchListAdapter
 import be.technifutur.projet_android.mockdata.MockUsers
 import be.technifutur.projet_android.models.Game
 import be.technifutur.projet_android.models.GameResult
+import be.technifutur.projet_android.models.GamesResult
 import be.technifutur.projet_android.models.SearchResult
 import be.technifutur.projet_android.network.GameService
 import kotlinx.android.synthetic.main.activity_search_results.*
@@ -22,14 +24,14 @@ class SearchActivity : AppCompatActivity() {
 
     private val mUserList = MockUsers.createUsers()
     private var mGameResultList = arrayListOf<Game>()
-    private lateinit var mResults : SearchResult
+    //private lateinit var mResults : SearchResult
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_results)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(MainActivity.BASE_URL)
+            .baseUrl(MainActivity.BASE_URL_RAWG)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -37,12 +39,12 @@ class SearchActivity : AppCompatActivity() {
 
         intent.getStringExtra(MainActivity.SEARCH_EXTRA)?.let { query ->
 
-            gameService.gameSearchQuery(query).enqueue(object : Callback<GameResult> {
-                override fun onFailure(call: Call<GameResult>, t: Throwable) {
+            gameService.gameSearchQuery(query).enqueue(object : Callback<GamesResult> {
+                override fun onFailure(call: Call<GamesResult>, t: Throwable) {
                     Log.d("GrosProbleme", t.message)
                 }
 
-                override fun onResponse(call: Call<GameResult>, response: Response<GameResult>) {
+                override fun onResponse(call: Call<GamesResult>, response: Response<GamesResult>) {
                     response.body()?.results?.forEach { game ->
                         mGameResultList.add(game)
                     }
@@ -52,13 +54,27 @@ class SearchActivity : AppCompatActivity() {
 
             })
 
-            mResults = SearchResult(mGameResultList, mUserList)
+            //mResults = SearchResult(mGameResultList, mUserList)
 
-            val adapter = SearchListAdapter(this, mResults)
+            //val adapter = SearchListAdapter(this, mResults)
+            val adapter = SearchGameAdapter(this, mGameResultList)
             //adapter.filter.filter(query)
             resultsRecyclerView.layoutManager = LinearLayoutManager(this)
             resultsRecyclerView.adapter = adapter
         }
+
+        /*intent.getParcelableArrayListExtra<Game>(MainActivity.GAME_LIST_EXTRA)?.let { gamesList ->
+            mGameResultList.addAll(gamesList)
+
+            intent.getStringExtra(MainActivity.SEARCH_EXTRA)?.let { query ->
+                mResults = SearchResult(mGameResultList, mUserList)
+
+                val adapter = SearchListAdapter(this, mResults)
+                adapter.filter.filter(query)
+                resultsRecyclerView.layoutManager = LinearLayoutManager(this)
+                resultsRecyclerView.adapter = adapter
+            }
+        }*/
 
         supportActionBar?.title = "Search"
         //supportActionBar?.elevation = 0f

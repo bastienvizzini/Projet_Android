@@ -12,15 +12,18 @@ import androidx.fragment.app.Fragment
 import be.technifutur.projet_android.fragments.ExploreFragment
 import be.technifutur.projet_android.fragments.FriendsFragment
 import be.technifutur.projet_android.fragments.MessagesFragment
-import be.technifutur.projet_android.models.Game
-import be.technifutur.projet_android.models.MyGame
-import be.technifutur.projet_android.models.Platform
-import be.technifutur.projet_android.models.User
+import be.technifutur.projet_android.models.*
+import be.technifutur.projet_android.network.GameService
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.custom_actionbar_main.*
 import kotlinx.android.synthetic.main.fragment_explore.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,10 +40,15 @@ class MainActivity : AppCompatActivity() {
     private val mGame = MyGame("On m'appelle l'Ovni", Platform.PS4, R.drawable.apex_legends)
     private val mGameList : ArrayList<MyGame> = arrayListOf(mGame, mGame, mGame)
     private var mUser = User("JUL", 38, "Marseille", R.drawable.main_user, mGameList,true)
+    private var mAllGamesList = arrayListOf<Game>()
+
+    private lateinit var gameService: GameService
 
     companion object {
         const val SEARCH_EXTRA = "search_extra"
-        const val BASE_URL = "https://api.rawg.io/api/"
+        const val GAME_LIST_EXTRA = "game_list_extra"
+        const val BASE_URL_RAWG = "https://api.rawg.io/api/"
+        const val BASE_URL_GIANTBOMB = "https://www.giantbomb.com/api/"
         private const val ACTIVE_TAB = "active_tab"
         private const val FRIENDS = "friends"
         private const val EXPLORE = "explore"
@@ -85,6 +93,26 @@ class MainActivity : AppCompatActivity() {
 
         Glide.with(this).load(R.drawable.main_user).circleCrop().into(user_picture)
 
+        // Retrofit, get all games
+        val retrofit = Retrofit.Builder()
+            .baseUrl(MainActivity.BASE_URL_RAWG)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        gameService = retrofit.create(GameService::class.java)
+
+        gameService.getGames().enqueue(object : Callback<GamesResult> {
+            override fun onFailure(call: Call<GamesResult>, t: Throwable) {
+                Log.d("GrosProbleme", t.message)
+            }
+
+            override fun onResponse(call: Call<GamesResult>, response: Response<GamesResult>) {
+                response.body()?.results?.forEach { game ->
+                    mAllGamesList.add(game)
+                }
+            }
+        })
+
     }
 
     private val bottomNavMethod =
@@ -124,6 +152,7 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 val searchIntent = Intent(applicationContext, SearchActivity::class.java)
                 searchIntent.putExtra(SEARCH_EXTRA, query)
+                searchIntent.putExtra(GAME_LIST_EXTRA, mAllGamesList)
                 startActivity(searchIntent)
                 searchView.clearFocus()
                 return false

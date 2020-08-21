@@ -27,6 +27,7 @@
     <string name="recommended_games">Recommended games</string>
     <string name="add_games_button_title">Add games</string>
     <string name="rooms">Rooms :</string>
+    <string name="add">Ajouter</string>
 
     <integer name="swing_anim_time">500</integer>
 </resources>

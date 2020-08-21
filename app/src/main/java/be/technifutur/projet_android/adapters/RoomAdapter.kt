@@ -1,7 +1,9 @@
 package be.technifutur.projet_android.adapters
 
 import android.content.Context
+import android.graphics.Typeface
 import android.text.TextUtils
+import android.util.Log
 import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
@@ -68,12 +70,14 @@ class RoomAdapter(context: Context, roomList: ArrayList<Room>): RecyclerView.Ada
             //usernameTextView.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
             //usernameTextView.layoutParams = TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
             usernameTextView.text = user.userName
+            usernameTextView.setTypeface(usernameTextView.typeface, Typeface.BOLD)
             usernameTextView.ellipsize = TextUtils.TruncateAt.END
             usernameTextView.maxLines = 1
 
         }
 
         holder.numberOfUsersTextView.text = numberOfUsersString
+
         holder.gameDurationTextView.text = currentRoom.gameDuration
         holder.gameIntensityTextView.text = currentRoom.gameIntensity
         holder.roomLanguageTextView.text = currentRoom.language
@@ -82,10 +86,11 @@ class RoomAdapter(context: Context, roomList: ArrayList<Room>): RecyclerView.Ada
     inner class RoomViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
         val usersLinearLayout: LinearLayout = itemView.findViewById(R.id.roomUsersLinearLayout)
         val numberOfUsersTextView: TextView = itemView.findViewById(R.id.numberOfUsersTextView)
+        //val numberOfUsersLinearLayout: LinearLayout = itemView.findViewById(R.id.numberOfUsersLinearLayout)
         val gameDurationTextView: TextView = itemView.findViewById(R.id.gameDurationTextView)
         val gameIntensityTextView: TextView = itemView.findViewById(R.id.gameIntensityTextView)
         val roomLanguageTextView: TextView = itemView.findViewById(R.id.roomLanguageTextView)
-        val roomCardView: CardView = itemView.findViewById(R.id.roomCardView)
+        //val roomCardView: CardView = itemView.findViewById(R.id.roomCardView)
     }
 
     private fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int ) {
