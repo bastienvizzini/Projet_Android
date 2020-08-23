@@ -42,7 +42,7 @@
             </androidx.cardview.widget.CardView>
 
             <ImageButton
-                android:id="@+id/add_friend_image_button"
+                android:id="@+id/addFriendButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="140dp"
