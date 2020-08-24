@@ -1,15 +1,19 @@
 package be.technifutur.projet_android
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.technifutur.projet_android.adapters.UserGameListAdapter
@@ -17,6 +21,7 @@ import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import java.io.File
+
 
 class UserProfileActivity : AppCompatActivity() {
 
@@ -53,18 +58,8 @@ class UserProfileActivity : AppCompatActivity() {
             this.setupMainUserViews()
 
             addFriendButton.setOnClickListener {
-                // Check permission !!!! otherwise crash
-                val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                photoFile = getPhotoFile(Companion.FILE_NAME)
-                // Doesn't work for API >= 24 (2016)
-                //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
-                val fileProvider = FileProvider.getUriForFile(this, "be.technifutur.fileprovider", photoFile)
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
-
-                if (takePictureIntent.resolveActivity(this.packageManager) != null) {
-                    startActivityForResult(takePictureIntent, 123)
-                } else {
-                    Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
+                if (isPermissionGranted()) {
+                    this.changeProfilePicture()
                 }
             }
         }
@@ -117,4 +112,54 @@ class UserProfileActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item);
         }
     }
+
+    // Ajouter permission pour écrire données?
+    private fun isPermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= 23) {
+            if ((checkSelfPermission(Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_GRANTED)
+            ) {
+                Log.v("bite", "Permission is granted")
+                true
+            } else {
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(
+                        Manifest.permission.CAMERA
+                    ), 1
+                )
+                false
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("bite", "Permission is granted")
+            true
+        }
+    }
+
+    private fun changeProfilePicture() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        photoFile = getPhotoFile(FILE_NAME)
+        // Doesn't work for API >= 24 (2016)
+        //takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile)
+        val fileProvider =
+            FileProvider.getUriForFile(this, "be.technifutur.fileprovider", photoFile)
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
+
+        if (takePictureIntent.resolveActivity(this.packageManager) != null) {
+            startActivityForResult(takePictureIntent, 123)
+        } else {
+            Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == 1) {
+            this.changeProfilePicture()
+        }
+    }
+
+
 }
