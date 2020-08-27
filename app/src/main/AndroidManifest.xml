@@ -13,35 +13,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        
+
         <provider
-            android:authorities="be.technifutur.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="be.technifutur.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileprovider" />
         </provider>
+
+        <activity
+            android:name=".EmptyMainActivity"
+            android:theme="@style/Theme.AppCompat.Light" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".GameActivity"
-            android:theme="@style/AppTheme.ActionBar.Transparent">
-        </activity>
+            android:theme="@style/AppTheme.ActionBar.Transparent" />
         <activity
             android:name=".UserProfileActivity"
-            android:theme="@style/AppTheme.ActionBar.Transparent">
-        </activity>
-        <activity
-            android:name=".SearchActivity" >
-        </activity>
+            android:theme="@style/AppTheme.ActionBar.Transparent" />
+        <activity android:name=".SearchActivity" />
         <activity
             android:name=".MainActivity"
             android:windowSoftInputMode="adjustNothing">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

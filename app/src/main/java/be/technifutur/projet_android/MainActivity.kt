@@ -3,7 +3,6 @@ package be.technifutur.projet_android
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBar
@@ -16,9 +15,9 @@ import be.technifutur.projet_android.models.*
 import be.technifutur.projet_android.network.GameService
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.custom_actionbar_main.*
-import kotlinx.android.synthetic.main.fragment_explore.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,9 +36,8 @@ class MainActivity : AppCompatActivity() {
 
     private var mActiveTabString = FRIENDS
 
-    private val mGame = MyGame("On m'appelle l'Ovni", Platform.PS4, R.drawable.apex_legends)
-    private val mGameList : ArrayList<MyGame> = arrayListOf(mGame, mGame, mGame)
-    private var mUser = User("JUL", 38, "Marseille", R.drawable.main_user, mGameList,true)
+    private val mFirebaseUser = getCurrentFirebaseUser()
+    private val mUser = createUser()
     private var mAllGamesList = arrayListOf<Game>()
 
     private lateinit var gameService: GameService
@@ -53,6 +51,17 @@ class MainActivity : AppCompatActivity() {
         private const val FRIENDS = "friends"
         private const val EXPLORE = "explore"
         private const val MESSAGES = "messages"
+    }
+
+
+    private fun getCurrentFirebaseUser(): FirebaseUser? { return FirebaseAuth.getInstance().currentUser }
+
+    private fun isCurrentUserLogged(): Boolean{ return (this.getCurrentFirebaseUser() != null) }
+
+    private fun createUser(): User {
+        val mGame = MyGame("On m'appelle l'Ovni", Platform.PS4, R.drawable.apex_legends)
+        val mGameList : ArrayList<MyGame> = arrayListOf(mGame, mGame, mGame)
+        return User(mFirebaseUser?.displayName.toString(), 38, "Marseille", R.drawable.main_user, mGameList,true)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
