@@ -29,6 +29,13 @@
     <string name="rooms">Rooms :</string>
     <string name="add">Ajouter</string>
     <string name="sign_in">Sign In</string>
+    <string name="change_username">Change username</string>
+    <string name="sign_out">Sign out</string>
+    <string name="delete_account">Delete account</string>
+    <string name="popup_message_confirmation_delete_acount">This operation will delete your account. Are you sure ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="lets_go_button">Let\'s go !</string>
 
     <integer name="swing_anim_time">500</integer>
 </resources>

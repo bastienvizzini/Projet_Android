@@ -20,12 +20,21 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        if (MainActivity.isCurrentUserLogged()) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        } else {
+            this.startSignInActivity()
+        }
+
         signInButton.setOnClickListener {
             this.startSignInActivity()
         }
+
     }
 
     private fun startSignInActivity() {
+
         startActivityForResult(
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
@@ -33,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
                 .setIsSmartLockEnabled(false, true)
                 .build(),
             RC_SIGN_IN);
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

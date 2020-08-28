@@ -12,5 +12,8 @@
         <item name="windowActionBarOverlay">true</item>
         <item name="colorPrimary">@android:color/transparent</item>
     </style>
+    <style name="RedMenuTextApperance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@android:color/holo_red_light</item>
+    </style>
 
 </resources>

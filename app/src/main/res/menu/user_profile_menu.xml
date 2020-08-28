@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/changeUsernameAction"
+        android:title="@string/change_username" />
+    <item
+        android:id="@+id/signOutAction"
+        android:title="@string/sign_out" />
+    <item
+        android:id="@+id/deleteAccountAction"
+        android:title="@string/delete_account" />
+</menu>

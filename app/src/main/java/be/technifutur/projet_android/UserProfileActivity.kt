@@ -2,6 +2,8 @@ package be.technifutur.projet_android
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -10,6 +12,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import be.technifutur.projet_android.adapters.UserGameListAdapter
 import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
+import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.tasks.OnSuccessListener
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import java.io.File
 
@@ -27,6 +32,8 @@ class UserProfileActivity : AppCompatActivity() {
 
     companion object {
         private const val FILE_NAME = "photo.jpg"
+        private const val SIGN_OUT_TASK = 10
+        private const val DELETE_USER_TASK = 20
     }
 
     private lateinit var photoFile: File
@@ -57,6 +64,7 @@ class UserProfileActivity : AppCompatActivity() {
             games_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             this.setupMainUserViews()
 
+            // changeProfilePictureButton
             addFriendButton.setOnClickListener {
                 if (isPermissionGranted()) {
                     this.changeProfilePicture()
@@ -107,6 +115,17 @@ class UserProfileActivity : AppCompatActivity() {
         return when (item.itemId) {
             android.R.id.home -> {
                 finish()
+                true
+            }
+            R.id.changeUsernameAction -> {
+                true
+            }
+            R.id.signOutAction -> {
+                this.signOut()
+                true
+            }
+            R.id.deleteAccountAction -> {
+                this.deleteUser()
                 true
             }
             else -> super.onOptionsItemSelected(item);
@@ -160,6 +179,49 @@ class UserProfileActivity : AppCompatActivity() {
             this.changeProfilePicture()
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.user_profile_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun signOut() {
+        AuthUI.getInstance()
+            .signOut(this)
+            .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK))
+    }
+
+    private fun deleteUser() {
+        AlertDialog.Builder(this)
+            .setMessage(getString(R.string.popup_message_confirmation_delete_acount))
+            .setPositiveButton(getString(R.string.yes)
+            ) { _, _ -> deleteUserFromFirebase() }
+            .setNegativeButton(getString(R.string.no), null)
+            .show()
+    }
+
+    private fun deleteUserFromFirebase() {
+        if (MainActivity.getCurrentFirebaseUser() != null) {
+            AuthUI.getInstance()
+                .delete(this)
+                .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(DELETE_USER_TASK))
+        }
+    }
+
+    private fun updateUIAfterRESTRequestsCompleted(origin: Int): OnSuccessListener<Void> {
+        return OnSuccessListener<Void> {
+            when (origin) {
+                SIGN_OUT_TASK -> {
+                    finish()
+                }
+                DELETE_USER_TASK -> {
+                    finish()
+                }
+                else -> { }
+            }
+        }
+    }
+
 
 
 }

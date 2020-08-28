@@ -51,12 +51,10 @@ class MainActivity : AppCompatActivity() {
         private const val FRIENDS = "friends"
         private const val EXPLORE = "explore"
         private const val MESSAGES = "messages"
+
+        fun getCurrentFirebaseUser(): FirebaseUser? { return FirebaseAuth.getInstance().currentUser }
+        fun isCurrentUserLogged(): Boolean{ return (this.getCurrentFirebaseUser() != null) }
     }
-
-
-    private fun getCurrentFirebaseUser(): FirebaseUser? { return FirebaseAuth.getInstance().currentUser }
-
-    private fun isCurrentUserLogged(): Boolean{ return (this.getCurrentFirebaseUser() != null) }
 
     private fun createUser(): User {
         val mGame = MyGame("On m'appelle l'Ovni", Platform.PS4, R.drawable.apex_legends)
@@ -179,6 +177,10 @@ class MainActivity : AppCompatActivity() {
 
         // Clear searchView when we go back to MainActivity
         searchView.setQuery("", false)
+
+        if (!isCurrentUserLogged()) {
+            finish()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

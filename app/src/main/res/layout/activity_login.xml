@@ -14,6 +14,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="24dp"
-        android:text="@string/sign_in" />
+        android:text="@string/lets_go_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

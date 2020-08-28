@@ -24,16 +24,13 @@
                 android:resource="@xml/fileprovider" />
         </provider>
 
-        <activity
-            android:name=".EmptyMainActivity"
-            android:theme="@style/Theme.AppCompat.Light" >
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
         <activity
             android:name=".GameActivity"
             android:theme="@style/AppTheme.ActionBar.Transparent" />
