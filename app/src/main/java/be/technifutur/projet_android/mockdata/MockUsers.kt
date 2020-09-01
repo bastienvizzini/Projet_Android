@@ -3,11 +3,11 @@ package be.technifutur.projet_android.mockdata
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.models.MyGame
 import be.technifutur.projet_android.models.Platform
-import be.technifutur.projet_android.models.User
+import be.technifutur.projet_android.models.MyUser
 
 class MockUsers {
     companion object {
-        fun createUsers(): ArrayList<User> {
+        fun createUsers(): ArrayList<MyUser> {
 
             val gameList: ArrayList<MyGame> = arrayListOf()
             gameList.add(
@@ -80,8 +80,8 @@ class MockUsers {
                 )
             )
 
-            val users: ArrayList<User> = arrayListOf()
-            val user1 = User(
+            val users: ArrayList<MyUser> = arrayListOf()
+            val user1 = MyUser(
                 "JeanClaude24",
                 24,
                 "Liège",
@@ -89,7 +89,7 @@ class MockUsers {
                 gameList,
                 false
             )
-            val user2 = User(
+            val user2 = MyUser(
                 "TechnoKiller",
                 28,
                 "Liège",
@@ -97,7 +97,7 @@ class MockUsers {
                 gameList2,
                 true
             )
-            val user3 = User(
+            val user3 = MyUser(
                 "Didier Raoult",
                 87,
                 "Marseille",
@@ -105,7 +105,7 @@ class MockUsers {
                 gameList3,
                 false
             )
-            val user4 = User(
+            val user4 = MyUser(
                 "Corona",
                 16,
                 "Wuhan",
@@ -113,7 +113,7 @@ class MockUsers {
                 gameList4,
                 true
             )
-            val user5 = User(
+            val user5 = MyUser(
                 "PatrickBalkaneuxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                 67,
                 "Levallois",
@@ -121,7 +121,7 @@ class MockUsers {
                 gameList,
                 false
             )
-            val user6 = User(
+            val user6 = MyUser(
                 "XHipster",
                 25,
                 "Bruxelles",
@@ -129,7 +129,7 @@ class MockUsers {
                 gameList2,
                 true
             )
-            val user7 = User(
+            val user7 = MyUser(
                 "Kevkev",
                 17,
                 "Namur",
@@ -137,7 +137,7 @@ class MockUsers {
                 gameList3,
                 false
             )
-            val user8 = User(
+            val user8 = MyUser(
                 "TwitchThot",
                 22,
                 "Anderlecht",
@@ -145,7 +145,7 @@ class MockUsers {
                 gameList4,
                 true
             )
-            val user9 = User(
+            val user9 = MyUser(
                 "Diams",
                 38,
                 "Charleroi",

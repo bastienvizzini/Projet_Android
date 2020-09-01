@@ -3,7 +3,6 @@ package be.technifutur.projet_android
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -14,64 +13,46 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.technifutur.projet_android.adapters.UserGameListAdapter
+import be.technifutur.projet_android.firebaseapi.UserHelper
+import be.technifutur.projet_android.models.MyUser
 import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import java.io.File
 
 
-class UserProfileActivity : AppCompatActivity() {
+class UserProfileActivity : BaseActivity() {
 
     companion object {
         private const val FILE_NAME = "photo.jpg"
         private const val SIGN_OUT_TASK = 10
         private const val DELETE_USER_TASK = 20
+        private const val UPDATE_USERNAME = 30
     }
 
     private lateinit var photoFile: File
+    private var isCurrentUser: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
 
+        if (!isCurrentUserLogged()) {
+            finish()
+        }
+
         // quand ce sera un fragment, faire comme dans le projet Pokédex fragment avec bundle et args
-
-        // Selected user
-        intent.getParcelableExtra<User>("USER_SELECTED")?.let { currentUser ->
-            this.setUser(currentUser)
-            val mAdapter = UserGameListAdapter(this, currentUser.games)
-            games_recycler_view.adapter = mAdapter
-            games_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-            addFriendButton.setOnClickListener {
-                val user = currentUser
-            }
-        }
-
-        // Main user
-        intent.getParcelableExtra<User>("USER_MAIN")?.let { mainUser ->
-            this.setUser(mainUser)
-            val mAdapter = UserGameListAdapter(this, mainUser.games)
-            games_recycler_view.adapter = mAdapter
-            games_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            this.setupMainUserViews()
-
-            // changeProfilePictureButton
-            addFriendButton.setOnClickListener {
-                if (isPermissionGranted()) {
-                    this.changeProfilePicture()
-                }
-            }
-        }
-
+        this.updateUIWhenCreating()
         // Custom Action Bar
         /*supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         supportActionBar?.setDisplayShowCustomEnabled(true)
@@ -100,10 +81,10 @@ class UserProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUser(user: User) {
+    private fun setUser(user: MyUser) {
         //user_profile_picture.setImageResource(user.mProfilePicture)
         Glide.with(this).load(user.profilePicture).centerCrop().into(user_profile_picture)
-        user_username.text = user.userName
+        userUsernameTextView.text = user.userName
     }
 
     private fun setupMainUserViews() {
@@ -118,6 +99,7 @@ class UserProfileActivity : AppCompatActivity() {
                 true
             }
             R.id.changeUsernameAction -> {
+                this.updateUsernameInFirebase()
                 true
             }
             R.id.signOutAction -> {
@@ -128,9 +110,10 @@ class UserProfileActivity : AppCompatActivity() {
                 this.deleteUser()
                 true
             }
-            else -> super.onOptionsItemSelected(item);
+            else -> super.onOptionsItemSelected(item)
         }
     }
+
 
     // Ajouter permission pour écrire données?
     private fun isPermissionGranted(): Boolean {
@@ -181,47 +164,166 @@ class UserProfileActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.user_profile_menu, menu)
+        if (isCurrentUser) {
+            menuInflater.inflate(R.menu.user_profile_menu, menu)
+        }
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun updateUsernameInFirebase(){
+        usernameProgressBar.visibility = View.VISIBLE
+        userUsernameTextView.text = ""
+        this.createAlterDialogWithEditText()
     }
 
     private fun signOut() {
         AuthUI.getInstance()
             .signOut(this)
-            .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK))
+            .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK, null))
     }
 
     private fun deleteUser() {
         AlertDialog.Builder(this)
             .setMessage(getString(R.string.popup_message_confirmation_delete_acount))
-            .setPositiveButton(getString(R.string.yes)
+            .setPositiveButton(
+                getString(R.string.yes)
             ) { _, _ -> deleteUserFromFirebase() }
             .setNegativeButton(getString(R.string.no), null)
             .show()
     }
 
     private fun deleteUserFromFirebase() {
-        if (MainActivity.getCurrentFirebaseUser() != null) {
+        // Supprimé de Firestore mais pas de Firebase si non connecté
+
+            // Delete from Firestore
+            getCurrentUser()?.let { user ->
+                UserHelper.deleteUser(user.uid).addOnFailureListener(this.onFailureListener())
+            }
+            // Delete from Firebase
             AuthUI.getInstance()
                 .delete(this)
-                .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(DELETE_USER_TASK))
-        }
+                .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(DELETE_USER_TASK, null))
+                .addOnFailureListener(this.onFailureListener())
+
+            this.signOut()
     }
 
-    private fun updateUIAfterRESTRequestsCompleted(origin: Int): OnSuccessListener<Void> {
+    private fun updateUIAfterRESTRequestsCompleted(origin: Int, username: String?): OnSuccessListener<Void> {
         return OnSuccessListener<Void> {
             when (origin) {
                 SIGN_OUT_TASK -> {
                     finish()
                 }
                 DELETE_USER_TASK -> {
-                    finish()
+                    //finish()
+                }
+                UPDATE_USERNAME -> {
+                    usernameProgressBar.visibility = View.INVISIBLE
+                    userUsernameTextView.text = username
                 }
                 else -> { }
             }
         }
     }
 
+    private fun createAlterDialogWithEditText() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        builder.setTitle("Change username")
+        val dialogLayout = inflater.inflate(R.layout.alert_dialog_edittext, null)
+        val editText  = dialogLayout.findViewById<EditText>(R.id.editText)
+        builder.setView(dialogLayout)
 
+        builder.setPositiveButton("OK") { _, _ ->
+            val username: String = editText.text.toString()
+            this.updateUsername(username)
+            Toast.makeText(this, username, Toast.LENGTH_SHORT).show()
+        }.setNegativeButton("Cancel", null)
+        builder.show()
+    }
+
+    private fun updateUsername(username: String) {
+        if (username.isNotBlank()) {
+            getCurrentUser()?.let { user ->
+                UserHelper.updateUsername(username, user.uid)
+                    .addOnFailureListener(this.onFailureListener())
+                    .addOnSuccessListener(this.updateUIAfterRESTRequestsCompleted(UPDATE_USERNAME, username))
+            }
+        } else {
+            showSnackBar(getString(R.string.error_invalid_username))
+        }
+    }
+
+    private fun showSnackBar(message: String){
+        Snackbar.make(userProfileConstraintLayout, message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun updateUIWhenCreating() {
+
+        // Main user
+        intent.getParcelableExtra<MyUser>("USER_MAIN")?.let { mainUser ->
+            //this.setUser(mainUser)
+            val mAdapter = UserGameListAdapter(this, mainUser.games)
+            games_recycler_view.adapter = mAdapter
+            games_recycler_view.layoutManager = LinearLayoutManager(
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            this.setupMainUserViews()
+            this.getCurrentUser()?.let { currentUser ->
+
+                if (currentUser.photoUrl != null) {
+                    //Get picture URL from Firebase
+                    Glide.with(this)
+                        .load(currentUser.photoUrl)
+                        .into(user_profile_picture)
+                } else {
+                    Glide.with(this)
+                        .load(R.drawable.default_profile_pic)
+                        .into(user_profile_picture)
+                }
+
+                UserHelper.getUser(currentUser.uid)
+                    .addOnSuccessListener { documentSnapshot ->
+                        val user = documentSnapshot.toObject(User::class.java)
+                        val username = user?.username ?: "Username not found"
+                        userUsernameTextView.text = username
+                    }
+            }
+
+            // changeProfilePictureButton
+            addFriendButton.setOnClickListener {
+                if (isPermissionGranted()) {
+                    this.changeProfilePicture()
+                }
+            }
+        }
+
+        // Selected user
+        intent.getParcelableExtra<MyUser>("USER_SELECTED")?.let { currentUser ->
+            isCurrentUser = false
+            this.setUser(currentUser)
+            val mAdapter = UserGameListAdapter(this, currentUser.games)
+            games_recycler_view.adapter = mAdapter
+            games_recycler_view.layoutManager = LinearLayoutManager(
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            addFriendButton.setOnClickListener {
+                val user = currentUser
+            }
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isCurrentUserLogged()) {
+            finish()
+        }
+    }
 
 }

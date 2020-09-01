@@ -7,7 +7,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".UserProfileActivity">
+        tools:context=".UserProfileActivity"
+        android:id="@+id/userProfileConstraintLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/top_profile_container"
@@ -24,7 +25,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="8dp"
                 android:layout_marginTop="32dp"
-                app:layout_constraintBottom_toTopOf="@+id/user_username"
+                app:layout_constraintBottom_toTopOf="@+id/userUsernameTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -56,10 +57,10 @@
                 app:layout_constraintTop_toTopOf="@+id/user_profile_cardview" />
 
             <TextView
-                android:id="@+id/user_username"
+                android:id="@+id/userUsernameTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/username"
+                tools:text="Username"
                 android:textColor="@android:color/white"
                 android:textSize="24sp"
                 android:textAlignment="center"
@@ -71,6 +72,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_profile_cardview" />
+
+            <ProgressBar
+                android:id="@+id/usernameProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_profile_cardview"
+                android:visibility="invisible"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -4,21 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginBottom
-import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.models.User
+import be.technifutur.projet_android.models.MyUser
 import com.bumptech.glide.Glide
 
-class MessagesAdapter(context: Context, userList: MutableList<User>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MessagesAdapter(context: Context, userList: MutableList<MyUser>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var mMessageFriendList: MutableList<User> = userList
+    private var mMessageFriendList: MutableList<MyUser> = userList
     private var mInflater: LayoutInflater = LayoutInflater.from(context)
     // To set the screen title
     private val itemScreenTitle = 0

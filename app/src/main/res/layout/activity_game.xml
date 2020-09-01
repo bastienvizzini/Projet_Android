@@ -49,7 +49,7 @@
                     android:id="@+id/gameDetailNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/game_name"
+                    tools:text="@string/game_name"
                     android:textColor="@android:color/white"
                     android:textSize="22sp"
                     android:textAlignment="textStart"
@@ -67,7 +67,7 @@
                     android:layout_height="30dp"
                     android:background="@drawable/button_background_light_blue"
                     android:elevation="2dp"
-                    android:text="@string/add"
+                    tools:text="@string/add"
                     android:textColor="@android:color/white"
                     android:textAllCaps="false"
                     android:layout_marginStart="16dp"
@@ -87,5 +87,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:clipToPadding="false"
         android:padding="8dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/createRoomFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_add"
+        android:tint="@android:color/white"
+        android:background="@drawable/button_background_light_blue"
+        android:backgroundTint="@color/colorPrimary"
+        app:rippleColor="@color/listItemBackground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

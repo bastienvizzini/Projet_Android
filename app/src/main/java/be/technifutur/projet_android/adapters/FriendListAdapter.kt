@@ -3,8 +3,6 @@ package be.technifutur.projet_android.adapters
 import android.content.Context
 import android.content.Intent
 import android.view.*
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
@@ -12,15 +10,15 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.UserProfileActivity
-import be.technifutur.projet_android.models.User
+import be.technifutur.projet_android.models.MyUser
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.friendlist_item_final.view.*
 
 
-class FriendsListAdapter(context: Context, userList: MutableList<User>) :
+class FriendsListAdapter(context: Context, userList: MutableList<MyUser>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var mFriendsList: MutableList<User> = userList
+    private var mFriendsList: MutableList<MyUser> = userList
     private var mInflater: LayoutInflater = LayoutInflater.from(context)
     private var mContext = context
     private val itemScreenTitle = 0

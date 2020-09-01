@@ -1,17 +1,17 @@
 package be.technifutur.projet_android.models
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Game (
-    val id: Int,
-    val name: String?,
+    var id: Int? = 0,
+    var name: String? = "",
     @SerializedName("background_image")
-    val posterPath: String?,
-    val image: Image?,
-    val genres: ArrayList<Genres>?
+    var posterPath: String? = "",
+    var image: Image? = null,
+    var genres: ArrayList<Genres>? = null
 ) : Parcelable {
+
 }

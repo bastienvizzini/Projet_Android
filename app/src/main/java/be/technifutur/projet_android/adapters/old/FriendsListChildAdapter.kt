@@ -8,12 +8,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.models.User
+import be.technifutur.projet_android.models.MyUser
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.android.synthetic.main.friendlist_platform_child_item.view.*
 
-class FriendsListChildAdapter(context: Context, userList: MutableList<User>) :
+class FriendsListChildAdapter(context: Context, userList: MutableList<MyUser>) :
     RecyclerView.Adapter<FriendsListChildAdapter.ChildViewHolder>() {
 
     private val mUserList = userList

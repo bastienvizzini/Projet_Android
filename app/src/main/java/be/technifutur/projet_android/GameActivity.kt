@@ -2,17 +2,29 @@ package be.technifutur.projet_android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import be.technifutur.projet_android.adapters.RoomAdapter
+import be.technifutur.projet_android.firebaseapi.RoomsHelper
+import be.technifutur.projet_android.firebaseapi.UserHelper
 import be.technifutur.projet_android.mockdata.MockRooms
 import be.technifutur.projet_android.models.Game
+import be.technifutur.projet_android.models.GameID
+import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.OnSuccessListener
 import kotlinx.android.synthetic.main.activity_game.*
 import kotlinx.android.synthetic.main.activity_user_profile.*
 
-class GameActivity : AppCompatActivity() {
+class GameActivity : BaseActivity() {
+
+    companion object {
+        private const val GAME_ADDED = 30
+    }
 
     private val mRoomList = MockRooms.createRooms()
 
@@ -20,11 +32,19 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
-        intent.getParcelableExtra<Game>("GAME_SELECTED")?.let { currentGame ->
-            this.setGame(currentGame)
-            //val mAdapter = UserGameListAdapter(this, currentGame.games)
-            //games_recycler_view.adapter = mAdapter
-            //games_recycler_view.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        this.updateUIWhenCreating()
+        this.addGameButton.setOnClickListener{
+            this.addGame()
+        }
+        this.createRoomFab.setOnClickListener {
+            intent.getParcelableExtra<Game>("GAME_SELECTED")?.let { currentGame ->
+                RoomsHelper.createRoom(currentGame.id!!, 4, "French", "Long sessions", "Tryhard")
+                    .addOnFailureListener { error -> Log.d("bite", "Creating room error : $error") }
+                    .addOnSuccessListener{
+                        Toast.makeText(this, "Room created", Toast.LENGTH_SHORT).show()
+                    }
+
+            }
         }
 
         val mAdapter = RoomAdapter(this, mRoomList)
@@ -55,6 +75,67 @@ class GameActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item);
+        }
+    }
+
+    private fun addGame() {
+        when (addGameButton.text) {
+            "Added" -> {
+                Toast.makeText(this, "Deleting game... To be implemented", Toast.LENGTH_SHORT).show()
+            }
+            "Add" -> {
+                intent.getParcelableExtra<Game>("GAME_SELECTED")?.let { currentGame ->
+                    getCurrentUser()?.let { user ->
+                        UserHelper.addGame(currentGame, user.uid)
+                            .addOnFailureListener { error -> Log.d("bite", "Adding game error : $error") }
+                            .addOnSuccessListener(this.updateUIAfterRESTRequestsCompleted(
+                                GAME_ADDED))
+                    }
+                }
+            }
+            else -> {
+                Toast.makeText(this, "What the hell", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun updateUIWhenCreating() {
+
+        intent.getParcelableExtra<Game>("GAME_SELECTED")?.let { currentGame ->
+
+            this.setGame(currentGame)
+
+            getCurrentUser()?.let { user ->
+                UserHelper.getGame(user.uid, currentGame.id.toString())
+                    .addOnSuccessListener { documentSnapshot ->
+                        if (documentSnapshot.data != null) {
+                            addGameButton.text = "Added"
+                        } else {
+                            addGameButton.text = "Add"
+                        }
+                    }
+                    .addOnFailureListener { err ->
+                        Toast.makeText(this, "Game not found : $err", Toast.LENGTH_SHORT).show()
+                    }
+
+            }
+        }
+
+    }
+
+    private fun updateUIAfterRESTRequestsCompleted(origin: Int): OnSuccessListener<Void> {
+        return OnSuccessListener<Void> {
+            when (origin) {
+                GAME_ADDED -> {
+                    Toast.makeText(
+                        this,
+                        "Game added",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    addGameButton.text = "Added"
+                }
+                else -> { }
+            }
         }
     }
 }

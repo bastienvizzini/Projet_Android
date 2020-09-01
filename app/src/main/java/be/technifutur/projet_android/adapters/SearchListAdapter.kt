@@ -16,15 +16,15 @@ import be.technifutur.projet_android.GameActivity
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.models.Game
 import be.technifutur.projet_android.models.SearchResult
-import be.technifutur.projet_android.models.User
+import be.technifutur.projet_android.models.MyUser
 import com.bumptech.glide.Glide
 
 class SearchListAdapter(context: Context, resultList: SearchResult) : RecyclerView.Adapter<SearchListAdapter.SearchViewHolder>(), Filterable {
 
     private var mInflater: LayoutInflater = LayoutInflater.from(context)
-    private var mAllUserResultList: ArrayList<User> = resultList.userResult
+    private var mAllUserResultList: ArrayList<MyUser> = resultList.userResult
     private var mAllGameResultList: ArrayList<Game> = resultList.gameResults // on utilise ça comme search déjà fait via api
-    private var mUserResultList: ArrayList<User> = arrayListOf()
+    private var mUserResultList: ArrayList<MyUser> = arrayListOf()
     private var mGameResultList: ArrayList<Game> = arrayListOf()
 
     override fun onCreateViewHolder(

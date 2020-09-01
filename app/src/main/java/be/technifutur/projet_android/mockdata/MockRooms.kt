@@ -1,34 +1,34 @@
 package be.technifutur.projet_android.mockdata
 
-import be.technifutur.projet_android.models.Room
-import be.technifutur.projet_android.models.User
+import be.technifutur.projet_android.models.MyRoom
+import be.technifutur.projet_android.models.MyUser
 
 class MockRooms {
     companion object {
-        fun createRooms(): ArrayList<Room> {
+        fun createRooms(): ArrayList<MyRoom> {
 
-            val rooms =  arrayListOf<Room>()
+            val rooms =  arrayListOf<MyRoom>()
             val users = MockUsers.createUsers()
-            val room1users = arrayListOf<User>()
+            val room1users = arrayListOf<MyUser>()
             room1users.add(users[0])
             room1users.add(users[4])
             room1users.add(users[2])
 
-            val room2users = arrayListOf<User>()
+            val room2users = arrayListOf<MyUser>()
             room2users.add(users[1])
             room2users.add(users[3])
 
-            val room3users = arrayListOf<User>()
+            val room3users = arrayListOf<MyUser>()
             room3users.add(users[8])
             room3users.add(users[7])
             room3users.add(users[6])
 
-            val room1 = Room(room1users, 4, "French", "Long sessions", "Tryhard")
-            val room2 = Room(room2users, 3, "English", "Few games", "Casual")
-            val room3 = Room(room3users, 4, "Estonian", "Long sessions", "Fun")
-            val room4 = Room(room1users, 4, "French", "Long sessions", "Tryhard")
-            val room5 = Room(room2users, 3, "English", "Few games", "Casual")
-            val room6 = Room(room3users, 4, "Estonian", "Long sessions", "Fun")
+            val room1 = MyRoom(room1users, 4, "French", "Long sessions", "Tryhard")
+            val room2 = MyRoom(room2users, 3, "English", "Few games", "Casual")
+            val room3 = MyRoom(room3users, 4, "Estonian", "Long sessions", "Fun")
+            val room4 = MyRoom(room1users, 4, "French", "Long sessions", "Tryhard")
+            val room5 = MyRoom(room2users, 3, "English", "Few games", "Casual")
+            val room6 = MyRoom(room3users, 4, "Estonian", "Long sessions", "Fun")
 
             rooms.add(room1)
             rooms.add(room2)

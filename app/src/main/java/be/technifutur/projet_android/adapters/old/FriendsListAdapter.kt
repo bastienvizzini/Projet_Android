@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
 import be.technifutur.projet_android.models.Platform
-import be.technifutur.projet_android.models.User
+import be.technifutur.projet_android.models.MyUser
 import kotlinx.android.synthetic.main.friendlist_platform_item.view.*
 
-class FriendsListAdapter(context: Context, userList: MutableList<User>) :
+class FriendsListAdapter(context: Context, userList: MutableList<MyUser>) :
     RecyclerView.Adapter<FriendsListAdapter.FriendsViewHolder>() {
 
-    private var mUserList: MutableList<User> = userList
+    private var mUserList: MutableList<MyUser> = userList
     //private var mOnlineUserList: MutableList<User> = getOnlineUsers(mUserList)
     //private var mOfflineUserList: MutableList<User> = getOfflineUsers(mUserList)
     private var mInflater: LayoutInflater = LayoutInflater.from(context)
@@ -43,7 +43,7 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
         )
     }
 
-    private fun getPlatforms(users: MutableList<User>): MutableList<String> {
+    private fun getPlatforms(users: MutableList<MyUser>): MutableList<String> {
         val platformList = mutableListOf<String>()
         for (user in users) {
             for (game in user.games) {
@@ -107,7 +107,7 @@ class FriendsListAdapter(context: Context, userList: MutableList<User>) :
         val childLayoutManager = LinearLayoutManager(holder.recyclerView.context, LinearLayoutManager.HORIZONTAL, false)
 
         //childLayoutManager.initialPrefetchItemCount = 4
-        val mUserListByPlatform = mutableListOf<User>()
+        val mUserListByPlatform = mutableListOf<MyUser>()
         // Lol ça marche pas, par contre plutôt faire un gridlayout avec tous les amis et garder ce layout là pour le discovery
         when (mCurrentPlatform) {
             Platform.SWITCH.platformName -> {

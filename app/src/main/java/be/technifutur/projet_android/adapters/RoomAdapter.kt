@@ -3,7 +3,6 @@ package be.technifutur.projet_android.adapters
 import android.content.Context
 import android.graphics.Typeface
 import android.text.TextUtils
-import android.util.Log
 import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +13,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.NonNull
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.models.Room
+import be.technifutur.projet_android.models.MyRoom
 import com.bumptech.glide.Glide
 
 
-class RoomAdapter(context: Context, roomList: ArrayList<Room>): RecyclerView.Adapter<RoomAdapter.RoomViewHolder>() {
+class RoomAdapter(context: Context, roomList: ArrayList<MyRoom>): RecyclerView.Adapter<RoomAdapter.RoomViewHolder>() {
 
     private val mRoomList = roomList
     private val mInflater = LayoutInflater.from(context)
