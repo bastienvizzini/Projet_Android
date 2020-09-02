@@ -1,5 +1,6 @@
 package be.technifutur.projet_android.adapters.game_detail
 
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,12 +69,12 @@ class RoomMessageAdapter(@NonNull options: FirestoreRecyclerOptions<Message>, va
                 // Update profile picture ImageView
                 imageViewProfile.visibility = View.VISIBLE
                 imageViewProfileReceiver.visibility = View.INVISIBLE
-                if (message.userSender
-                        ?.urlPicture != null) {
-                    glide.load(message.userSender.urlPicture)
-                        .apply(RequestOptions.circleCropTransform())
+                glide.load(/*message.userSender
+                        ?.urlPicture ?:*/ R.drawable.default_profile_pic)
+                        .circleCrop()
                         .into(imageViewProfile)
-                }
+                textMessageContainer.gravity = Gravity.END
+
             } else {
                 imageViewProfile.visibility = View.INVISIBLE
                 imageViewProfileReceiver.visibility = View.VISIBLE

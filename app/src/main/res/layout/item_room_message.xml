@@ -27,7 +27,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:visibility="visible" />
-"/>
 
         <!-- TEXT MESSAGE CONTAINER -->
         <LinearLayout
@@ -40,26 +39,21 @@
             app:layout_constraintEnd_toStartOf="@id/activityRoomItemProfileImageCurrentUser"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
-            android:background="@drawable/item_background_rounded_corner_dark"
-            android:orientation="horizontal" >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="8dp">
+            android:gravity="start">
 
                 <!-- TEXT MESSAGE -->
                 <TextView
                     android:id="@+id/activityRoomItemMessageTextView"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"
-                    tools:text="Text example" />
+                    tools:text="Text example"
+                    android:padding="8dp"
+                    android:background="@drawable/item_background_rounded_corner_dark"/>
 
-            </LinearLayout>
+
 
         </LinearLayout>
 

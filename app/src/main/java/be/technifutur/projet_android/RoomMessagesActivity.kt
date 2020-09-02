@@ -98,12 +98,9 @@ class RoomMessagesActivity : BaseActivity(), RoomMessageAdapter.Listener {
     }
 
     override fun onDataChanged() {
-        Log.d("bite", "Je suis pas onDataChanged")
         if (this.roomMessageAdapter.itemCount == 0) {
-            Log.d("bite", "Je suis GONE")
             roomEmptyRecyclerView.visibility = View.VISIBLE
         } else {
-            Log.d("bite", "Je suis VISIBLE")
             roomEmptyRecyclerView.visibility = View.GONE
         }
     }
