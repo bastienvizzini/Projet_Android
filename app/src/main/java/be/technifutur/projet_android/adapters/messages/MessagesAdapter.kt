@@ -1,4 +1,4 @@
-package be.technifutur.projet_android.adapters
+package be.technifutur.projet_android.adapters.messages
 
 import android.content.Context
 import android.view.LayoutInflater

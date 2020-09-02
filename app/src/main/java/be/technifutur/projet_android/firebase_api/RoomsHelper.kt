@@ -1,7 +1,6 @@
-package be.technifutur.projet_android.firebaseapi
+package be.technifutur.projet_android.firebase_api
 
 import be.technifutur.projet_android.models.Room
-import be.technifutur.projet_android.models.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore

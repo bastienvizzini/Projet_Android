@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import be.technifutur.projet_android.R
+import be.technifutur.projet_android.adapters.friends.FriendsListAdapter
 import be.technifutur.projet_android.mockdata.MockUsers
 import kotlinx.android.synthetic.main.fragment_friends.*
-import kotlinx.android.synthetic.main.fragment_messages.*
 
 /**
  * A simple [Fragment] subclass.
@@ -28,7 +28,7 @@ class FriendsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mAdapter = be.technifutur.projet_android.adapters.FriendsListAdapter(requireContext(), mUserList)
+        val mAdapter = FriendsListAdapter(requireContext(), mUserList)
         val layoutManager = GridLayoutManager(activity, 1)
         layoutManager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() { // à changer balec du gridlayoutmaintenant
             override fun getSpanSize(position: Int): Int {

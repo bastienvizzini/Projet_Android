@@ -7,10 +7,10 @@ import java.util.*
 
 @Parcelize
 data class Message(
-    val message: String,
+    val message: String? = null,
     @ServerTimestamp
-    val dateCreated: Date,
-    val userSender: User,
-    val urlImage: String
+    val dateCreated: Date? = null,
+    val userSender: User? = null,
+    val urlImage: String? = null
 ): Parcelable {
 }

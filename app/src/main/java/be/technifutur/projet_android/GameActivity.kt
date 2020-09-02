@@ -1,24 +1,18 @@
 package be.technifutur.projet_android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import be.technifutur.projet_android.adapters.RoomAdapter
-import be.technifutur.projet_android.firebaseapi.RoomsHelper
-import be.technifutur.projet_android.firebaseapi.UserHelper
+import be.technifutur.projet_android.adapters.game_detail.RoomAdapter
+import be.technifutur.projet_android.firebase_api.RoomsHelper
+import be.technifutur.projet_android.firebase_api.UserHelper
 import be.technifutur.projet_android.mockdata.MockRooms
 import be.technifutur.projet_android.models.Game
-import be.technifutur.projet_android.models.GameID
-import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnSuccessListener
 import kotlinx.android.synthetic.main.activity_game.*
-import kotlinx.android.synthetic.main.activity_user_profile.*
 
 class GameActivity : BaseActivity() {
 

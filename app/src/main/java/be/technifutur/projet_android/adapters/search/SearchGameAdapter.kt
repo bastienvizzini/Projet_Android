@@ -1,4 +1,4 @@
-package be.technifutur.projet_android.adapters
+package be.technifutur.projet_android.adapters.search
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.GameActivity
@@ -24,7 +23,7 @@ class SearchGameAdapter(context: Context, gameResultList: ArrayList<Game>): Recy
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SearchGameAdapter.SearchGameViewHolder {
+    ): SearchGameViewHolder {
         val itemView: View = mInflater.inflate(R.layout.resultlist_item, parent, false)
         return SearchGameViewHolder(itemView, this)
     }
@@ -33,7 +32,7 @@ class SearchGameAdapter(context: Context, gameResultList: ArrayList<Game>): Recy
         return mGameResultList.size
     }
 
-    override fun onBindViewHolder(holder: SearchGameAdapter.SearchGameViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchGameViewHolder, position: Int) {
         val currentResult = mGameResultList[position]
 
         holder.resultTitleTextView.text = currentResult.name

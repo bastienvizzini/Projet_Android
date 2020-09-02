@@ -1,4 +1,4 @@
-package be.technifutur.projet_android.adapters
+package be.technifutur.projet_android.adapters.user
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -19,7 +19,7 @@ class UserGameListAdapter (context: Context, gameList: MutableList<MyGame>): Rec
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): UserGameListAdapter.UserGameViewHolder {
+    ): UserGameViewHolder {
         val mItemView: View = mInflater.inflate(R.layout.user_profile_gamelist_item, parent, false)
         return UserGameViewHolder(mItemView, this)
     }
@@ -28,7 +28,7 @@ class UserGameListAdapter (context: Context, gameList: MutableList<MyGame>): Rec
         return mGameList.size
     }
 
-    override fun onBindViewHolder(holder: UserGameListAdapter.UserGameViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserGameViewHolder, position: Int) {
         val mCurrentGamePictureResource: Int = mGameList[position].imageResource
         //holder.gamePictureImageView.setImageResource(mCurrentGamePictureResource)
         Glide.with(holder.itemView.context)

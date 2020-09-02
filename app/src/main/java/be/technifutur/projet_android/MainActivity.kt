@@ -7,7 +7,6 @@ import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import be.technifutur.projet_android.firebaseapi.UserHelper
 import be.technifutur.projet_android.fragments.ExploreFragment
 import be.technifutur.projet_android.fragments.FriendsFragment
 import be.technifutur.projet_android.fragments.MessagesFragment

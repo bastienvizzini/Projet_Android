@@ -1,4 +1,4 @@
-package be.technifutur.projet_android.adapters.old
+package be.technifutur.projet_android.adapters.friends.old
 
 import android.content.Context
 import android.view.LayoutInflater

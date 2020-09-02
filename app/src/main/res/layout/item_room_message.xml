@@ -1,76 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activityRoomMessages"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp">
-
-    <!-- PROFILE CONTAINER -->
-    <LinearLayout
-        android:id="@+id/activity_mentor_chat_item_profile_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activity_mentor_chat_item_message_container"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_mentor_chat_item_message_container"
-        android:layout_margin="8dp">
-
-        <!-- IMAGE VIEW PROFILE -->
-        <ImageView
-            android:id="@+id/activity_mentor_chat_item_profile_container_profile_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/default_profile_pic"/>
-
-        <!-- IMAGE IS MENTOR -->
-        <ImageView
-            android:id="@+id/activity_mentor_chat_item_profile_container_is_mentor_image"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            app:srcCompat="@drawable/default_profile_pic"/>
-
-    </LinearLayout>
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="2dp"
+    android:orientation="horizontal">
 
     <!-- MESSAGE CONTAINER -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/activity_mentor_chat_item_message_container"
+        android:id="@+id/activityRoomItemMessageContainer"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/activity_mentor_chat_item_profile_container">
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
 
-        <!-- IMAGE SENT CONTAINER -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/activity_mentor_chat_item_message_container_image_sent_cardview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <!-- IMAGE VIEW PROFILE -->
+        <ImageView
+            android:id="@+id/activityRoomItemProfileImageReceiverUser"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/default_profile_pic"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="gone">
-
-            <!-- IMAGE SENT -->
-            <ImageView
-                android:id="@+id/activity_mentor_chat_item_message_container_image_sent_cardview_image"
-                android:layout_width="100dip"
-                android:layout_height="100dip"
-                android:scaleType="centerCrop"/>
-
-        </androidx.cardview.widget.CardView>
+            android:visibility="visible" />
+"/>
 
         <!-- TEXT MESSAGE CONTAINER -->
         <LinearLayout
-            android:id="@+id/activity_mentor_chat_item_message_container_text_message_container"
-            android:layout_width="match_parent"
+            android:id="@+id/activityRoomItemMessageContainerTextContainer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/activityRoomItemProfileImageReceiverUser"
+            app:layout_constraintEnd_toStartOf="@id/activityRoomItemProfileImageCurrentUser"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
             android:background="@drawable/item_background_rounded_corner_dark"
@@ -84,7 +51,7 @@
 
                 <!-- TEXT MESSAGE -->
                 <TextView
-                    android:id="@+id/activity_mentor_chat_item_message_container_text_message_container_text_view"
+                    android:id="@+id/activityRoomItemMessageTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textIsSelectable="true"
@@ -98,16 +65,28 @@
 
         <!-- DATE MESSAGE -->
         <TextView
-            android:id="@+id/activity_mentor_chat_item_message_container_text_view_date"
+            android:id="@+id/activityRoomItemMessageTextViewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/activity_mentor_chat_item_message_container_text_message_container"
-            app:layout_constraintEnd_toEndOf="@+id/activity_mentor_chat_item_message_container_text_message_container"
+            app:layout_constraintTop_toBottomOf="@+id/activityRoomItemMessageContainerTextContainer"
+            app:layout_constraintEnd_toEndOf="@+id/activityRoomItemMessageContainerTextContainer"
             tools:text="12:12"
             android:textStyle="bold"
             android:textSize="8sp" />
 
+        <!-- IMAGE VIEW PROFILE -->
+        <ImageView
+            android:id="@+id/activityRoomItemProfileImageCurrentUser"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/default_profile_pic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="visible"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

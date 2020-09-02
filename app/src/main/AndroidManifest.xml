@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RoomActivity"></activity>
+        <activity android:name=".RoomMessagesActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

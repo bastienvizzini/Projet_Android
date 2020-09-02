@@ -1,9 +1,8 @@
 package be.technifutur.projet_android
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import be.technifutur.projet_android.firebaseapi.UserHelper
+import be.technifutur.projet_android.firebase_api.UserHelper
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse

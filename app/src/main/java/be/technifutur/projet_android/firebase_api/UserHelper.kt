@@ -1,4 +1,4 @@
-package be.technifutur.projet_android.firebaseapi
+package be.technifutur.projet_android.firebase_api
 
 import be.technifutur.projet_android.models.Game
 import be.technifutur.projet_android.models.User

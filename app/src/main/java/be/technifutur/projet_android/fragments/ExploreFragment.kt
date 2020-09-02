@@ -10,9 +10,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.technifutur.projet_android.MainActivity
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.adapters.GameAdapter
+import be.technifutur.projet_android.adapters.explore.GameAdapter
 import be.technifutur.projet_android.models.Game
-import be.technifutur.projet_android.models.GameResult
 import be.technifutur.projet_android.models.GamesResult
 import be.technifutur.projet_android.network.GameService
 import kotlinx.android.synthetic.main.fragment_explore.*

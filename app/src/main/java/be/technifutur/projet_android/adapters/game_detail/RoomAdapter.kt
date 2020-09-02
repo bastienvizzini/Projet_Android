@@ -1,4 +1,4 @@
-package be.technifutur.projet_android.adapters
+package be.technifutur.projet_android.adapters.game_detail
 
 import android.content.Context
 import android.graphics.Typeface
@@ -31,7 +31,7 @@ class RoomAdapter(context: Context, roomList: ArrayList<MyRoom>): RecyclerView.A
     private val scale: Float = context.resources.displayMetrics.density
     var pixels = (20.0f * scale + 0.5f).toInt()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomAdapter.RoomViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder {
         val itemView: View = mInflater.inflate(R.layout.item_room, parent, false)
         return RoomViewHolder(itemView)
     }
@@ -40,7 +40,7 @@ class RoomAdapter(context: Context, roomList: ArrayList<MyRoom>): RecyclerView.A
         return mRoomList.size
     }
 
-    override fun onBindViewHolder(holder: RoomAdapter.RoomViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RoomViewHolder, position: Int) {
         val currentRoom = mRoomList[position]
         val numberOfUsersString = "${currentRoom.users.size} / ${currentRoom.maxUsersInRoom}"
 
@@ -81,7 +81,7 @@ class RoomAdapter(context: Context, roomList: ArrayList<MyRoom>): RecyclerView.A
         holder.roomLanguageTextView.text = currentRoom.language
     }
 
-    inner class RoomViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
+    class RoomViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
         val usersLinearLayout: LinearLayout = itemView.findViewById(R.id.roomUsersLinearLayout)
         val numberOfUsersTextView: TextView = itemView.findViewById(R.id.numberOfUsersTextView)
         //val numberOfUsersLinearLayout: LinearLayout = itemView.findViewById(R.id.numberOfUsersLinearLayout)

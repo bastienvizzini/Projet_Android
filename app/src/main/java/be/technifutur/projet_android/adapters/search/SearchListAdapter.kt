@@ -1,4 +1,4 @@
-package be.technifutur.projet_android.adapters
+package be.technifutur.projet_android.adapters.search
 
 import android.content.Context
 import android.content.Intent
@@ -30,7 +30,7 @@ class SearchListAdapter(context: Context, resultList: SearchResult) : RecyclerVi
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SearchListAdapter.SearchViewHolder {
+    ): SearchViewHolder {
         val mItemView: View = mInflater.inflate(R.layout.resultlist_item, parent, false)
         return SearchViewHolder(mItemView, this)
     }
@@ -44,7 +44,7 @@ class SearchListAdapter(context: Context, resultList: SearchResult) : RecyclerVi
         }
     }
 
-    override fun onBindViewHolder(holder: SearchListAdapter.SearchViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         if (mUserResultList.isEmpty() && mGameResultList.isEmpty()) {
             holder.resultTitleTextView.visibility = View.INVISIBLE
             holder.pictureResultImageView.visibility = View.INVISIBLE

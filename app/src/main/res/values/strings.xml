@@ -41,7 +41,8 @@
     <string name="error_auth_canceled">Authentification canceled</string>
     <string name="connexion_success">Connexion success !</string>
     <string name="error_invalid_username">Invalid username</string>
-    <string name="there_is_no_messages">There is no messages</string>
+    <string name="there_are_no_messages">There are no messages</string>
+    <string name="error_not_connected">Error: Not connected</string>
 
     <integer name="swing_anim_time">500</integer>
 </resources>

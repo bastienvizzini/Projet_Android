@@ -1,4 +1,4 @@
-package be.technifutur.projet_android.adapters
+package be.technifutur.projet_android.adapters.explore
 
 import android.content.Context
 import android.content.Intent
@@ -20,7 +20,7 @@ class GameAdapter(context: Context, gameList: MutableList<Game>):
     private var mGameList = gameList
     private var mInflater: LayoutInflater = LayoutInflater.from(context)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameAdapter.GameViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
         val itemView: View = mInflater.inflate(R.layout.item_game_explore, parent, false)
         return GameViewHolder(itemView)
     }
@@ -29,7 +29,7 @@ class GameAdapter(context: Context, gameList: MutableList<Game>):
         return mGameList.size
     }
 
-    override fun onBindViewHolder(holder: GameAdapter.GameViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
         val currentGame = mGameList[position]
 
         currentGame.posterPath?.let { posterPath ->

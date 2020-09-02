@@ -5,13 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
-import be.technifutur.projet_android.adapters.SearchGameAdapter
-import be.technifutur.projet_android.adapters.SearchListAdapter
+import be.technifutur.projet_android.adapters.search.SearchGameAdapter
 import be.technifutur.projet_android.mockdata.MockUsers
 import be.technifutur.projet_android.models.Game
-import be.technifutur.projet_android.models.GameResult
 import be.technifutur.projet_android.models.GamesResult
-import be.technifutur.projet_android.models.SearchResult
 import be.technifutur.projet_android.network.GameService
 import kotlinx.android.synthetic.main.activity_search_results.*
 import retrofit2.Call

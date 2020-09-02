@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.adapters.MessagesAdapter
+import be.technifutur.projet_android.adapters.messages.MessagesAdapter
 import be.technifutur.projet_android.mockdata.MockUsers
-import kotlinx.android.synthetic.main.fragment_friends.*
 import kotlinx.android.synthetic.main.fragment_messages.*
 
 /**

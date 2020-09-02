@@ -1,4 +1,4 @@
-package be.technifutur.projet_android.adapters
+package be.technifutur.projet_android.adapters.friends
 
 import android.content.Context
 import android.content.Intent

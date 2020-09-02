@@ -19,8 +19,8 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import be.technifutur.projet_android.adapters.UserGameListAdapter
-import be.technifutur.projet_android.firebaseapi.UserHelper
+import be.technifutur.projet_android.adapters.user.UserGameListAdapter
+import be.technifutur.projet_android.firebase_api.UserHelper
 import be.technifutur.projet_android.models.MyUser
 import be.technifutur.projet_android.models.User
 import com.bumptech.glide.Glide
@@ -47,8 +47,12 @@ class UserProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
 
-        if (!isCurrentUserLogged()) {
-            finish()
+        sendMessageButton.setOnClickListener {
+            if (isCurrentUserLogged()) {
+                this.startRoomActivity()
+            } else {
+                Toast.makeText(this, getString(R.string.error_not_connected), Toast.LENGTH_SHORT).show()
+            }
         }
 
         // quand ce sera un fragment, faire comme dans le projet Pokédex fragment avec bundle et args
@@ -63,6 +67,11 @@ class UserProfileActivity : BaseActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true) // back on actionbar
 
 
+    }
+
+    private fun startRoomActivity() {
+        val intent = Intent(this, RoomMessagesActivity::class.java)
+        startActivity(intent)
     }
 
     private fun getPhotoFile(fileName: String): File {

@@ -1,4 +1,4 @@
-package be.technifutur.projet_android.adapters.old
+package be.technifutur.projet_android.adapters.friends.old
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,8 +13,8 @@ import be.technifutur.projet_android.models.Platform
 import be.technifutur.projet_android.models.MyUser
 import kotlinx.android.synthetic.main.friendlist_platform_item.view.*
 
-class FriendsListAdapter(context: Context, userList: MutableList<MyUser>) :
-    RecyclerView.Adapter<FriendsListAdapter.FriendsViewHolder>() {
+class OldFriendsListAdapter(context: Context, userList: MutableList<MyUser>) :
+    RecyclerView.Adapter<OldFriendsListAdapter.FriendsViewHolder>() {
 
     private var mUserList: MutableList<MyUser> = userList
     //private var mOnlineUserList: MutableList<User> = getOnlineUsers(mUserList)
@@ -203,7 +203,7 @@ class FriendsListAdapter(context: Context, userList: MutableList<MyUser>) :
 
     }
 
-    class FriendsViewHolder(@NonNull itemView: View, adapter: FriendsListAdapter) :
+    class FriendsViewHolder(@NonNull itemView: View, adapter: OldFriendsListAdapter) :
         RecyclerView.ViewHolder(itemView) {
 
         val platformTextView: TextView = itemView.platformName
