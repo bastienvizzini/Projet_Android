@@ -13,24 +13,24 @@ class RoomsHelper {
         private const val COLLECTION_GAMES = "games"
 
         // --- COLLECTION REFERENCE ---
-        fun getGamesCollection(): CollectionReference {
+        private fun getGamesCollection(): CollectionReference {
             return FirebaseFirestore.getInstance().collection(COLLECTION_GAMES)
         }
 
-        fun getRoomsCollection(id: String): CollectionReference {
-            return getGamesCollection().document(id).collection(COLLECTION_ROOMS)
+        fun getRoomsCollection(gameId: Int): CollectionReference {
+            return getGamesCollection().document(gameId.toString()).collection(COLLECTION_ROOMS)
         }
 
         // --- GET ---
-        fun getAllRoomsForGame(id: String): Query? {
-            return RoomsHelper.getRoomsCollection(id)
+        fun getAllRoomsForGame(gameId: Int): Query {
+            return RoomsHelper.getRoomsCollection(gameId)
                 .orderBy("dateCreated")
         }
 
         // --- CREATE ---
-        fun createRoom(id: Int, users: Int, lang: String, duration: String, intensity: String): Task<Void> {
-            val roomToCreate = Room(maxUsersInRoom = users, language = lang, gameDuration = duration, gameIntensity = intensity)
-            return getRoomsCollection(id.toString()).document().set(roomToCreate)
+        fun createRoom(gameId: Int, users: Int, lang: String, duration: String, intensity: String, gameID: Int): Task<Void> {
+            val roomToCreate = Room(maxUsersInRoom = users, language = lang, gameDuration = duration, gameIntensity = intensity, gameId = gameID)
+            return getRoomsCollection(gameId).document().set(roomToCreate)
         }
     }
 }

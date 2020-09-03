@@ -2,7 +2,6 @@ package be.technifutur.projet_android
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.annotation.Nullable
@@ -22,17 +21,23 @@ class RoomMessagesActivity : BaseActivity(), RoomMessageAdapter.Listener {
 
     @Nullable private var modelCurrentUser: User? = null
     private lateinit var currentChatUid: String
-    private lateinit var currentGameId: String
+    private var currentGameId: Int = 0
     private lateinit var roomMessageAdapter: RoomMessageAdapter
+    private var mItemCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room)
 
-        val uid = "Gv2ETLZ4ypakxDotsTIO"
-        val gameId = "290856"
+        intent.getStringExtra("ROOM_UID")?.let { roomUid ->
+            currentChatUid = roomUid
+        }
 
-        this.configureRecyclerView(gameId, uid)
+        intent.getIntExtra("GAME_ID", 0)?.let { gameId ->
+            currentGameId = gameId
+        }
+
+        this.configureRecyclerView(currentGameId, currentChatUid)
         this.getCurrentUserFromFirestore()
 
         supportActionBar?.elevation = 0f
@@ -53,6 +58,10 @@ class RoomMessagesActivity : BaseActivity(), RoomMessageAdapter.Listener {
                 this.roomEditTextMessage.setText("")
             }
         }
+        roomEditTextMessage.setOnClickListener {
+            roomMessagesRecyclerView.smoothScrollToPosition(mItemCount)
+        }
+
     }
 
     // --------------------
@@ -69,7 +78,7 @@ class RoomMessagesActivity : BaseActivity(), RoomMessageAdapter.Listener {
     // UI
     // --------------------
     // Configure RecyclerView with a Query
-    private fun configureRecyclerView(gameId: String, roomUid: String) {
+    private fun configureRecyclerView(gameId: Int, roomUid: String) {
         //track game
         this.currentGameId = gameId
         // track current chat
@@ -83,13 +92,15 @@ class RoomMessagesActivity : BaseActivity(), RoomMessageAdapter.Listener {
         roomMessageAdapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver(){
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 roomMessagesRecyclerView.smoothScrollToPosition(roomMessageAdapter.itemCount)
+                mItemCount = roomMessageAdapter.itemCount
             }
         })
+        //itemCount = roomMessageAdapter.itemCount
         roomMessagesRecyclerView.layoutManager = LinearLayoutManager(this)
         roomMessagesRecyclerView.adapter = roomMessageAdapter
     }
 
-    // 6 - Create options for RecyclerView from a Query
+    // Create options for RecyclerView from a Query
     private fun generateOptionsForAdapter(query: Query): FirestoreRecyclerOptions<Message> {
         return FirestoreRecyclerOptions.Builder<Message>()
             .setQuery(query, Message::class.java)

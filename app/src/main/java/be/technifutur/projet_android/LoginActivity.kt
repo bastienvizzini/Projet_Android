@@ -2,6 +2,7 @@ package be.technifutur.projet_android
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import be.technifutur.projet_android.firebase_api.UserHelper
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
@@ -20,6 +21,7 @@ class LoginActivity : BaseActivity() {
         setContentView(R.layout.activity_login)
 
         if (isCurrentUserLogged()) {
+            Log.d("bite", getCurrentUser().toString())
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         } else {

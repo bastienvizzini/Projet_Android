@@ -46,14 +46,7 @@ class UserProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
-
-        sendMessageButton.setOnClickListener {
-            if (isCurrentUserLogged()) {
-                this.startRoomActivity()
-            } else {
-                Toast.makeText(this, getString(R.string.error_not_connected), Toast.LENGTH_SHORT).show()
-            }
-        }
+        
 
         // quand ce sera un fragment, faire comme dans le projet Pokédex fragment avec bundle et args
         this.updateUIWhenCreating()
@@ -69,10 +62,7 @@ class UserProfileActivity : BaseActivity() {
 
     }
 
-    private fun startRoomActivity() {
-        val intent = Intent(this, RoomMessagesActivity::class.java)
-        startActivity(intent)
-    }
+
 
     private fun getPhotoFile(fileName: String): File {
         // Use 'getExternalFilesDir on Context to access package-specific directories

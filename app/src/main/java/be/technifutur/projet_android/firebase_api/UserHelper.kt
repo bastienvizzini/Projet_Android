@@ -13,7 +13,7 @@ class UserHelper {
         private const val COLLECTION_GAMES = "games"
 
         // --- COLLECTION REFERENCE ---
-        private fun getUsersCollection(): CollectionReference {
+        fun getUsersCollection(): CollectionReference {
             return FirebaseFirestore.getInstance().collection(COLLECTION_USERS)
         }
 

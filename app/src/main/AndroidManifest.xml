@@ -13,8 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RoomMessagesActivity"></activity>
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="be.technifutur.fileprovider"
@@ -25,6 +23,8 @@
                 android:resource="@xml/fileprovider" />
         </provider>
 
+        <activity android:name=".RoomMessagesActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

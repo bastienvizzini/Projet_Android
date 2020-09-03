@@ -22,7 +22,7 @@
             android:id="@+id/activityRoomItemProfileImageReceiverUser"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/default_profile_pic"
+            tools:srcCompat="@drawable/default_profile_pic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -39,6 +39,8 @@
             app:layout_constraintEnd_toStartOf="@id/activityRoomItemProfileImageCurrentUser"
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:orientation="vertical"
             android:gravity="start">
 
                 <!-- TEXT MESSAGE -->
@@ -51,29 +53,27 @@
                     android:textSize="12sp"
                     tools:text="Text example"
                     android:padding="8dp"
-                    android:background="@drawable/item_background_rounded_corner_dark"/>
+                    tools:background="@drawable/item_background_rounded_corner_dark"/>
+
+                <!-- DATE MESSAGE -->
+                <TextView
+                    android:id="@+id/activityRoomItemMessageTextViewDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="12:12"
+                    android:textStyle="bold"
+                    android:textSize="8sp" />
 
 
 
         </LinearLayout>
-
-        <!-- DATE MESSAGE -->
-        <TextView
-            android:id="@+id/activityRoomItemMessageTextViewDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/activityRoomItemMessageContainerTextContainer"
-            app:layout_constraintEnd_toEndOf="@+id/activityRoomItemMessageContainerTextContainer"
-            tools:text="12:12"
-            android:textStyle="bold"
-            android:textSize="8sp" />
 
         <!-- IMAGE VIEW PROFILE -->
         <ImageView
             android:id="@+id/activityRoomItemProfileImageCurrentUser"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/default_profile_pic"
+            tools:srcCompat="@drawable/default_profile_pic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

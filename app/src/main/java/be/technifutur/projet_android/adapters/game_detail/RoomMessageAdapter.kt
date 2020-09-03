@@ -10,9 +10,10 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
+import be.technifutur.projet_android.firebase_api.UserHelper
 import be.technifutur.projet_android.models.Message
+import be.technifutur.projet_android.models.User
 import com.bumptech.glide.RequestManager
-import com.bumptech.glide.request.RequestOptions
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import java.text.DateFormat
@@ -42,49 +43,66 @@ class RoomMessageAdapter(@NonNull options: FirestoreRecyclerOptions<Message>, va
 
     class MessageViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        val imageViewProfile: ImageView = itemView.findViewById(R.id.activityRoomItemProfileImageCurrentUser)
-        val imageViewProfileReceiver: ImageView = itemView.findViewById(R.id.activityRoomItemProfileImageReceiverUser)
-        val textMessageContainer: LinearLayout = itemView.findViewById(R.id.activityRoomItemMessageContainerTextContainer)
-        val textViewMessage: TextView = itemView.findViewById(R.id.activityRoomItemMessageTextView)
-        val textViewDate: TextView = itemView.findViewById(R.id.activityRoomItemMessageTextViewDate)
+        private val imageViewProfile: ImageView = itemView.findViewById(R.id.activityRoomItemProfileImageCurrentUser)
+        private val imageViewProfileReceiver: ImageView = itemView.findViewById(R.id.activityRoomItemProfileImageReceiverUser)
+        private val textMessageContainer: LinearLayout = itemView.findViewById(R.id.activityRoomItemMessageContainerTextContainer)
+        private val activityMessageContainer: LinearLayout = itemView.findViewById(R.id.activityRoomMessages)
+        private val textViewMessage: TextView = itemView.findViewById(R.id.activityRoomItemMessageTextView)
+        private val textViewDate: TextView = itemView.findViewById(R.id.activityRoomItemMessageTextViewDate)
 
         fun updateWithMessage(message: Message, currentUserId: String, glide: RequestManager) {
 
-            // Check if current user is the sender
-            val isCurrentUser: Boolean = message.userSender?.uid.equals(currentUserId)
-
+            activityMessageContainer.visibility = View.INVISIBLE
             // Update message TextView
             textViewMessage.text = message.message
-            textViewMessage.textAlignment =
-                if (isCurrentUser) {
-                    View.TEXT_ALIGNMENT_TEXT_END
-                } else View.TEXT_ALIGNMENT_TEXT_START
-
             // Update date TextView
             if (message.dateCreated != null) {
                 textViewDate.text = convertDateToHour(message.dateCreated)
             }
 
-            if (isCurrentUser) {
-                // Update profile picture ImageView
-                imageViewProfile.visibility = View.VISIBLE
-                imageViewProfileReceiver.visibility = View.INVISIBLE
-                glide.load(/*message.userSender
-                        ?.urlPicture ?:*/ R.drawable.default_profile_pic)
-                        .circleCrop()
-                        .into(imageViewProfile)
-                textMessageContainer.gravity = Gravity.END
+            UserHelper.getUser(message.userSenderUid!!).addOnSuccessListener { documentSnapshot ->
+                val userSender = documentSnapshot.toObject(User::class.java)
 
-            } else {
-                imageViewProfile.visibility = View.INVISIBLE
-                imageViewProfileReceiver.visibility = View.VISIBLE
-                if (message.userSender
-                        ?.urlPicture != null) {
-                    glide.load(message.userSender.urlPicture)
-                        .apply(RequestOptions.circleCropTransform())
-                        .into(imageViewProfileReceiver)
+                // Check if current user is the sender
+                val isCurrentUser: Boolean = userSender?.uid.equals(currentUserId)
+
+                if (isCurrentUser) {
+                    // Update profile picture ImageView
+                    imageViewProfile.visibility = View.VISIBLE
+                    imageViewProfileReceiver.visibility = View.INVISIBLE
+                    if (userSender
+                            ?.urlPicture != "null"){ // null is stored as String somehow
+                        glide.load(userSender?.urlPicture)
+                            .circleCrop()
+                            .into(imageViewProfile)
+                    } else {
+                        glide.load(R.drawable.default_profile_pic)
+                            .circleCrop()
+                            .into(imageViewProfile)
+                    }
+                    textViewMessage.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
+                    textMessageContainer.gravity = Gravity.END
+
+                } else {
+                    imageViewProfile.visibility = View.INVISIBLE
+                    imageViewProfileReceiver.visibility = View.VISIBLE
+                    if (userSender
+                            ?.urlPicture != "null"){ // null is stored as String somehow
+                        glide.load(userSender?.urlPicture)
+                            .circleCrop()
+                            .into(imageViewProfileReceiver)
+                    } else {
+                        glide.load(R.drawable.default_profile_pic)
+                            .circleCrop()
+                            .into(imageViewProfileReceiver)
+                    }
+                    textViewMessage.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+                    textMessageContainer.gravity = Gravity.START
                 }
+                textViewMessage.setBackgroundResource(R.drawable.item_background_rounded_corner_dark)
+                activityMessageContainer.visibility = View.VISIBLE
             }
+
         }
 
         // ---

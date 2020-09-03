@@ -1,27 +1,36 @@
 package be.technifutur.projet_android.adapters.game_detail
 
 import android.content.Context
-import android.graphics.Typeface
-import android.text.TextUtils
+import android.content.Intent
+import android.util.Log
 import android.view.Display
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowManager
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.NonNull
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import be.technifutur.projet_android.R
-import be.technifutur.projet_android.models.MyRoom
-import com.bumptech.glide.Glide
+import be.technifutur.projet_android.RoomMessagesActivity
+import be.technifutur.projet_android.models.Room
+import com.bumptech.glide.RequestManager
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 
-class RoomAdapter(context: Context, roomList: ArrayList<MyRoom>): RecyclerView.Adapter<RoomAdapter.RoomViewHolder>() {
+class RoomAdapter(@NonNull options: FirestoreRecyclerOptions<Room>, val glide: RequestManager, private val callback: Listener, context: Context):
+    FirestoreRecyclerAdapter<Room, RoomAdapter.RoomViewHolder>(options) {
 
-    private val mRoomList = roomList
+    interface Listener {
+        fun onDataChanged()
+    }
+
+    //private val mRoomList = roomList
     private val mInflater = LayoutInflater.from(context)
 
     // To get window size
@@ -36,49 +45,15 @@ class RoomAdapter(context: Context, roomList: ArrayList<MyRoom>): RecyclerView.A
         return RoomViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int {
-        return mRoomList.size
-    }
+    override fun onBindViewHolder(holder: RoomViewHolder, position: Int, model: Room) {
+        holder.updateWithRoom(model, this.glide)
 
-    override fun onBindViewHolder(holder: RoomViewHolder, position: Int) {
-        val currentRoom = mRoomList[position]
-        val numberOfUsersString = "${currentRoom.users.size} / ${currentRoom.maxUsersInRoom}"
-
-        //holder.roomCardView.layoutParams.width = (display.width/3)+(display.width/9)
-
-        for (user in mRoomList[position].users) {
-
-            val singleUserLinearLayout = LinearLayout(holder.itemView.context)
-            holder.usersLinearLayout.addView(singleUserLinearLayout)
-            singleUserLinearLayout.orientation = LinearLayout.HORIZONTAL
-            singleUserLinearLayout.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
-            singleUserLinearLayout.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
-            //singleUserLinearLayout.gravity = Gravity.CENTER
-
-            val pictureImageView = ImageView(holder.itemView.context)
-            singleUserLinearLayout.addView(pictureImageView)
-            Glide.with(holder.itemView.context).load(user.profilePicture).circleCrop().into(pictureImageView)
-            pictureImageView.layoutParams.width = pixels
-            pictureImageView.layoutParams.height = pixels
-            setMargins(pictureImageView, 0,0,8,4)
-
-            val usernameTextView = TextView(holder.itemView.context)
-            singleUserLinearLayout.addView(usernameTextView)
-            //usernameTextView.width = ViewGroup.LayoutParams.MATCH_PARENT
-            //usernameTextView.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
-            //usernameTextView.layoutParams = TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
-            usernameTextView.text = user.userName
-            usernameTextView.setTypeface(usernameTextView.typeface, Typeface.BOLD)
-            usernameTextView.ellipsize = TextUtils.TruncateAt.END
-            usernameTextView.maxLines = 1
-
+        holder.itemView.setOnClickListener{
+            val intent = Intent(holder.itemView.context, RoomMessagesActivity::class.java)
+            intent.putExtra("ROOM_UID", model.roomUid)
+            intent.putExtra("GAME_ID", model.gameId)
+            holder.itemView.context.startActivity(intent)
         }
-
-        holder.numberOfUsersTextView.text = numberOfUsersString
-
-        holder.gameDurationTextView.text = currentRoom.gameDuration
-        holder.gameIntensityTextView.text = currentRoom.gameIntensity
-        holder.roomLanguageTextView.text = currentRoom.language
     }
 
     class RoomViewHolder(@NonNull itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -89,6 +64,50 @@ class RoomAdapter(context: Context, roomList: ArrayList<MyRoom>): RecyclerView.A
         val gameIntensityTextView: TextView = itemView.findViewById(R.id.gameIntensityTextView)
         val roomLanguageTextView: TextView = itemView.findViewById(R.id.roomLanguageTextView)
         //val roomCardView: CardView = itemView.findViewById(R.id.roomCardView)
+
+        fun updateWithRoom(room: Room, glide: RequestManager) {
+            val numberOfUsersString = "Max : ${room.maxUsersInRoom} players"
+
+            //holder.roomCardView.layoutParams.width = (display.width/3)+(display.width/9)
+
+            /*for (user in mRoomList[position].users) {
+
+                val singleUserLinearLayout = LinearLayout(holder.itemView.context)
+                holder.usersLinearLayout.addView(singleUserLinearLayout)
+                singleUserLinearLayout.orientation = LinearLayout.HORIZONTAL
+                singleUserLinearLayout.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+                singleUserLinearLayout.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+                //singleUserLinearLayout.gravity = Gravity.CENTER
+
+                val pictureImageView = ImageView(holder.itemView.context)
+                singleUserLinearLayout.addView(pictureImageView)
+                Glide.with(holder.itemView.context).load(user.profilePicture).circleCrop().into(pictureImageView)
+                pictureImageView.layoutParams.width = pixels
+                pictureImageView.layoutParams.height = pixels
+                setMargins(pictureImageView, 0,0,8,4)
+
+                val usernameTextView = TextView(holder.itemView.context)
+                singleUserLinearLayout.addView(usernameTextView)
+                //usernameTextView.width = ViewGroup.LayoutParams.MATCH_PARENT
+                //usernameTextView.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
+                //usernameTextView.layoutParams = TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+                usernameTextView.text = user.userName
+                usernameTextView.setTypeface(usernameTextView.typeface, Typeface.BOLD)
+                usernameTextView.ellipsize = TextUtils.TruncateAt.END
+                usernameTextView.maxLines = 1
+
+            }*/
+
+            numberOfUsersTextView.text = numberOfUsersString
+            Log.d("bite", numberOfUsersString)
+            Log.d("bite", room.gameDuration)
+            Log.d("bite", room.gameIntensity)
+            Log.d("bite", room.language)
+
+            gameDurationTextView.text = room.gameDuration
+            gameIntensityTextView.text = room.gameIntensity
+            roomLanguageTextView.text = room.language
+        }
     }
 
     private fun setMargins(view: View, left: Int, top: Int, right: Int, bottom: Int ) {
