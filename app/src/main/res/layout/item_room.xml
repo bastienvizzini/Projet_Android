@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:gravity="center">
 
@@ -35,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="X / X" />
+                tools:text="X / X" />
 
             <LinearLayout
                 android:id="@+id/numberOfUsersLinearLayout"
@@ -51,19 +52,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="gameDuration" />
+                tools:text="gameDuration" />
 
             <TextView
                 android:id="@+id/gameIntensityTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="gameIntensity" />
+                tools:text="gameIntensity" />
 
             <TextView
                 android:id="@+id/roomLanguageTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="language" />
+                tools:text="language" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,7 +76,7 @@
                 android:background="@drawable/item_background_rounded_corner_dark"
                 android:textColor="@android:color/white"
                 android:layout_marginTop="8dp"
-                android:text="Join" />
+                android:text="@string/join" />
 
         </LinearLayout>
 

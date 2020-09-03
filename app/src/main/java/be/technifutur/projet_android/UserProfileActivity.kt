@@ -46,7 +46,7 @@ class UserProfileActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profile)
-        
+
 
         // quand ce sera un fragment, faire comme dans le projet Pokédex fragment avec bundle et args
         this.updateUIWhenCreating()

@@ -55,7 +55,7 @@ class MessagesAdapter(context: Context, userList: MutableList<MyUser>): Recycler
                     else -> holder.backgroundView.setBackgroundResource(R.drawable.item_background_dark)
                 }
                 val mCurrentUsername: String = mMessageFriendList[position-1].userName // -1 bc of header
-                val mCurrentMessage = "Hey, this is a sample text, you know what I mean ?"
+                val mCurrentMessage = holder.itemView.context.getString(R.string.sample_text)
                 val mCurrentPictureResource: Int = mMessageFriendList[position-1].profilePicture
                 holder.usernameTextView.text = mCurrentUsername
                 holder.messageTextView.text = mCurrentMessage
@@ -65,7 +65,7 @@ class MessagesAdapter(context: Context, userList: MutableList<MyUser>): Recycler
                     .into(holder.pictureImageView)
             }
             is ScreenTitleViewHolder -> {
-                holder.screenTitleTextView.text = "Messages"
+                holder.screenTitleTextView.text = holder.itemView.context.getString(R.string.messages_title)
             }
             }
     }

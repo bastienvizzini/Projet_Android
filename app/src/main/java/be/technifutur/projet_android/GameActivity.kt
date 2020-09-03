@@ -96,7 +96,7 @@ class GameActivity : BaseActivity(), RoomAdapter.Listener {
         RoomsHelper.createRoom(game.id!!, 4, "French", "Long sessions", "Tryhard", game.id!!)
             .addOnFailureListener { error -> Log.d("bite", "Creating room error : $error") }
             .addOnSuccessListener{
-                Toast.makeText(this, "Room created", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.room_created), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -123,10 +123,10 @@ class GameActivity : BaseActivity(), RoomAdapter.Listener {
 
     private fun addGame() {
         when (addGameButton.text) {
-            "Added" -> {
-                Toast.makeText(this, "Deleting game... To be implemented", Toast.LENGTH_SHORT).show()
+            getString(R.string.added) -> {
+                Toast.makeText(this, getString(R.string.deleting_game), Toast.LENGTH_SHORT).show()
             }
-            "Add" -> {
+            getString(R.string.add) -> {
                 intent.getParcelableExtra<Game>("GAME_SELECTED")?.let { currentGame ->
                     getCurrentUser()?.let { user ->
                         UserHelper.addGame(currentGame, user.uid)
@@ -152,9 +152,9 @@ class GameActivity : BaseActivity(), RoomAdapter.Listener {
                 UserHelper.getGame(user.uid, currentGame.id.toString())
                     .addOnSuccessListener { documentSnapshot ->
                         if (documentSnapshot.data != null) {
-                            addGameButton.text = "Added"
+                            addGameButton.text = getString(R.string.added)
                         } else {
-                            addGameButton.text = "Add"
+                            addGameButton.text = getString(R.string.add)
                         }
                     }
                     .addOnFailureListener { err ->
@@ -175,7 +175,7 @@ class GameActivity : BaseActivity(), RoomAdapter.Listener {
                         "Game added",
                         Toast.LENGTH_SHORT
                     ).show()
-                    addGameButton.text = "Added"
+                    addGameButton.text = getString(R.string.added)
                 }
                 else -> { }
             }

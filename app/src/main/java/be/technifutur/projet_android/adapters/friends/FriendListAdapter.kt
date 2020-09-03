@@ -63,10 +63,13 @@ class FriendsListAdapter(context: Context, userList: MutableList<MyUser>) :
                         currentFriend.games[0].title
                     }
                     2 -> {
-                        "${currentFriend.games[0].title } and 1 other game"
+                        val andOneOtherGame = holder.itemView.context.getString(R.string.and_one_other_game)
+                        currentFriend.games[0].title+andOneOtherGame
                     }
                     else -> {
-                        "${currentFriend.games[0].title } and ${currentFriend.games.size - 1} other games"
+                        val and = holder.itemView.context.getString(R.string.and)
+                        val otherGames = holder.itemView.context.getString(R.string.other_games)
+                        currentFriend.games[0].title+and+(currentFriend.games.size - 1)+otherGames
                     }
                 }
                 holder.gamesTextView.text = games

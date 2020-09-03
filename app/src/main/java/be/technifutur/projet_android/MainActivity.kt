@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import be.technifutur.projet_android.fragments.ExploreFragment
 import be.technifutur.projet_android.fragments.FriendsFragment
 import be.technifutur.projet_android.fragments.MessagesFragment
+import be.technifutur.projet_android.mockdata.MockUsers
 import be.technifutur.projet_android.models.Game
 import be.technifutur.projet_android.models.MyGame
 import be.technifutur.projet_android.models.MyUser
@@ -50,14 +51,13 @@ class MainActivity : BaseActivity() {
     }
 
     private fun createUser(): MyUser {
-        val mGame = MyGame("On m'appelle l'Ovni", Platform.PS4, R.drawable.apex_legends)
-        val mGameList : ArrayList<MyGame> = arrayListOf(mGame, mGame, mGame)
+        val gameList = MockUsers.gameList()
         return MyUser(
             mFirebaseUser?.displayName.toString(),
             38,
             "Marseille",
-            R.drawable.main_user,
-            mGameList,
+            R.drawable.default_profile_pic,
+            gameList,
             true
         )
     }
@@ -110,7 +110,7 @@ class MainActivity : BaseActivity() {
 
         searchView = supportActionBar?.customView!!.findViewById(R.id.searchView)
 
-        Glide.with(this).load(R.drawable.main_user).circleCrop().into(user_picture)
+        Glide.with(this).load(R.drawable.default_profile_pic).circleCrop().into(user_picture)
     }
 
     private val bottomNavMethod =

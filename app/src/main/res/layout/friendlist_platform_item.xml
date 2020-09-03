@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/friendListRecyclerView"
-        android:text="Platform name"
+        android:text="@string/platform_name"
         android:textSize="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView

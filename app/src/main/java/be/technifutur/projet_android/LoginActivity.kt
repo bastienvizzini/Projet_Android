@@ -24,8 +24,6 @@ class LoginActivity : BaseActivity() {
             Log.d("bite", getCurrentUser().toString())
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-        } else {
-            this.startSignInActivity()
         }
 
         signInButton.setOnClickListener {
@@ -40,7 +38,8 @@ class LoginActivity : BaseActivity() {
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(listOf(AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()))
-                .setTheme(R.style.AppTheme)
+                .setLogo(R.drawable.teammateslogo)
+                .setTheme(R.style.AppTheme_NoActionBar)
                 .setIsSmartLockEnabled(false, true)
                 .build(),
             RC_SIGN_IN);

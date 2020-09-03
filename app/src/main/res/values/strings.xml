@@ -1,21 +1,21 @@
 <resources>
-    <string name="app_name">Projet_Android</string>
+    <string name="app_name">Teammates</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="friends_list_title">Friend List</string>
-    <string name="explore_title">Explore</string>
+    <string name="explore_title">Discovery</string>
     <string name="messages_title">Messages</string>
     <string name="screen_title">Screen Title</string>
     <string name="friend_name">Friend Name</string>
     <string name="current_playing_game">Current Playing Game</string>
     <string name="friends_menu_title">Friends</string>
-    <string name="explore_menu_title">Explore</string>
+    <string name="explore_menu_title">Discovery</string>
     <string name="messages_menu_title">Messages</string>
     <string name="offline_title">Offline</string>
     <string name="online_title">Online</string>
     <string name="search_title">Search</string>
-    <string name="search_hint">Search users and games</string>
+    <string name="search_hint">Search games and users</string>
     <string name="result_title">Result</string>
     <string name="no_results">Oops… No results !</string>
     <string name="games">Games :</string>
@@ -27,7 +27,6 @@
     <string name="recommended_games">Recommended games</string>
     <string name="add_games_button_title">Add games</string>
     <string name="rooms">Rooms :</string>
-    <string name="add">Ajouter</string>
     <string name="sign_in">Sign In</string>
     <string name="change_username">Change username</string>
     <string name="sign_out">Sign out</string>
@@ -43,6 +42,19 @@
     <string name="error_invalid_username">Invalid username</string>
     <string name="there_are_no_messages">There are no messages</string>
     <string name="error_not_connected">Error: Not connected</string>
+    <string name="type_something">Type something...</string>
+    <string name="send">Send</string>
+    <string name="send_a_message">Send a message</string>
+    <string name="platform_name">Platform name</string>
+    <string name="join">Join</string>
+    <string name="add">Add</string>
+    <string name="added">Added</string>
+    <string name="sample_text">Hey, this is a sample text, you know what I mean ?</string>
+    <string name="and_one_other_game">&#160;and 1 other game</string>
+    <string name="and">&#160;and&#160;</string>
+    <string name="other_games">&#160;other games</string>
+    <string name="room_created">Room created</string>
+    <string name="deleting_game">Deleting game... To be implemented</string>
 
     <integer name="swing_anim_time">500</integer>
 </resources>

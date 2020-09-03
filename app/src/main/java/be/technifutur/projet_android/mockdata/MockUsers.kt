@@ -7,6 +7,27 @@ import be.technifutur.projet_android.models.MyUser
 
 class MockUsers {
     companion object {
+
+        fun gameList(): ArrayList<MyGame> {
+            val gameList2: ArrayList<MyGame> = arrayListOf()
+            gameList2.add(
+                MyGame(
+                    "The Last of Us: Part II",
+                    Platform.PS4,
+                    R.drawable.theltasofuspartii
+                )
+            )
+            gameList2.add(
+                MyGame(
+                    "Call of Duty",
+                    Platform.XBOXONE,
+                    R.drawable.callofduty
+                )
+            )
+
+            return gameList2
+        }
+
         fun createUsers(): ArrayList<MyUser> {
 
             val gameList: ArrayList<MyGame> = arrayListOf()
@@ -97,14 +118,6 @@ class MockUsers {
                 gameList2,
                 true
             )
-            val user3 = MyUser(
-                "Didier Raoult",
-                87,
-                "Marseille",
-                R.drawable.user3,
-                gameList3,
-                false
-            )
             val user4 = MyUser(
                 "Corona",
                 16,
@@ -112,14 +125,6 @@ class MockUsers {
                 R.drawable.user4,
                 gameList4,
                 true
-            )
-            val user5 = MyUser(
-                "PatrickBalkaneuxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-                67,
-                "Levallois",
-                R.drawable.user5,
-                gameList,
-                false
             )
             val user6 = MyUser(
                 "XHipster",
@@ -137,32 +142,17 @@ class MockUsers {
                 gameList3,
                 false
             )
-            val user8 = MyUser(
-                "TwitchThot",
-                22,
-                "Anderlecht",
-                R.drawable.user8,
-                gameList4,
-                true
-            )
-            val user9 = MyUser(
-                "Diams",
-                38,
-                "Charleroi",
-                R.drawable.user9,
-                gameList,
-                false
-            )
 
             users.add(user1)
             users.add(user2)
-            users.add(user3)
             users.add(user4)
-            users.add(user5)
             users.add(user6)
             users.add(user7)
-            users.add(user8)
-            users.add(user9)
+            users.add(user1)
+            users.add(user2)
+            users.add(user4)
+            users.add(user6)
+            users.add(user7)
 
             return users
         }
